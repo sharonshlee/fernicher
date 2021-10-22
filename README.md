@@ -1,3 +1,6 @@
+### Final Year Project by Sharon Lee and [Lewis Lee](https://github.com/rexiah23)
+
+
 ### Database First Time Setup (If needed for the next step; Install [Postgres](https://www.postgresql.org/).):
 
 Login to database in terminal:
