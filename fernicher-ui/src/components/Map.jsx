@@ -37,7 +37,7 @@ const Map = ({ usersAndProducts }) => {
           e.preventDefault()
           setSelectedProduct(product)
         }}>
-          <img src="../../public/imgs/mapArrow.png" alt="Map Arrow" /> 
+          <img src="/imgs/mapArrow.png" alt="Map Arrow" /> 
         </button>
       </Marker>
     ))
