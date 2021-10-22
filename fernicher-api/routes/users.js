@@ -16,7 +16,7 @@ module.exports = ({ getUsers, getUserByEmail, addUser, getUsersProducts }) => {
 
   router.get("/products", (req, res) => {
     getUsersProducts()
-      .then((usersProducts) => {        
+      .then((usersProducts) => {
         res.json(usersProducts);
       })
       .catch((err) =>
