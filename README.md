@@ -22,15 +22,16 @@ Login to database in terminal:
 In terminal run these commands:
 
 1. `cd fernicher-api`
-2. `npm install`
-3. `npm run db:reset`
-4. `npm run dev`
+2. Create a .env file based on the .env.example file
+3. `npm install`
+4. `npm run db:reset`
+5. `npm run dev`
 
 ### Front End:
 
 Open a new terminal run these commands:
 
-1. `cd fernicher-ui`
+1. `cd fernicher-ui` 
 2. `npm install`
 3. `npm start`
 4. Go to url http://localhost:3000
