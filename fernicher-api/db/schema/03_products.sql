@@ -5,6 +5,6 @@ CREATE TABLE products(
     product_name VARCHAR(255) NOT NULL,
     product_description TEXT,
     image_url TEXT,
-    catgory_id INTEGER REFERENCES users(id)
+    category_id INTEGER REFERENCES categories(id),
     user_id INTEGER REFERENCES users(id)
 );
