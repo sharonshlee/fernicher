@@ -36,7 +36,7 @@ module.exports = (db) => {
 
   const getUsersProducts = () => {
     const query = {
-      text: `SELECT users.id as user_id, first_name, last_name, email, products.id as post_id, product_name, product_description
+      text: `SELECT * 
       FROM users
       INNER JOIN products
       ON users.id = products.user_id`,
@@ -52,6 +52,6 @@ module.exports = (db) => {
     getUsers,
     getUserByEmail,
     addUser,
-    getUsersProducts,
+    getUsersProducts
   };
 };

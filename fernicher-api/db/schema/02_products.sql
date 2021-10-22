@@ -6,5 +6,7 @@ CREATE TABLE products(
     product_description TEXT,
     image_url TEXT,
     catgory_id INTEGER REFERENCES users(id)
-    user_id INTEGER REFERENCES users(id)
+    user_id INTEGER REFERENCES users(id),
+    product_location float8 ARRAY
 );
+  

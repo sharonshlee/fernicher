@@ -6,7 +6,7 @@ import axios from "axios";
 const useApplicationData = () => {
   const [state, dispatch] = useReducer(dataReducer, {
     users: [],
-    loading: true,
+    loading: true
   });
   useEffect(() => {
     axios

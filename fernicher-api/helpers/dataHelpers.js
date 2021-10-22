@@ -15,6 +15,7 @@ const getProductsByUsers = (usersProducts) => {
     productsByUsers[product.user_id].products.push({
       name: product.product_name,
       description: product.product_description,
+      location: product.product_location
     });
   }
 
