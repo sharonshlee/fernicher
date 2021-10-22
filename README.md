@@ -1,5 +1,8 @@
-### Final Year Project by Sharon Lee and [Lewis Lee](https://github.com/rexiah23)
+### Fernicher
+Final Year Project by [Sharon Lee](https://github.com/sharonshlee) and [Lewis Lee](https://github.com/rexiah23)
 
+
+### Setup
 
 ### Database First Time Setup (If needed for the next step; Install [Postgres](https://www.postgresql.org/).):
 
