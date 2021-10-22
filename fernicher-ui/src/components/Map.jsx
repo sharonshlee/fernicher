@@ -1,7 +1,5 @@
-import axios from 'axios';
 import React, { useState, useEffect } from 'react';
-import ReactMapGL, { Marker, Popup } from 'react-map-gl';
-
+import ReactMapGL, { Marker, Popup, NavigationControl } from 'react-map-gl';
 
 const Map = ({ usersAndProducts }) => {
   const [viewport, setViewport] = useState({
@@ -11,6 +9,7 @@ const Map = ({ usersAndProducts }) => {
     height: '100vh',
     zoom: 10
   })
+
   const [selectedProduct, setSelectedProduct] = useState(null);
 
   //Adds ability to close selectedProduct with the escape key. 
@@ -52,6 +51,7 @@ const Map = ({ usersAndProducts }) => {
           setViewport(viewport)
         }}
       >
+        <NavigationControl /> 
         {productsOnMap}
         {selectedProduct && (
           <Popup 
