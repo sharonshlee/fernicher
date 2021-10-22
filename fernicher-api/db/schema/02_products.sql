@@ -5,5 +5,5 @@ CREATE TABLE products(
     product_name VARCHAR(255) NOT NULL,
     product_description TEXT,
     user_id INTEGER REFERENCES users(id),
-    product_location INTEGER ARRAY
+    product_location float8 ARRAY
 );
