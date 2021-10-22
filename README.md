@@ -1,6 +1,8 @@
 ### Fernicher
-Final Year Project by [Sharon Lee](https://github.com/sharonshlee) and [Lewis Lee](https://github.com/rexiah23)
 
+A website for people in the community to donate and get free preloved furniture.
+
+Final Year Project by [Sharon Lee](https://github.com/sharonshlee) and [Lewis Lee](https://github.com/rexiah23)
 
 ### Setup
 
