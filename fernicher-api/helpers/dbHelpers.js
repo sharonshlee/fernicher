@@ -52,6 +52,6 @@ module.exports = (db) => {
     getUsers,
     getUserByEmail,
     addUser,
-    getUsersProducts,
+    getUsersProducts
   };
 };
