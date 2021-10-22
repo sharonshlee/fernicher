@@ -1,6 +1,7 @@
 import React from "react";
 import "./App.scss";
 import useApplicationData from "./components/useApplicationData";
+import Map from "./components/Map";
 
 const App = () => {
   const { state, dispatch } = useApplicationData();
@@ -13,8 +14,8 @@ const App = () => {
   return (
     <div className="App">
       <h1> Users </h1>
-
       <ul> {userList} </ul>
+      <Map/>
     </div>
   );
 };
