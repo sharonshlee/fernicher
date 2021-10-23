@@ -54,7 +54,7 @@ const Map = ({ usersAndProducts }) => {
         }}
         // ask Lewis to change for page nav
         // suggest use +/- for zooming
-        // scrollZoom={false}
+        scrollZoom={false}
       >
         {productsOnMap}
         {selectedProduct && (

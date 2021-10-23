@@ -3,6 +3,11 @@ import React from "react";
 function Footer() {
   return (
     <div>
+      <img
+        style={{ width: "500px" }}
+        src="/imgs/maria-orlova-XmhAN9TYD50-unsplash.jpg"
+        alt="abc"
+      />
       <h1>This is footer</h1>
       Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum laboriosam
       architecto voluptate odit fugiat veniam itaque rem omnis nobis, facere
