@@ -181,14 +181,8 @@ export default function PrimarySearchAppBar() {
           <Sidebar position="left" toggleSlider={toggleSlider} state={state} />
           <Typography variant="h6" noWrap>
             FerniCHer &nbsp;&nbsp;&nbsp;
-            <Button
-              // component={Link}
-              // to={"/sidebar"}
-              onClick={toggleSlider("right", true)}
-            >
-              Products
-            </Button>
-            {/* &nbsp;&nbsp;&nbsp;Rooms */}
+            <Button onClick={toggleSlider("right", true)}>Products</Button>
+            <Button onClick={toggleSlider("right", true)}>Rooms</Button>
           </Typography>
 
           <div className={classes.search}>

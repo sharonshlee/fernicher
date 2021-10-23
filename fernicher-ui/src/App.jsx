@@ -7,9 +7,11 @@ import Map from "./components/Map/Map";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import Rooms from "./components/Rooms";
+import Products from "./components/Products";
 import Sidebar from "./components/Sidebar";
-import Home from "./components/Home";
+// import Home from "./components/Home";
 import Favourites from "./components/Favourites";
+import ImageSliders from "./components/ImageSliders/ImageSliders";
 
 const App = () => {
   const [usersAndProducts, setUsersAndProducts] = useState([]);
@@ -28,8 +30,10 @@ const App = () => {
     <>
       <CssBaseline />
       <Navbar />
+      <ImageSliders />
       {/* <Route path="/" component={Home} /> */}
       <Route path="/sidebar" component={Sidebar} />
+      <Route path="/products" component={Products} />
       <Route path="/rooms" component={Rooms} />
       <Route path="/fav" component={Favourites} />
       <Route path="/footer" component={Footer} />

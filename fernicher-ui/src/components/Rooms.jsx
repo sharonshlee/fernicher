@@ -1,18 +1,11 @@
 import React from "react";
+import MasonryImageList from "./ImageSliders/MasonryImageList";
 
 function Rooms() {
   return (
     <div>
-      <h1>This is Rooms.</h1>
-      <h1>This is Rooms.</h1>
-      <h1>This is Rooms.</h1>
-      <h1>This is Rooms.</h1>
-      <h1>This is Rooms.</h1>
-      <h1>This is Rooms.</h1>
-      <h1>This is Rooms.</h1>
-      <h1>This is Rooms.</h1>
-      <h1>This is Rooms.</h1>
-      <h1>This is Rooms.</h1>
+      <h1>Rooms:</h1>
+      <MasonryImageList />
     </div>
   );
 }

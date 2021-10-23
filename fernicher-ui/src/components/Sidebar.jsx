@@ -43,7 +43,7 @@ const menuItems = [
   {
     listIcon: <AssignmentInd />,
     listText: "Products",
-    listPath: "/footer",
+    listPath: "/products",
   },
   {
     listIcon: <Apps />,
