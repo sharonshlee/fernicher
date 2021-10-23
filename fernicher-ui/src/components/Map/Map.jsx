@@ -12,7 +12,7 @@ const Map = ({ usersAndProducts }) => {
   
     return (
       <Fragment>
-        {viewport && <ReactMapGL 
+        <ReactMapGL 
           {...viewport} 
           mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_TOKEN}
           mapStyle="mapbox://styles/rexiah23/ckv2jbc970n8u14nyzb407f1l"
@@ -24,10 +24,9 @@ const Map = ({ usersAndProducts }) => {
           <NavigationControl /> 
           <ProductsOnMap usersAndProducts={usersAndProducts} setSelectedProduct={setSelectedProduct}/>
           <PopupCard selectedProduct={selectedProduct} setSelectedProduct={setSelectedProduct}/>
-          {/* {!coords.resolved && <p>fectching your location</p>}
-          {(coords.resolved && !coords.error) && <p>your location is {coords.lat}, {coords.lng}</p>}
-          {coords.error && <p>{coords.error}</p>} */}
-        </ReactMapGL>}   
+        </ReactMapGL>
+        {!viewport.resolved && <p>Fetching Your Location To Display Products Near You...</p>}
+        {viewport.error && <p>Could not fetch your location. Please turn on Location services and Try again.</p>}
       </Fragment>
   )
 }
