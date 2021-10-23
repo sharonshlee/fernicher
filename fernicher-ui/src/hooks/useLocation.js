@@ -13,12 +13,13 @@ const useLocation = () => {
       const lat = data.coords.latitude;
       const lng = data.coords.longitude;
 
-      setCoords({
+      setCoords(prev => ({
+        ...prev,
         lat: lat,
         lng: lng,
         error: null,
         resolved: true
-      })
+      }))
     }
 
     const handleError = (err) => {

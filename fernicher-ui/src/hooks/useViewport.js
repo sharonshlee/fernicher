@@ -16,17 +16,22 @@ const useViewport = () => {
   
   useEffect(() => {
     if (coords.resolved && !coords.error) {
-      setViewport(prev => ({
-        ...prev, 
-        resolved: true, 
-        latitude: coords.lat, 
-        longitude: coords.lng
-      }))
+      setViewport(prev => {
+        console.log("PREV IS:", prev)
+        return {
+          ...prev, 
+          resolved: true, 
+          latitude: coords.lat, 
+          longitude: coords.lng
+        }
+      })
     } else if (coords.error) {
-      setViewport(prev => ({
+      setViewport(prev => {
+        console.log("PREV IS:", prev)
+        return {
         ...prev, 
         error: coords.error
-      }))
+      }})
     } 
   }, [coords])
 

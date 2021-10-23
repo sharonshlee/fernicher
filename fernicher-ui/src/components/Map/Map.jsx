@@ -6,10 +6,11 @@ import useProductCard from '../../hooks/useProductCard'
 import useViewport from '../../hooks/useViewport'
 
 const Map = ({ usersAndProducts }) => {
-
+  
   const { viewport, setViewport } = useViewport()
   const { selectedProduct, setSelectedProduct } = useProductCard()
   
+
     return (
       <Fragment>
         <ReactMapGL 
@@ -25,8 +26,7 @@ const Map = ({ usersAndProducts }) => {
           <ProductsOnMap usersAndProducts={usersAndProducts} setSelectedProduct={setSelectedProduct}/>
           <PopupCard selectedProduct={selectedProduct} setSelectedProduct={setSelectedProduct}/>
         </ReactMapGL>
-        {!viewport.resolved && <p>Fetching Your Location To Display Products Near You...</p>}
-        {viewport.error && <p>Could not fetch your location. Please turn on Location services and Try again.</p>}
+        {!viewport && <p>Fetching Your Location To Display Products Near You...</p>}
       </Fragment>
   )
 }
