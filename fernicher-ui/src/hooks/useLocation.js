@@ -13,8 +13,6 @@ const useLocation = () => {
       const lat = data.coords.latitude;
       const lng = data.coords.longitude;
 
-      console.log(lat, lng)
-
       setCoords({
         lat: lat,
         lng: lng,

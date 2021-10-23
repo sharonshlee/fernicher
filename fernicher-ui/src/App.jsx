@@ -8,7 +8,6 @@ import Map from "./components/Map/Map";
 
 const App = () => {
   const [usersAndProducts, setUsersAndProducts] = useState([]); 
-  // const { state, dispatch } = useApplicationData();
 
   useEffect(() => {
     axios
