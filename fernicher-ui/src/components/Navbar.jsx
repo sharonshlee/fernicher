@@ -177,7 +177,7 @@ export default function PrimarySearchAppBar() {
   return (
     <div className={classes.grow}>
       <AppBar position="static" style={{ color: "black", background: "white" }}>
-        <Toolbar>
+        <Toolbar id="back-to-top-anchor">
           <Sidebar position="left" toggleSlider={toggleSlider} state={state} />
           <Typography variant="h6" noWrap>
             FerniCHer &nbsp;&nbsp;&nbsp;

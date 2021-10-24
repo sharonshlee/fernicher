@@ -12,6 +12,7 @@ import Sidebar from "./components/Sidebar";
 // import Home from "./components/Home";
 import Favourites from "./components/Favourites";
 import ImageSliders from "./components/ImageSliders/ImageSliders";
+import BackToTop from "./components/utilities/BackToTop";
 
 const App = () => {
   const [usersAndProducts, setUsersAndProducts] = useState([]);
@@ -39,6 +40,7 @@ const App = () => {
       <Route path="/footer" component={Footer} />
       <Map usersAndProducts={usersAndProducts} />
       <Footer />
+      <BackToTop />
     </>
   );
 };
