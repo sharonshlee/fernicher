@@ -170,9 +170,10 @@ export default function PrimarySearchAppBar() {
   const [state, setState] = useState({
     right: false,
     left: false,
+    menu: "main",
   });
-  const toggleSlider = (slider, open) => () => {
-    setState({ ...state, [slider]: open });
+  const toggleSlider = (slider, open, menu) => () => {
+    setState({ ...state, [slider]: open, menu });
   };
   return (
     <div className={classes.grow}>
@@ -181,8 +182,12 @@ export default function PrimarySearchAppBar() {
           <Sidebar position="left" toggleSlider={toggleSlider} state={state} />
           <Typography variant="h6" noWrap>
             FerniCHer &nbsp;&nbsp;&nbsp;
-            <Button onClick={toggleSlider("right", true)}>Products</Button>
-            <Button onClick={toggleSlider("right", true)}>Rooms</Button>
+            <Button onClick={toggleSlider("right", true, "products")}>
+              Products
+            </Button>
+            <Button onClick={toggleSlider("right", true, "rooms")}>
+              Rooms
+            </Button>
           </Typography>
 
           <div className={classes.search}>

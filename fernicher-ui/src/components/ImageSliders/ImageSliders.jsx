@@ -21,11 +21,6 @@ function ImageSliders() {
           className="sliderimg"
         />
         <SingleLineImageList />
-        <img
-          src="/imgs/furniture7.jpg"
-          alt="furniture1"
-          className="sliderimg"
-        />
       </AliceCarousel>
     </div>
   );
