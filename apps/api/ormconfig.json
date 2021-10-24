@@ -1,0 +1,9 @@
+{
+  "type": "postgres",
+  "database": "pricedb",
+  "username": "admin",
+  "password": "P@ssw0rd",
+  "host": "192.168.0.19",
+  "port": 5432,
+  "synchronize": true
+}

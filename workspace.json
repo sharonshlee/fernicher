@@ -1,0 +1,9 @@
+{
+  "version": 2,
+  "projects": {
+    "api": "apps/api",
+    "fernicher-ui": "apps/fernicher-ui",
+    "fernicher-ui-e2e": "apps/fernicher-ui-e2e",
+    "models": "libs/models"
+  }
+}

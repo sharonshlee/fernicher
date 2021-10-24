@@ -1,37 +1,59 @@
-### Fernicher
+# Fernicher
 
-A website for people in the community to donate and get free preloved furniture.
+> A website for people in the community to donate and get free preloved furnitures.
 
-Final Year Project by [Sharon Lee](https://github.com/sharonshlee) and [Lewis Lee](https://github.com/rexiah23)
+- Final Year Project by [Sharon Lee](https://github.com/sharonshlee) and [Lewis Lee](https://github.com/rexiah23)
 
-### Setup
+## First Time Setup:
 
-### Database First Time Setup (If needed for the next step; Install [Postgres](https://www.postgresql.org/).):
+### Database Setup:
 
-Login to database in terminal:
+(If needed install [Postgres](https://www.postgresql.org/))
+
+In terminal, run these commands:
 
 1. `psql`
 2. `CREATE ROLE labber LOGIN SUPERUSER PASSWORD 'labber';`
 3. `\q`
 4. `psql -U labber`
-5. `CREATE DATABASE fernicherdb;`
+5. `CREATE DATABASE fernicherdb_ts;`
 6. `\q`
+
+### Project Setup
+
+In terminal run this command: `npm install`
 
 ### Back End:
 
-In terminal run these commands:
+In `apps/api` folder, create a .env file based on the .env.example file.
 
-1. `cd fernicher-api`
-2. Create a .env file based on the .env.example file
-3. `npm install`
-4. `npm run db:reset`
-5. `npm run dev`
+To start api:
+
+1. Open terminal at project root folder (fernicher).
+2. Run this command: `npx nx serve api`
+
+To clear and seed data, start the api first, and browse to: `http://localhost:3001/api/dbreset`
+
+Note: Data tables will be automatically created/updated when API is started.
 
 ### Front End:
 
-Open a new terminal run these commands:
+In `apps/fernicher-ui` folder, create a .env file based on the .env.example file.
 
-1. `cd fernicher-ui` 
-2. `npm install`
-3. `npm start`
-4. Go to url http://localhost:3000
+To start fernicher-ui:
+
+1. Open another terminal at project root folder (fernicher).
+2. Run this command: `npx nx serve fernicher-ui`
+3. Go to url http://localhost:4200
+
+Powered by:
+
+- [Material UI](https://mui.com/)
+- [Mapbox GL](https://docs.mapbox.com/mapbox-gl-js/api/)
+- [Nx.Dev (monorepo)](https://nx.dev/)
+- [TypeORM](https://typeorm.io/)
+- [React](https://reactjs.org/)
+- [NodeJS](https://nodejs.org/)
+- [ExpressJS](http://expressjs.com/)
+- [TypeScript](https://www.typescriptlang.org/)
+- [PostgreSQL](https://www.postgresql.org/)
