@@ -3,7 +3,6 @@ import AliceCarousel from "react-alice-carousel";
 import "react-alice-carousel/lib/alice-carousel.css";
 import "./ImageSliders.scss";
 import SingleLineImageList from "./SingleLineImageList";
-import CenteredGrid from "./CenteredGrid";
 
 function ImageSliders() {
   return (

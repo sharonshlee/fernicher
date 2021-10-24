@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
     height: "200px",
   },
   title: {
-    color: theme.palette.primary.light,
+    color: "white",
   },
   titleBar: {
     background:
@@ -79,13 +79,18 @@ export default function SingleLineImageList() {
           <ImageListItem key={item.img}>
             <img src={item.img} alt={item.title} />
             <ImageListItemBar
-              title={item.title}
+              // title={item.title}
               classes={{
                 root: classes.titleBar,
                 title: classes.title,
               }}
               actionIcon={
-                <IconButton aria-label={`star ${item.title}`}>
+                <IconButton
+                  aria-label={`star ${item.title}`}
+                  onClick={() => {
+                    console.log("Hello");
+                  }}
+                >
                   <FavoriteBorderIcon className={classes.title} />
                 </IconButton>
               }
