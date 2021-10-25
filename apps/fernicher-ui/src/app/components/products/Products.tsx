@@ -3,7 +3,8 @@ import axios from 'axios';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import ProductsSocialCard from './ProductsSocialCard';
-import { map } from 'lodash';
+import { constant, map, orderBy, take } from 'lodash';
+import { useParams } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -12,15 +13,29 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function Products() {
-  const [usersAndProducts, setUsersAndProducts] = useState<[]>([]);
+  const [usersAndProducts, setUsersAndProducts] = useState<any>([]);
   const classes = useStyles();
-
+  const { cat } = useParams<{ cat: 'recent' | 'chair' | 'table' | 'all' }>();
   useEffect(() => {
     axios
-      .post<[]>('/api/products')
-      .then((res) => setUsersAndProducts(res.data))
+      .post<any[]>('/api/users')
+      .then((res) => {
+        const products: any = [];
+        map(res.data, (user) => {
+          products.push(
+            ...map(user.products, (product) => ({ ...product, user }))
+          );
+        });
+        if (cat === 'all') {
+          setUsersAndProducts(products);
+        } else if (cat === 'recent') {
+          setUsersAndProducts(
+            take(orderBy(products, ['createdAt'], ['desc']), 4)
+          );
+        }
+      })
       .catch((err) => console.log('ERR HAPPENED', err));
-  }, []);
+  }, [cat]);
 
   return (
     <div>

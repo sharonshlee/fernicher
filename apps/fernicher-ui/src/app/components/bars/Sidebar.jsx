@@ -17,6 +17,9 @@ import {
 import { AssignmentInd, Home, Apps, ContactMail } from '@material-ui/icons';
 import LoyaltyOutlinedIcon from '@material-ui/icons/LoyaltyOutlined';
 
+// import BedroomBabyIcon from '@mui/icons-material';
+// import BedIcon from '@mui/icons-material/Bed';
+
 const useStyles = makeStyles((theme) => ({
   menuSliderContainer: {
     width: 250,
@@ -44,7 +47,7 @@ const menus = {
     {
       listIcon: <AssignmentInd />,
       listText: 'Products',
-      listPath: '/products',
+      listPath: '/products/all',
     },
     {
       listIcon: <Apps />,
@@ -59,17 +62,40 @@ const menus = {
   ],
   products: [
     {
+      // istIcon: <ContactMail />,
       listText: 'New',
-      listPath: '/products',
+      listPath: '/products/recent',
     },
+    // {
+    //   // listIcon: <BedroomBabyIcon />,
+    //   listText: 'Shelf',
+    //   listPath: '/products/shelf',
+    // },
+    // {
+    //   // listIcon: <BedroomBabyIcon />,
+    //   listText: 'Pantry',
+    //   listPath: '/products/pantry',
+    // },
     {
+      // listIcon: <BedroomBabyIcon />,
       listText: 'Table',
-      listPath: '/table',
+      listPath: '/products/table',
     },
-    {
-      listText: 'Shelf',
-      listPath: '/shelf',
-    },
+    // {
+    //   // listIcon: <BedroomBabyIcon />,
+    //   listText: 'Chair',
+    //   listPath: '/products/chair',
+    // },
+    // {
+    //   // listIcon: <BedIcon />,
+    //   listText: 'Bed',
+    //   listPath: '/products/bed',
+    // },
+    // {
+    //   // listIcon: <BedroomBabyIcon />,
+    //   listText: 'Kid',
+    //   listPath: '/products/kid',
+    // },
   ],
   rooms: [
     {
@@ -137,7 +163,13 @@ const Sidebar = (props) => {
       <Divider />
       <List>
         {menus[state.menu].map((lsItem, key) => (
-          <ListItem button key={key} component={Link} to={lsItem.listPath}>
+          <ListItem
+            button
+            key={key}
+            component={Link}
+            to={lsItem.listPath}
+            onClick={toggleSlider('right', false, 'main')}
+          >
             <ListItemIcon className={classes.listItem}>
               {lsItem.listIcon && lsItem.listIcon}
               {lsItem.listImage && lsItem.listImage}
