@@ -6,6 +6,7 @@ import ImageListItemBar from '@material-ui/core/ImageListItemBar';
 import IconButton from '@material-ui/core/IconButton';
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 import './ImageSliders.scss';
+import { chunk, map } from 'lodash';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -31,66 +32,32 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-// will change to axios db data
-const itemData = [
-  {
-    img: '/assets/imgs/furniture1.jpg',
-    title: 'Image',
-    author: 'author',
-  },
-  {
-    img: '/assets/imgs/furniture2.jpg',
-    title: 'Image',
-    author: 'author',
-  },
-  {
-    img: '/assets/imgs/furniture3.jpg',
-    title: 'Image',
-    author: 'author',
-  },
-  {
-    img: '/assets/imgs/furniture4.jpg',
-    title: 'Image',
-    author: 'author',
-  },
-  {
-    img: '/assets/imgs/furniture5.jpg',
-    title: 'Image',
-    author: 'author',
-  },
-  {
-    img: '/assets/imgs/furniture6.jpg',
-    title: 'Image',
-    author: 'author',
-  },
-  {
-    img: '/assets/imgs/furniture7.jpg',
-    title: 'Image',
-    author: 'author',
-  },
-];
-export default function SingleLineImageList() {
+export default function SingleLineImageList(props: {
+  subUsersAndProducts: any;
+}) {
+  const { subUsersAndProducts } = props;
+
   const classes = useStyles();
 
   return (
     <div className={classes.root}>
-      <ImageList className={classes.imageList} cols={4}>
-        {itemData.map((item) => (
-          <ImageListItem key={item.img}>
-            <img src={item.img} alt={item.title} />
+      <ImageList className={classes.imageList} cols={5}>
+        {map(subUsersAndProducts, (usersAndProduct) => (
+          <ImageListItem key={usersAndProduct.id}>
+            <img
+              height="180px"
+              src={usersAndProduct.image}
+              alt={usersAndProduct.name}
+            />
+
             <ImageListItemBar
-              // title={item.title}
+              title={usersAndProduct.name}
               classes={{
                 root: classes.titleBar,
                 title: classes.title,
               }}
               actionIcon={
-                <IconButton
-                  aria-label={`star ${item.title}`}
-                  onClick={() => {
-                    console.log('Hello');
-                  }}
-                >
+                <IconButton>
                   <FavoriteBorderIcon className={classes.title} />
                 </IconButton>
               }

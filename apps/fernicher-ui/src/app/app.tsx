@@ -7,7 +7,7 @@ import Map from './components/Map/Map';
 import Navbar from './components/bars/Navbar';
 import Footer from './components/Footer';
 import Rooms from './components/Rooms';
-import Products from './components/Products';
+import Products from './components/products/Products';
 import Sidebar from './components/bars/Sidebar';
 // import Home from "./components/Home";
 import Favourites from './components/Favourites';
