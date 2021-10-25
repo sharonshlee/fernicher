@@ -38,7 +38,7 @@ const App = () => {
       <Route path="/rooms" component={Rooms} />
       <Route path="/fav" component={Favourites} />
       <Route path="/footer" component={Footer} />
-      <Map usersAndProducts={usersAndProducts} />
+      <Map usersAndProducts={usersAndProducts}/>
       <Footer />
       <BackToTop />
     </>
