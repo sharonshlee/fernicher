@@ -128,7 +128,10 @@ const Sidebar = (props) => {
     <Box
       className={classes.menuSliderContainer}
       component="div"
-      onClick={(toggleSlider(slider, false), 'main')}
+      onClick={(e) => {
+        e.preventDefault();
+        toggleSlider(slider, false, 'main');
+      }}
     >
       <LoyaltyOutlinedIcon className={classes.logo} />
       <Divider />

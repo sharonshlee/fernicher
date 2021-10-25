@@ -50,7 +50,7 @@ Powered by:
 
 - [Material UI](https://mui.com/)
 - [Mapbox GL](https://docs.mapbox.com/mapbox-gl-js/api/)
-- [Nx.Dev (monorepo)](https://nx.dev/)
+- [Nx.Dev (monorepos)](https://nx.dev/)
 - [TypeORM](https://typeorm.io/)
 - [React](https://reactjs.org/)
 - [NodeJS](https://nodejs.org/)
