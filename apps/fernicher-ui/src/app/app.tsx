@@ -10,7 +10,7 @@ import Rooms from './components/Rooms';
 import Products from './components/products/Products';
 import Sidebar from './components/bars/Sidebar';
 // import Home from "./components/Home";
-import Favourites from './components/Favourites';
+import Favourites from './components/Favourites/Favourites';
 import ImageSliders from './components/ImageSliders/ImageSliders';
 import BackToTop from './components/utilities/BackToTop';
 
@@ -38,7 +38,7 @@ const App = () => {
       <Route path="/rooms" component={Rooms} />
       <Route path="/fav" component={Favourites} />
       <Route path="/footer" component={Footer} />
-      <Map usersAndProducts={usersAndProducts} />
+      <Map usersAndProducts={usersAndProducts}/>
       <Footer />
       <BackToTop />
     </>
