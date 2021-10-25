@@ -1,5 +1,5 @@
-import { Column, Entity, ManyToOne } from 'typeorm';
-import { User, Category } from '.';
+import { Column, Entity, ManyToOne, OneToMany } from 'typeorm';
+import { User, Category, Favourite } from '.';
 import { ModelBase } from './base';
 
 @Entity('products')
@@ -19,6 +19,11 @@ export class Product extends ModelBase {
 
   @ManyToOne(() => User, (user) => user.products, { eager: true })
   user!: User;
+
+  @OneToMany(() => Favourite, (favourite) => favourite.product, {
+    eager: true,
+  })
+  favourite!: Favourite;
 
   @ManyToOne(() => Category, (category) => category.products, { eager: true })
   category!: Category;

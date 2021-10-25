@@ -85,7 +85,7 @@ export const dbresetRoutes = (
     ]);
 
     // products(product_name, product_description, image_url, category_id, user_id, product_location)
-    await productRepository.insert([
+    const products = await productRepository.save([
       {
         name: 'Dinning Table',
         description:
@@ -193,6 +193,45 @@ export const dbresetRoutes = (
         category: categories[0],
         user: users[4],
         productLocation: [43.119975, -79.230215],
+      },
+    ]);
+
+    await favouriteRepository.insert([
+      {
+        user: users[0],
+        product: products[0],
+      },
+      {
+        user: users[0],
+        product: products[1],
+      },
+      {
+        user: users[0],
+        product: products[2],
+      },
+      {
+        user: users[1],
+        product: products[0],
+      },
+      {
+        user: users[1],
+        product: products[1],
+      },
+      {
+        user: users[1],
+        product: products[2],
+      },
+      {
+        user: users[2],
+        product: products[0],
+      },
+      {
+        user: users[2],
+        product: products[1],
+      },
+      {
+        user: users[2],
+        product: products[2],
       },
     ]);
 
