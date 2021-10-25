@@ -10,7 +10,7 @@ import Rooms from './components/Rooms';
 import Products from './components/Products';
 import Sidebar from './components/bars/Sidebar';
 // import Home from "./components/Home";
-import Favourites from './components/Favourites';
+import Favourites from './components/Favourites/Favourites';
 import ImageSliders from './components/ImageSliders/ImageSliders';
 import BackToTop from './components/utilities/BackToTop';
 
