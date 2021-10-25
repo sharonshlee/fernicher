@@ -17,9 +17,12 @@
     "@material-ui/styles": "^4.11.4",
     "@mui/icons-material": "^5.0.4",
     "@mui/material": "^5.0.4",
+    "@reach/combobox": "^0.16.3",
+    "@react-google-maps/api": "^2.5.0",
     "axios": "^0.23.0",
     "buffer": "^6.0.3",
     "core-js": "^3.6.5",
+    "date-fns": "^2.25.0",
     "express": "4.17.1",
     "mapbox-gl": "^2.5.1",
     "pg": "^8.7.1",
@@ -33,7 +36,8 @@
     "regenerator-runtime": "0.13.7",
     "rxjs": "^7.4.0",
     "tslib": "^2.0.0",
-    "typeorm": "^0.2.38"
+    "typeorm": "^0.2.38",
+    "use-places-autocomplete": "^1.10.0"
   },
   "devDependencies": {
     "@nrwl/cli": "13.0.2",

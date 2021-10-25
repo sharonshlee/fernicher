@@ -1,40 +1,19 @@
-import React, { Fragment } from 'react';
-import ReactMapGL, { NavigationControl } from 'react-map-gl';
-import ProductsOnMap from './ProductsOnMap';
-import PopupCard from './PopupCard';
-import useProductCard from '../../hooks/useProductCard';
-import useViewport from '../../hooks/useViewport';
+import React from 'react';
+import {
+  Google Map,
+  useLoadScript,
+  Marker,
+  InfoWindow
+} from '@react-google-maps/api';
+import { formatRelative } from "date-fns"
 
-const Map = ({ usersAndProducts }) => {
-  const { viewport, setViewport } = useViewport();
-  const { selectedProduct, setSelectedProduct } = useProductCard();
+import "@reach/combobox/styles.css"
 
-  return (
-    <Fragment>
-      <ReactMapGL
-        {...viewport}
-        mapboxApiAccessToken={process.env.NX_MAPBOX_TOKEN}
-        mapStyle="mapbox://styles/rexiah23/ckv2jbc970n8u14nyzb407f1l"
-        onViewportChange={(viewport) => {
-          setViewport(viewport);
-        }}
-        scrollZoom={false}
-      >
-        <NavigationControl />
-        <ProductsOnMap
-          usersAndProducts={usersAndProducts}
-          setSelectedProduct={setSelectedProduct}
-        />
-        <PopupCard
-          selectedProduct={selectedProduct}
-          setSelectedProduct={setSelectedProduct}
-        />
-      </ReactMapGL>
-      {!viewport && (
-        <p>Fetching Your Location To Display Products Near You...</p>
-      )}
-    </Fragment>
-  );
-};
+const libraries = ['places']
+const Map = props => {
+  const {} = useLoadScript({
+    googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
+    libraries,
+  })
 
-export default Map;
+}
