@@ -7,9 +7,9 @@ export const productRoutes = (productRepository: Repository<Product>) => {
   const productRouter = Router();
   // Find products
   productRouter.post('/products', (req, res) => {
-    const where = whereBuilder(req.body);
+    // const where = whereBuilder(req.body);
     return productRepository
-      .find({ where })
+      .find(req.body)
       .then((products) => res.send(products));
   });
 

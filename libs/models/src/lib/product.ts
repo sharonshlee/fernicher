@@ -1,4 +1,4 @@
-import { Column, Entity, ManyToOne, OneToMany } from 'typeorm';
+import { Column, Entity, ManyToOne, OneToMany, Timestamp } from 'typeorm';
 import { User, Category, Favourite } from '.';
 import { ModelBase } from './base';
 
@@ -17,12 +17,13 @@ export class Product extends ModelBase {
   @Column({ nullable: true, type: 'float', array: true })
   productLocation?: number[];
 
-  @ManyToOne(() => User, (user) => user.products, { eager: true })
+  @Column({ default: new Date() })
+  createdAt!: Date;
+
+  @ManyToOne(() => User, (user) => user.products)
   user!: User;
 
-  @OneToMany(() => Favourite, (favourite) => favourite.product, {
-    eager: true,
-  })
+  @OneToMany(() => Favourite, (favourite) => favourite.product)
   favourite!: Favourite;
 
   @ManyToOne(() => Category, (category) => category.products, { eager: true })

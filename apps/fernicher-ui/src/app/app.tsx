@@ -13,6 +13,7 @@ import Sidebar from './components/bars/Sidebar';
 import Favourites from './components/Favourites/Favourites';
 import ImageSliders from './components/ImageSliders/ImageSliders';
 import BackToTop from './components/utilities/BackToTop';
+import { map } from 'lodash';
 
 const App = () => {
   const [usersAndProducts, setUsersAndProducts] = useState([]);
@@ -20,9 +21,15 @@ const App = () => {
 
   useEffect(() => {
     axios
-      .post<[]>('/api/products')
+      .post<any[]>('/api/users')
       .then((res) => {
-        setUsersAndProducts(res.data);
+        const products: any = [];
+        map(res.data, (user) => {
+          products.push(
+            ...map(user.products, (product) => ({ ...product, user }))
+          );
+        });
+        setUsersAndProducts(products);
       })
       .catch((err) => console.log('ERR HAPPENED', err));
   }, []);
@@ -34,7 +41,7 @@ const App = () => {
       <ImageSliders />
       {/* <Route path="/" component={Home} /> */}
       <Route path="/sidebar" component={Sidebar} />
-      <Route path="/products" component={Products} />
+      <Route path="/products/:cat" component={Products} />
       <Route path="/rooms" component={Rooms} />
       <Route path="/fav" component={Favourites} />
       <Route path="/footer" component={Footer} />
