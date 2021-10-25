@@ -26,9 +26,12 @@ function Products() {
     <div>
       <h1>Products:</h1>
       <Grid container spacing={4}>
-        {map(usersAndProducts, (usersAndProduct) => (
+        {map(usersAndProducts, (usersAndProduct: any) => (
           <Grid item xs={3}>
-            <ProductsSocialCard usersAndProduct={usersAndProduct} />
+            <ProductsSocialCard
+              key={usersAndProduct.id}
+              usersAndProduct={usersAndProduct}
+            />
           </Grid>
         ))}
       </Grid>
