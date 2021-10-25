@@ -8,7 +8,7 @@ import {
 import { formatRelative } from "date-fns";
 import "@reach/combobox/styles.css";
 import mapStyles from './mapStyles';
-import ProductSocialCard from '../products/ProductsSocialCard';
+import ProductCard from '../products/ProductCard';
 import useViewport from '../../hooks/useViewport';
 
 const libraries = ['places'];
@@ -71,7 +71,7 @@ const Map = ({ usersAndProducts }) => {
         position={{lat: selected.productLocation[0], lng: selected.productLocation[1]}}
         onCloseClick={() => setSelected(null)}
       >
-        <ProductSocialCard />
+        <ProductCard title={selected.name} description={selected.description}/>
       </InfoWindow>)}
       </GoogleMap>
   </div>;
