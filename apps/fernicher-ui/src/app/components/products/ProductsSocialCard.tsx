@@ -15,7 +15,9 @@ import FavoriteIcon from '@material-ui/icons/Favorite';
 import ShareIcon from '@material-ui/icons/Share';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
-
+import { isEmpty, isUndefined, map } from 'lodash';
+import { Badge } from '@mui/material';
+import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
 const useStyles = makeStyles((theme) => ({
   root: {
     maxWidth: 345,
@@ -39,7 +41,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function ProductsSocialCard() {
+export default function ProductsSocialCard(props: { usersAndProduct: any }) {
+  const { usersAndProduct } = props;
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
 
@@ -52,7 +55,7 @@ export default function ProductsSocialCard() {
       <CardHeader
         avatar={
           <Avatar aria-label="recipe" className={classes.avatar}>
-            R
+            {usersAndProduct.user.firstName}
           </Avatar>
         }
         action={
@@ -60,27 +63,32 @@ export default function ProductsSocialCard() {
             <MoreVertIcon />
           </IconButton>
         }
-        title="Shrimp and Chorizo Paella"
-        subheader="September 14, 2016"
+        title={usersAndProduct.name}
+        // need to convert geolocation to location
+        subheader={usersAndProduct.productLocation}
       />
       <CardMedia
         className={classes.media}
-        image="/assets/imgs/maria-orlova-XmhAN9TYD50-unsplash.jpg"
-        title="Yellow Couch"
+        image={usersAndProduct.image}
+        title={usersAndProduct.name}
       />
       <CardContent>
         <Typography variant="body2" color="textSecondary" component="p">
-          This impressive paella is a perfect party dish and a fun meal to cook
-          together with your guests. Add 1 cup of frozen peas along with the
-          mussels, if you like.
+          {usersAndProduct.description}
         </Typography>
       </CardContent>
       <CardActions disableSpacing>
         <IconButton aria-label="add to favorites">
-          <FavoriteIcon />
+          <Badge badgeContent={usersAndProduct.id} color="primary">
+            <FavoriteIcon />
+          </Badge>
         </IconButton>
+
         <IconButton aria-label="share">
           <ShareIcon />
+        </IconButton>
+        <IconButton aria-label="share">
+          <ChatBubbleOutlineIcon />
         </IconButton>
         <IconButton
           className={clsx(classes.expand, {

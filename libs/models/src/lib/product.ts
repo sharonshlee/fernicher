@@ -11,7 +11,7 @@ export class Product extends ModelBase {
   description!: string;
 
   //https://www.postgresql.org/docs/7.4/jdbc-binary-data.html
-  @Column({ nullable: true, type: 'bytea' })
+  @Column({ nullable: true })
   image?: string;
 
   @Column({ nullable: true, type: 'float', array: true })
