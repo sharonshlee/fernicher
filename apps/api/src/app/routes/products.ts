@@ -1,6 +1,6 @@
 import { Product } from '@fernicher/models';
 import { Router } from 'express';
-import { Repository } from 'typeorm';
+import { ILike, Repository } from 'typeorm';
 import { whereBuilder } from './routeHelpers';
 
 export const productRoutes = (productRepository: Repository<Product>) => {
@@ -9,6 +9,32 @@ export const productRoutes = (productRepository: Repository<Product>) => {
   productRouter.post('/products', (req, res) => {
     return productRepository
       .find(req.body)
+      .then((products) => res.send(products));
+  });
+
+  productRouter.post('/products/search', (req, res) => {
+    const { name, description, orderBy, desc, take } = req.body;
+    const where = {};
+    if (name) {
+      where['name'] = ILike(`%${name}%`);
+    }
+    if (description) {
+      where['description'] = ILike(`%${description}%`);
+    }
+    const findOptions = { where, take: take ? take : 1000 };
+    if (orderBy) {
+      findOptions['order'] = { [orderBy]: desc ? 'DESC' : 'ASC' };
+    }
+    return productRepository
+      .find({
+        ...findOptions,
+        join: {
+          alias: 'product',
+          innerJoinAndSelect: {
+            user: 'product.user',
+          },
+        },
+      })
       .then((products) => res.send(products));
   });
 

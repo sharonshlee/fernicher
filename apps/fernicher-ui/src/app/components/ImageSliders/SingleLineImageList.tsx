@@ -25,6 +25,8 @@ const useStyles = makeStyles((theme) => ({
   },
   title: {
     color: 'white',
+    display: 'flex',
+    justifyContent: 'flex-start',
   },
   titleBar: {
     background:

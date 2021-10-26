@@ -97,7 +97,7 @@ export const dbresetRoutes = (
     // products(product_name, product_description, image_url, category_id, user_id, product_location)
     const products = await productRepository.save([
       {
-        name: 'Dinning Table',
+        name: 'Dining Table',
         description:
           'In vel quam orci. Suspendisse potenti. Curabitur eget aliquam ex. Praesent ullamcorper scelerisque egestas. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi interdum viverra magna, ut gravida massa lacinia at. Fusce blandit quis lectus ac iaculis.',
         image:
