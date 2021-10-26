@@ -169,26 +169,26 @@ export default function PrimarySearchAppBar() {
     </Menu>
   );
   const [state, setState] = useState({
-    right: false,
-    left: false,
+    position: 'left',
+    open: false,
     menu: 'main',
   });
-  const toggleSlider = (slider, open, menu) => () => {
-    setState({ ...state, [slider]: open, menu });
+  const toggleSlider = (position, open, menu) => () => {
+    setState({ ...state, position, open, menu });
   };
   return (
     <div className={classes.grow}>
       <AppBar position="static" style={{ color: 'black', background: 'white' }}>
         <Toolbar id="back-to-top-anchor">
-          <Sidebar position="left" toggleSlider={toggleSlider} state={state} />
+          <Sidebar {...state} toggleSlider={toggleSlider} />
           <Typography variant="h6" noWrap component={Link} to={'/home'}>
             FerniCHer
           </Typography>
 
-          <Button onClick={toggleSlider('right', true, 'products')}>
+          <Button onClick={toggleSlider('left', true, 'products')}>
             Products
           </Button>
-          <Button onClick={toggleSlider('right', true, 'rooms')}>Rooms</Button>
+          <Button onClick={toggleSlider('left', true, 'rooms')}>Rooms</Button>
 
           <div className={classes.search}>
             <div className={classes.searchIcon}>

@@ -144,8 +144,7 @@ const menus = {
   ],
 };
 
-const Sidebar = (props) => {
-  const { position, toggleSlider, state } = props;
+const Sidebar = ({ position, toggleSlider, open, menu }) => {
 
   const classes = useStyles();
 
@@ -161,14 +160,14 @@ const Sidebar = (props) => {
       <LoyaltyOutlinedIcon className={classes.logo} />
       <Divider />
       <List>
-        {menus[state.menu].map((lsItem, key) => (
+        {menus[menu].map((lsItem, key) => (
           <ListItem
             button
             key={key}
             component={Link}
             to={lsItem.listPath}
             style={{ display: 'flex', flexDirection: 'column' }}
-            onClick={toggleSlider('right', false, 'main')}
+            onClick={toggleSlider(position, false, 'main')}
           >
             <ListItemIcon className={classes.listItem}>
               {lsItem.listIcon && lsItem.listIcon}
@@ -191,17 +190,17 @@ const Sidebar = (props) => {
         className={classes.menuButton}
         color="inherit"
         aria-label="open drawer"
-        onClick={toggleSlider('right', true, 'main')}
+        onClick={toggleSlider(position, true, 'main')}
       >
         <MenuIcon />
       </IconButton>
 
       <MobileRightMenuSlider
         anchor={position}
-        open={state.right}
-        onClose={toggleSlider('right', false, 'main')}
+        open={open}
+        onClose={toggleSlider(position, false, 'main')}
       >
-        {sideList('right')}
+        {sideList(position)}
       </MobileRightMenuSlider>
     </>
   );

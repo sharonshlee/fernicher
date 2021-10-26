@@ -5,8 +5,8 @@ import List from '@mui/material/List';
 import Divider from '@mui/material/Divider';
 import Box from '@mui/material/Box';
 
-const FavouritesList = ({toggleDrawer, anchor, text}) => {
-  const favourites =
+const FavouritesList = ({usersAndProducts, toggleDrawer, anchor, text}) => {
+
   return (
   <Box
     sx={{ width: anchor === 'top' || anchor === 'bottom' ? 'auto' : 250 }}

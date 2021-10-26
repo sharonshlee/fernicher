@@ -3,11 +3,11 @@ import FavouritesDrawer from "./FavouritesDrawer";
 import axios from 'axios';
 
 const Favourites = (props) => {
-const [drawerToggle, setDrawerToggle] = useState(false);
+const [usersAndProducts, setUsersAndProducts] = useState(null);
 
 useEffect(() => {
   axios
-    .post<[]>('/api/products')
+    .post('/api/users')
     .then((res) => {
       setUsersAndProducts(res.data);
     })
@@ -15,7 +15,7 @@ useEffect(() => {
 }, []);
 
   return (
-    <FavouritesDrawer />
+    <FavouritesDrawer usersAndProducts={usersAndProducts}/>
   );
 }
 
