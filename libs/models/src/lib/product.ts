@@ -26,6 +26,6 @@ export class Product extends ModelBase {
   @OneToMany(() => Favourite, (favourite) => favourite.product)
   favourite!: Favourite;
 
-  @ManyToOne(() => Category, (category) => category.products, { eager: true })
+  @ManyToOne(() => Category, (category) => category.products)
   category!: Category;
 }

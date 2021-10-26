@@ -107,7 +107,7 @@ const menus = {
         />
       ),
       listText: 'Bedroom',
-      listPath: '/rooms',
+      listPath: '/rooms/bedroom',
     },
     {
       listImage: (
@@ -118,7 +118,7 @@ const menus = {
         />
       ),
       listText: 'Living Room',
-      listPath: '/living',
+      listPath: '/rooms/living',
     },
     {
       listImage: (
@@ -129,7 +129,7 @@ const menus = {
         />
       ),
       listText: 'Kitchen',
-      listPath: '/kitchen',
+      listPath: '/rooms/kitchen',
     },
     {
       listImage: (
@@ -140,7 +140,7 @@ const menus = {
         />
       ),
       listText: 'Office',
-      listPath: '/office',
+      listPath: '/rooms/office',
     },
   ],
 };

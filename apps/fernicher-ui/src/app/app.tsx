@@ -42,10 +42,10 @@ const App = () => {
       {/* <Route path="/" component={Home} /> */}
       <Route path="/sidebar" component={Sidebar} />
       <Route path="/products/:cat" component={Products} />
-      <Route path="/rooms" component={Rooms} />
+      <Route path="/rooms/:cat" component={Rooms} />
       <Route path="/fav" component={Favourites} />
       <Route path="/footer" component={Footer} />
-      <Map usersAndProducts={usersAndProducts}/>
+      <Map usersAndProducts={usersAndProducts} />
       <Footer />
       <BackToTop />
     </>

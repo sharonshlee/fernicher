@@ -8,9 +8,8 @@ export const categoryRoutes = (categoryRepository: Repository<Category>) => {
 
   // Find categories
   categoryRouter.post('/categories', (req, res) => {
-    const where = whereBuilder(req.body);
     return categoryRepository
-      .find({ where })
+      .find(req.body)
       .then((categories) => res.send(categories));
   });
 

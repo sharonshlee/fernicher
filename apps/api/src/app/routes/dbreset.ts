@@ -63,22 +63,32 @@ export const dbresetRoutes = (
 
     const categories = await categoryRepository.save([
       {
+        code: 'bedroom',
         name: 'Bedroom',
         description:
           '3 wolf moon lyft food truck asymmetrical, flannel paleo kombucha chia hashtag four dollar toast master cleanse franzen. Glossier chillwave truffaut keffiyeh flannel before they sold out.',
       },
       {
+        code: 'dining',
         name: 'Dining',
         description:
           '3 wolf moon lyft food truck asymmetrical, flannel paleo kombucha chia hashtag four dollar toast master cleanse franzen. Glossier chillwave truffaut keffiyeh flannel before they sold out.',
       },
       {
+        code: 'kitchen',
         name: 'Kitchen',
         description:
           '3 wolf moon lyft food truck asymmetrical, flannel paleo kombucha chia hashtag four dollar toast master cleanse franzen. Glossier chillwave truffaut keffiyeh flannel before they sold out.',
       },
       {
+        code: 'living',
         name: 'Living Room',
+        description:
+          '3 wolf moon lyft food truck asymmetrical, flannel paleo kombucha chia hashtag four dollar toast master cleanse franzen. Glossier chillwave truffaut keffiyeh flannel before they sold out.',
+      },
+      {
+        code: 'office',
+        name: 'Office',
         description:
           '3 wolf moon lyft food truck asymmetrical, flannel paleo kombucha chia hashtag four dollar toast master cleanse franzen. Glossier chillwave truffaut keffiyeh flannel before they sold out.',
       },
@@ -92,7 +102,7 @@ export const dbresetRoutes = (
           'In vel quam orci. Suspendisse potenti. Curabitur eget aliquam ex. Praesent ullamcorper scelerisque egestas. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi interdum viverra magna, ut gravida massa lacinia at. Fusce blandit quis lectus ac iaculis.',
         image:
           'https://images.unsplash.com/photo-1581404501824-b69dfb89f64c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1769&q=80',
-        category: categories[0],
+        category: categories[1],
         user: users[0],
         productLocation: [43.865822, -79.61982],
       },
@@ -114,7 +124,7 @@ export const dbresetRoutes = (
           'In vel quam orci. Suspendisse potenti. Curabitur eget aliquam ex. Praesent ullamcorper scelerisque egestas. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi interdum viverra magna, ut gravida massa lacinia at. Fusce blandit quis lectus ac iaculis.',
         image:
           'https://images.unsplash.com/photo-1540574163026-643ea20ade25?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1770&q=80',
-        category: categories[1],
+        category: categories[3],
         user: users[1],
         productLocation: [43.689975, -79.390215],
       },
@@ -125,7 +135,7 @@ export const dbresetRoutes = (
           'In vel quam orci. Suspendisse potenti. Curabitur eget aliquam ex. Praesent ullamcorper scelerisque egestas. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi interdum viverra magna, ut gravida massa lacinia at. Fusce blandit quis lectus ac iaculis.',
         image:
           'https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1770&q=80',
-        category: categories[2],
+        category: categories[0],
         user: users[2],
         productLocation: [43.189975, -79.890215],
       },
@@ -136,7 +146,7 @@ export const dbresetRoutes = (
           'In vel quam orci. Suspendisse potenti. Curabitur eget aliquam ex. Praesent ullamcorper scelerisque egestas. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi interdum viverra magna, ut gravida massa lacinia at. Fusce blandit quis lectus ac iaculis.',
         image:
           'https://images.unsplash.com/photo-1609799545166-347a5ba518cc?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=870&q=80',
-        category: categories[2],
+        category: categories[0],
         user: users[2],
         productLocation: [42.889975, -77.590215],
       },
@@ -147,7 +157,7 @@ export const dbresetRoutes = (
           'In vel quam orci. Suspendisse potenti. Curabitur eget aliquam ex. Praesent ullamcorper scelerisque egestas. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi interdum viverra magna, ut gravida massa lacinia at. Fusce blandit quis lectus ac iaculis.',
         image:
           'https://images.unsplash.com/photo-1519710164239-da123dc03ef4?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=774&q=80',
-        category: categories[2],
+        category: categories[3],
         user: users[2],
         productLocation: [43.829975, -79.590515],
       },
@@ -158,7 +168,7 @@ export const dbresetRoutes = (
           'In vel quam orci. Suspendisse potenti. Curabitur eget aliquam ex. Praesent ullamcorper scelerisque egestas. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi interdum viverra magna, ut gravida massa lacinia at. Fusce blandit quis lectus ac iaculis.',
         image:
           'https://images.unsplash.com/photo-1582901109033-8aad6fed8168?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=830&q=80',
-        category: categories[0],
+        category: categories[3],
         user: users[0],
         productLocation: [43.889945, -79.580215],
       },
@@ -180,7 +190,7 @@ export const dbresetRoutes = (
           'In vel quam orci. Suspendisse potenti. Curabitur eget aliquam ex. Praesent ullamcorper scelerisque egestas. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi interdum viverra magna, ut gravida massa lacinia at. Fusce blandit quis lectus ac iaculis.',
         image:
           'https://images.unsplash.com/photo-1583847268964-b28dc8f51f92?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=774&q=80',
-        category: categories[1],
+        category: categories[3],
         user: users[3],
         productLocation: [43.289975, -79.523215],
       },
@@ -190,7 +200,7 @@ export const dbresetRoutes = (
           'In vel quam orci. Suspendisse potenti. Curabitur eget aliquam ex. Praesent ullamcorper scelerisque egestas. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi interdum viverra magna, ut gravida massa lacinia at. Fusce blandit quis lectus ac iaculis.',
         image:
           'https://images.unsplash.com/photo-1556597249-cd6a997737df?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=744&q=80',
-        category: categories[0],
+        category: categories[3],
         user: users[4],
         productLocation: [43.119975, -79.230215],
       },
