@@ -16,9 +16,10 @@ export class User extends ModelBase {
   @Column()
   password!: string;
 
-  @OneToMany(() => Product, (product) => product.user)
+  @OneToMany(() => Product, (product) => product.user, { eager: true })
   products!: Product[];
 
-  @OneToMany(() => Favourite, (favourite) => favourite.user)
+  // eager true will load favourites for that user
+  @OneToMany(() => Favourite, (favourite) => favourite.user, { eager: true })
   favourites!: Favourite[];
 }

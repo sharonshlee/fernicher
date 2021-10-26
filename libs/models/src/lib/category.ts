@@ -7,9 +7,12 @@ export class Category extends ModelBase {
   @Column()
   name!: string;
 
+  @Column({ nullable: true })
+  code!: string;
+
   @Column()
   description!: string;
 
-  @OneToMany(() => Product, (product) => product.category)
+  @OneToMany(() => Product, (product) => product.category, { eager: true })
   products!: Product[];
 }

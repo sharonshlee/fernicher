@@ -20,6 +20,7 @@ import Tooltip from '@material-ui/core/Tooltip';
 import Button from '@material-ui/core/Button';
 import AddAPhotoIcon from '@material-ui/icons/AddAPhoto';
 import Sidebar from './Sidebar';
+import { ClassRounded } from '@material-ui/icons';
 
 const useStyles = makeStyles((theme) => ({
   grow: {
@@ -180,15 +181,14 @@ export default function PrimarySearchAppBar() {
       <AppBar position="static" style={{ color: 'black', background: 'white' }}>
         <Toolbar id="back-to-top-anchor">
           <Sidebar position="left" toggleSlider={toggleSlider} state={state} />
-          <Typography variant="h6" noWrap>
-            FerniCHer &nbsp;&nbsp;&nbsp;
-            <Button onClick={toggleSlider('right', true, 'products')}>
-              Products
-            </Button>
-            <Button onClick={toggleSlider('right', true, 'rooms')}>
-              Rooms
-            </Button>
+          <Typography variant="h6" noWrap component={Link} to={'/home'}>
+            FerniCHer
           </Typography>
+
+          <Button onClick={toggleSlider('right', true, 'products')}>
+            Products
+          </Button>
+          <Button onClick={toggleSlider('right', true, 'rooms')}>Rooms</Button>
 
           <div className={classes.search}>
             <div className={classes.searchIcon}>
@@ -242,11 +242,10 @@ export default function PrimarySearchAppBar() {
             </IconButton>
             <IconButton
               edge="end"
-              aria-label="account of current user"
-              aria-controls={menuId}
-              aria-haspopup="true"
-              onClick={handleProfileMenuOpen}
+              // onClick={handleProfileMenuOpen}
               color="inherit"
+              component={Link}
+              to="/login"
             >
               <AccountCircle />
             </IconButton>

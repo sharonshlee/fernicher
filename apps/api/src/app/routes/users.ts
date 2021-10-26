@@ -8,10 +8,10 @@ export const userRoutes = (userRepository: Repository<User>) => {
 
   // Find users
   userRouter.post('/users', (req, res) => {
-    const where = whereBuilder(req.body);
-    return userRepository.find({ where }).then((users) => res.send(users));
+    return userRepository.find(req.body).then((users) => res.send(users));
   });
 
+  // query to get all the products from the favourites table that only match a specific user_id?
   userRouter.get('/users/:userId', (req, res) => {
     const userId = req.params.userId;
     return userRepository.findOne(userId).then((user) => res.send(user));

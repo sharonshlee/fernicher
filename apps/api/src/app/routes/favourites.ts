@@ -8,9 +8,8 @@ export const favouriteRoutes = (favouriteRepository: Repository<Favourite>) => {
 
   // Find favourites
   favouriteRouter.post('/favourites', (req, res) => {
-    const where = whereBuilder(req.body);
     return favouriteRepository
-      .find({ where })
+      .find(req.body)
       .then((favourites) => res.send(favourites));
   });
 

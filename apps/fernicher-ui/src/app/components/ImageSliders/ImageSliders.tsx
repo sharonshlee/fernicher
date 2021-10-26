@@ -19,7 +19,13 @@ function ImageSliders() {
   return (
     <div className="App">
       {/* To display Top 10 or 20 favourites products  */}
-      <AliceCarousel autoPlay autoPlayInterval={3000}>
+      <AliceCarousel
+        autoPlay
+        autoPlayInterval={5000}
+        disableButtonsControls={true}
+        infinite={true}
+        // disableDotsControls={true}
+      >
         {map(chunk(usersAndProducts, 5), (subUsersAndProducts: any) => (
           <SingleLineImageList subUsersAndProducts={subUsersAndProducts} />
         ))}
