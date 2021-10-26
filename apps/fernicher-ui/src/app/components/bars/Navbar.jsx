@@ -176,6 +176,7 @@ export default function PrimarySearchAppBar() {
   const toggleSlider = (position, open, menu) => () => {
     setState({ ...state, position, open, menu });
   };
+  const [position, setPosition] = useState('left');
   return (
     <div className={classes.grow}>
       <AppBar position="static" style={{ color: 'black', background: 'white' }}>
@@ -223,8 +224,10 @@ export default function PrimarySearchAppBar() {
             <IconButton
               aria-label="show 17 new notifications"
               color="inherit"
-              component={Link}
-              to="/fav"
+              onClick={(e) => {
+                setPosition('right');
+                toggleSlider('right', true, 'favourites');
+              }}
             >
               <Badge badgeContent={5} color="secondary">
                 <FavoriteIcon />

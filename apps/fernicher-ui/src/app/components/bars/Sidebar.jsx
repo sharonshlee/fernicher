@@ -61,7 +61,12 @@ const menus = {
   products: [
     {
       // istIcon: <ContactMail />,
-      listText: 'New',
+      listText: 'All Products',
+      listPath: '/products/all',
+    },
+    {
+      // istIcon: <ContactMail />,
+      listText: 'Recent Products',
       listPath: '/products/recent',
     },
     // {
@@ -92,7 +97,7 @@ const menus = {
     {
       // listIcon: <BedroomBabyIcon />,
       listText: 'Kids',
-      listPath: '/products/kid',
+      listPath: '/products/kids',
     },
   ],
   rooms: [
@@ -140,6 +145,16 @@ const menus = {
       ),
       listText: 'Office',
       listPath: '/rooms/office',
+    },
+  ],
+  favourites: [
+    {
+      listText: 'Favourites',
+      listPath: '/fav',
+    },
+    {
+      listText: 'Recent Products',
+      listPath: '/products/recent',
     },
   ],
 };
