@@ -14,8 +14,11 @@ import {
   List,
   Box,
 } from '@material-ui/core';
-import { AssignmentInd, Home, Apps, ContactMail } from '@material-ui/icons';
+import { Home } from '@material-ui/icons';
 import LoyaltyOutlinedIcon from '@material-ui/icons/LoyaltyOutlined';
+import LivingIcon from '@mui/icons-material/Living';
+import ChairIcon from '@mui/icons-material/Chair';
+import BedroomBabyIcon from '@mui/icons-material/BedroomBaby';
 
 // import BedroomBabyIcon from '@mui/icons-material';
 // import BedIcon from '@mui/icons-material/Bed';
@@ -45,19 +48,14 @@ const menus = {
       listPath: '/',
     },
     {
-      listIcon: <AssignmentInd />,
+      listIcon: <ChairIcon />,
       listText: 'Products',
       listPath: '/products/all',
     },
     {
-      listIcon: <Apps />,
+      listIcon: <BedroomBabyIcon />,
       listText: 'Rooms',
-      listPath: '/rooms',
-    },
-    {
-      listIcon: <ContactMail />,
-      listText: 'Contact',
-      listPath: '/rooms',
+      listPath: '/rooms/living',
     },
   ],
   products: [
@@ -81,40 +79,29 @@ const menus = {
       listText: 'Table',
       listPath: '/products/table',
     },
-    // {
-    //   // listIcon: <BedroomBabyIcon />,
-    //   listText: 'Chair',
-    //   listPath: '/products/chair',
-    // },
-    // {
-    //   // listIcon: <BedIcon />,
-    //   listText: 'Bed',
-    //   listPath: '/products/bed',
-    // },
-    // {
-    //   // listIcon: <BedroomBabyIcon />,
-    //   listText: 'Kid',
-    //   listPath: '/products/kid',
-    // },
+    {
+      // listIcon: <BedroomBabyIcon />,
+      listText: 'Chair',
+      listPath: '/products/chair',
+    },
+    {
+      // listIcon: <BedIcon />,
+      listText: 'Bed',
+      listPath: '/products/bed',
+    },
+    {
+      // listIcon: <BedroomBabyIcon />,
+      listText: 'Kids',
+      listPath: '/products/kid',
+    },
   ],
   rooms: [
     {
       listImage: (
         <img
-          src="https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1770&q=80"
+          src="https://images.unsplash.com/photo-1554995207-c18c203602cb?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2070&q=80"
           alt=""
-          style={{ width: '150px', height: '150px' }}
-        />
-      ),
-      listText: 'Bedroom',
-      listPath: '/rooms/bedroom',
-    },
-    {
-      listImage: (
-        <img
-          src="/assets/imgs/furniture2.jpg"
-          alt=""
-          style={{ width: '150px', height: '150px' }}
+          style={{ height: '140px' }}
         />
       ),
       listText: 'Living Room',
@@ -123,9 +110,21 @@ const menus = {
     {
       listImage: (
         <img
+          src="https://images.unsplash.com/photo-1571508601936-6ca847b47ae4?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2071&q=80"
+          alt=""
+          style={{ height: '140px' }}
+        />
+      ),
+      listText: 'Bedroom',
+      listPath: '/rooms/bedroom',
+    },
+
+    {
+      listImage: (
+        <img
           src="https://images.unsplash.com/photo-1581369596603-71209b23077f?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1674&q=80"
           alt=""
-          style={{ width: '150px', height: '150px' }}
+          style={{ width: '225px', height: '140px' }}
         />
       ),
       listText: 'Kitchen',
@@ -134,9 +133,9 @@ const menus = {
     {
       listImage: (
         <img
-          src="/assets/imgs/furniture4.jpg"
+          src="https://images.unsplash.com/photo-1515965885361-f1e0095517ea?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2070&q=80"
           alt=""
-          style={{ width: '150px', height: '150px' }}
+          style={{ width: '225px', height: '140px' }}
         />
       ),
       listText: 'Office',
@@ -168,6 +167,7 @@ const Sidebar = (props) => {
             key={key}
             component={Link}
             to={lsItem.listPath}
+            style={{ display: 'flex', flexDirection: 'column' }}
             onClick={toggleSlider('right', false, 'main')}
           >
             <ListItemIcon className={classes.listItem}>
