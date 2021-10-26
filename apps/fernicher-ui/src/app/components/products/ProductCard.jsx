@@ -39,7 +39,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function ProductsSocialCard({title, date, description}) {
+export default function ProductsSocialCard({title, date, description, firstName, image}) {
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
 
@@ -52,7 +52,7 @@ export default function ProductsSocialCard({title, date, description}) {
       <CardHeader
         avatar={
           <Avatar aria-label="recipe" className={classes.avatar}>
-            R
+            {firstName && firstName[0]}
           </Avatar>
         }
         action={
@@ -65,7 +65,7 @@ export default function ProductsSocialCard({title, date, description}) {
       />
       <CardMedia
         className={classes.media}
-        image="/assets/imgs/maria-orlova-XmhAN9TYD50-unsplash.jpg"
+        image={image}
         title="Yellow Couch"
       />
       <CardContent>

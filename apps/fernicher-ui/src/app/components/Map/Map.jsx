@@ -30,7 +30,7 @@ const Map = ({ usersAndProducts }) => {
   const [selected, setSelected] = useState(null);
   const { viewport, setViewPort } = useViewport();
   const { isLoaded, loadError } = useLoadScript({
-    googleMapsApiKey: process.env.NX_GOOGLE_MAPS_API_KEY,
+    googleMapsApiKey: "AIzaSyAlh7RkuE1fQuj9D-L9-WQqpFoQaq0CBWk",
     libraries,
   });
 
@@ -60,6 +60,8 @@ const Map = ({ usersAndProducts }) => {
     />
   ));
 
+  console.log('UsersandProducts :', usersAndProducts)
+
   return (
     <div>
       <h2 className="map-title">
@@ -87,6 +89,9 @@ const Map = ({ usersAndProducts }) => {
             <ProductCard
               title={selected.name}
               description={selected.description}
+              date={selected.createdAt}
+              firstName={selected.name}
+              image={selected.image}
             />
           </InfoWindow>
         )}
