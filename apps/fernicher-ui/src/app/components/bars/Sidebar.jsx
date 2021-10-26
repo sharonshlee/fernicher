@@ -61,7 +61,12 @@ const menus = {
   products: [
     {
       // istIcon: <ContactMail />,
-      listText: 'New',
+      listText: 'All Products',
+      listPath: '/products/all',
+    },
+    {
+      // istIcon: <ContactMail />,
+      listText: 'Recent Products',
       listPath: '/products/recent',
     },
     // {
@@ -92,7 +97,7 @@ const menus = {
     {
       // listIcon: <BedroomBabyIcon />,
       listText: 'Kids',
-      listPath: '/products/kid',
+      listPath: '/products/kids',
     },
   ],
   rooms: [
@@ -142,6 +147,16 @@ const menus = {
       listPath: '/rooms/office',
     },
   ],
+  favourites: [
+    {
+      listText: 'Favourites',
+      listPath: '/fav',
+    },
+    {
+      listText: 'Recent Products',
+      listPath: '/products/recent',
+    },
+  ],
 };
 
 const Sidebar = (props) => {
@@ -168,7 +183,7 @@ const Sidebar = (props) => {
             component={Link}
             to={lsItem.listPath}
             style={{ display: 'flex', flexDirection: 'column' }}
-            onClick={toggleSlider('right', false, 'main')}
+            onClick={() => toggleSlider('right', false, 'main')}
           >
             <ListItemIcon className={classes.listItem}>
               {lsItem.listIcon && lsItem.listIcon}
@@ -191,7 +206,7 @@ const Sidebar = (props) => {
         className={classes.menuButton}
         color="inherit"
         aria-label="open drawer"
-        onClick={toggleSlider('right', true, 'main')}
+        onClick={() => toggleSlider('right', true, 'main')}
       >
         <MenuIcon />
       </IconButton>
@@ -199,7 +214,7 @@ const Sidebar = (props) => {
       <MobileRightMenuSlider
         anchor={position}
         open={state.right}
-        onClose={toggleSlider('right', false, 'main')}
+        onClose={() => toggleSlider('right', false, 'main')}
       >
         {sideList('right')}
       </MobileRightMenuSlider>

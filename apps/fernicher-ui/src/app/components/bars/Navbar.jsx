@@ -173,22 +173,35 @@ export default function PrimarySearchAppBar() {
     left: false,
     menu: 'main',
   });
-  const toggleSlider = (slider, open, menu) => () => {
+  const toggleSlider = (slider, open, menu) => {
     setState({ ...state, [slider]: open, menu });
   };
+  const [position, setPosition] = useState('left');
   return (
     <div className={classes.grow}>
       <AppBar position="static" style={{ color: 'black', background: 'white' }}>
         <Toolbar id="back-to-top-anchor">
-          <Sidebar position="left" toggleSlider={toggleSlider} state={state} />
+          <Sidebar
+            position={position}
+            toggleSlider={toggleSlider}
+            state={state}
+          />
           <Typography variant="h6" noWrap component={Link} to={'/home'}>
             FerniCHer
           </Typography>
 
-          <Button onClick={toggleSlider('right', true, 'products')}>
+          <Button
+            onClick={() => {
+              setPosition('left');
+              toggleSlider('right', true, 'products');
+            }}
+          >
             Products
           </Button>
-          <Button onClick={toggleSlider('right', true, 'rooms')}>Rooms</Button>
+
+          <Button onClick={() => toggleSlider('right', true, 'rooms')}>
+            Rooms
+          </Button>
 
           <div className={classes.search}>
             <div className={classes.searchIcon}>
@@ -223,8 +236,10 @@ export default function PrimarySearchAppBar() {
             <IconButton
               aria-label="show 17 new notifications"
               color="inherit"
-              component={Link}
-              to="/fav"
+              onClick={(e) => {
+                setPosition('right');
+                toggleSlider('right', true, 'favourites');
+              }}
             >
               <Badge badgeContent={5} color="secondary">
                 <FavoriteIcon />
