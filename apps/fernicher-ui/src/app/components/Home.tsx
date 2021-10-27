@@ -7,7 +7,7 @@ function Home(props : any) {
 
   const [usersAndProducts, setUsersAndProducts] = useState([]);
   // const { state, dispatch } = useApplicationData();
-  console.log("PROPS ARE: ", {...props})
+  console.log("PROPS ARE: ", props)
   useEffect(() => {
     axios
       .post<any[]>('/api/users')
