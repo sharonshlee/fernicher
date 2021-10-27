@@ -1,9 +1,15 @@
-import { Product } from '@fernicher/models';
+import { Category, Product, User } from '@fernicher/models';
 import { Router } from 'express';
 import { ILike, Repository } from 'typeorm';
 import { whereBuilder } from './routeHelpers';
+import { v2 as cloudinary } from 'cloudinary';
+import * as multer from 'multer';
 
-export const productRoutes = (productRepository: Repository<Product>) => {
+export const productRoutes = (
+  productRepository: Repository<Product>,
+  categoryRepository: Repository<Category>,
+  userRepository: Repository<User>
+) => {
   const productRouter = Router();
   // Find products
   productRouter.post('/products', (req, res) => {
@@ -45,13 +51,45 @@ export const productRoutes = (productRepository: Repository<Product>) => {
       .then((product) => res.send(product));
   });
 
+  const uploadPath = `${__dirname}/upload/`;
   // Create new product
-  productRouter.post('/products/new', (req, res) => {
-    const newProduct = req.body;
-    return productRepository
-      .insert(newProduct)
-      .then((product) => res.send(product));
-  });
+  productRouter.post(
+    '/products/new',
+    /** Enable multipart/form-data */
+    multer({ dest: uploadPath }).single('image'),
+    async (req, res) => {
+      const { categoryCode, productLocation, ...theRestOfFields } =
+        req.body as {
+          categoryCode: string;
+          name: string;
+          condition: string;
+          description?: string;
+          productLocation: string;
+        };
+      const location = productLocation.split(',').map((item) => Number(item));
+      cloudinary.config({
+        cloud_name: process.env.CLOUD_NAME,
+        api_key: process.env.API_KEY,
+        api_secret: process.env.API_SECRET,
+        secure: true,
+      });
+
+      const { url } = await cloudinary.uploader.upload(req.file.path);
+
+      const user = await userRepository.findOne({ firstName: 'John' }); // Need to grab from logged user session, hard coded for now.
+      const category = await categoryRepository.findOne({ code: categoryCode });
+      return productRepository
+        .save({
+          ...theRestOfFields,
+          productLocation: location,
+          image: url,
+          category,
+          user,
+        })
+        .then((product) => res.send(product))
+        .catch((err) => console.log(err));
+    }
+  );
 
   productRouter.put('/products/:productId', (req, res) => {
     const updatedProduct = req.body;

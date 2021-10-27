@@ -20,7 +20,7 @@ export const userRoutes = (userRepository: Repository<User>) => {
   // Create new user
   userRouter.post('/users/new', (req, res) => {
     const newUser = req.body;
-    return userRepository.insert(newUser).then((user) => res.send(user));
+    return userRepository.save(newUser).then((user) => res.send(user));
   });
 
   userRouter.put('/users/:userId', (req, res) => {

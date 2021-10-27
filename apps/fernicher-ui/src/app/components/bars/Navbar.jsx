@@ -20,7 +20,7 @@ import Tooltip from '@material-ui/core/Tooltip';
 import Button from '@material-ui/core/Button';
 import AddAPhotoIcon from '@material-ui/icons/AddAPhoto';
 import Sidebar from './Sidebar';
-import { ClassRounded } from '@material-ui/icons';
+import { AddProduct } from '../products/AddProduct';
 
 const useStyles = makeStyles((theme) => ({
   grow: {
@@ -177,6 +177,7 @@ export default function PrimarySearchAppBar() {
     setState({ ...state, position, open, menu });
   };
   const [position, setPosition] = useState('left');
+  const [showAddProduct, setShowAddProduct] = useState(false);
   return (
     <div className={classes.grow}>
       <AppBar position="static" style={{ color: 'black', background: 'white' }}>
@@ -206,11 +207,22 @@ export default function PrimarySearchAppBar() {
           </div>
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
-            <IconButton aria-label="show notifications" color="inherit">
+            <IconButton
+              aria-label="show notifications"
+              color="inherit"
+              component={Button}
+              onClick={() => setShowAddProduct(!showAddProduct)}
+            >
               <Badge color="secondary">
                 <AddAPhotoIcon />
               </Badge>
             </IconButton>
+            {showAddProduct && (
+              <AddProduct
+                open={showAddProduct}
+                handleClose={setShowAddProduct}
+              />
+            )}
             <Tooltip title="Nearby">
               <IconButton
                 aria-label="show 17 new notifications"
@@ -252,12 +264,6 @@ export default function PrimarySearchAppBar() {
             >
               <AccountCircle />
             </IconButton>
-
-            {/* <Sidebar
-              position="right"
-              toggleSlider={toggleSlider}
-              state={state}
-            /> */}
           </div>
           <div className={classes.sectionMobile}>
             <IconButton
