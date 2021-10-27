@@ -291,12 +291,28 @@ const Sidebar = ({ position, toggleSlider, open, menu }) => {
 
         if (menu === 'favourites') {
           const resFavs = res.data.filter(el => el.id ===  exampleLoggedInId)[0].favourites;
-          const favourites = resFavs.map(el => ({listText: el.product.name, listPath: '/fav'}));
+          // console.log("RES FAVS: ", resFavs)
+          const favourites = resFavs.map((el, i) => ({
+            listText: `${i+1}: ${el.product.name}`,
+            listPath: '/',
+            listImage: (
+              <img
+                src={el.product.image}
+                alt={el.product.name}
+                style={{ height: '50px' }}
+              />
+            ),
+            latlng: [el.product.productLocation[0], el.product.productLocation[1]]
+          }));
           setMenus(prev => ({
             ...prev,
             favourites
           })
         )}
+
+
+
+
         })
       .catch((err) => console.log('ERR HAPPENED', err));
   }, [menu]);
@@ -321,6 +337,7 @@ const Sidebar = ({ position, toggleSlider, open, menu }) => {
             button
             key={key}
             component={Link}
+            ContainerProps={lsItem.latlng}
             to={lsItem.listPath}
             style={{ display: 'flex', flexDirection: 'column' }}
             onClick={toggleSlider(position, false, 'main')}

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route } from 'react-router-dom';
+import { BrowserRouter as Router, Link, Route } from 'react-router-dom';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import './app.scss';
 import Navbar from './components/bars/Navbar';
@@ -23,6 +23,7 @@ const App = () => {
       <Route path="/fav" component={Favourites} />
       <Route path="/login" component={Login} />
       <Route path="/" component={Home} />
+      {/* <Route path="/" element={<Home authed={true}/>} /> */}
       <Footer />
       <BackToTop />
     </>
