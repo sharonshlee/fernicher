@@ -20,13 +20,13 @@ export function AddProduct(props: { open: boolean; handleClose: any }) {
   const defaultProductValues = {
     name: '',
     categoryCode: '',
-    image: '',
+    image: null,
     condition: '',
     description: '',
     productLocation: [latitude, longitude],
   };
   const [product, setProduct] = useState<{
-    image: string;
+    image: FileList | null;
     categoryCode: string;
     name: string;
     condition: string;
@@ -51,17 +51,34 @@ export function AddProduct(props: { open: boolean; handleClose: any }) {
           Donate A Furniture!
         </DialogTitle>
         <DialogContent>
-          <TextField
+          <label htmlFor="btn-upload">
+            <input
+              id="btn-upload"
+              name="btn-upload"
+              style={{ display: 'none' }}
+              type="file"
+              onChange={(e) =>
+                setProduct({ ...product, image: e.target.files })
+              }
+            />
+            <Button className="btn-choose" variant="outlined" component="span">
+              Choose Files
+            </Button>
+          </label>
+          <div className="file-name">
+            {product.image && product.image.length > 0 && product.image[0].name}
+          </div>
+          {/* <TextField
             autoFocus
             margin="dense"
             id="name"
             label="Add Photos"
-            type="text"
+            type="image"
             fullWidth
-            variant="standard"
+            variant="standard"            
             onChange={(e) => setProduct({ ...product, image: e.target.value })}
             value={product.image}
-          />
+          /> */}
           <FormControl variant="standard" sx={{ m: 0, minWidth: 200 }}>
             <InputLabel id="category">Furniture Category</InputLabel>
             <Select
@@ -130,16 +147,38 @@ export function AddProduct(props: { open: boolean; handleClose: any }) {
           </Button>
           <Button
             onClick={() => {
-              axios
-                .post('/api/products/new', product)
-                .then(() => {
-                  setProduct(defaultProductValues);
-                  handleClose(false);
-                  console.log('Product Saved!');
-                })
-                .catch((err) => {
-                  console.log(err);
-                });
+              new Promise<{ data: FormData }>((resolve) => {
+                const fd = new FormData();
+
+                const formData = new FormData();
+
+                formData.append('name', product.name);
+                formData.append('description', product.description as string);
+                formData.append('categoryCode', product.categoryCode);
+                formData.append(
+                  'productLocation',
+                  `${product.productLocation}`
+                );
+                formData.append('condition', product.condition);
+                if (product.image) {
+                  formData.append('image', product.image[0]);
+                }
+                resolve({ data: formData });
+              }).then((result) => {
+                const { data } = result;
+                axios
+                  .post('/api/products/new', data, {
+                    headers: { 'content-type': 'multipart/form-data' },
+                  })
+                  .then(() => {
+                    setProduct(defaultProductValues);
+                    handleClose(false);
+                    console.log('Product Saved!');
+                  })
+                  .catch((err) => {
+                    console.log(err);
+                  });
+              });
             }}
           >
             Donate and Save The World!
