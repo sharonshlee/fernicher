@@ -105,6 +105,7 @@ export const dbresetRoutes = (
         category: categories[1],
         user: users[0],
         productLocation: [43.865822, -79.61982],
+        condition: 'likenew',
       },
 
       {
@@ -116,6 +117,7 @@ export const dbresetRoutes = (
         category: categories[1],
         user: users[1],
         productLocation: [43.889975, -79.560215],
+        condition: 'likenew',
       },
 
       {
@@ -127,6 +129,7 @@ export const dbresetRoutes = (
         category: categories[3],
         user: users[1],
         productLocation: [43.689975, -79.390215],
+        condition: 'likenew',
       },
 
       {
@@ -138,6 +141,7 @@ export const dbresetRoutes = (
         category: categories[0],
         user: users[2],
         productLocation: [43.189975, -79.890215],
+        condition: 'likenew',
       },
 
       {
@@ -149,6 +153,7 @@ export const dbresetRoutes = (
         category: categories[0],
         user: users[2],
         productLocation: [42.889975, -77.590215],
+        condition: 'likenew',
       },
 
       {
@@ -160,6 +165,7 @@ export const dbresetRoutes = (
         category: categories[3],
         user: users[2],
         productLocation: [43.829975, -79.590515],
+        condition: 'likenew',
       },
 
       {
@@ -171,6 +177,7 @@ export const dbresetRoutes = (
         category: categories[3],
         user: users[0],
         productLocation: [43.889945, -79.580215],
+        condition: 'likenew',
       },
 
       {
@@ -182,6 +189,7 @@ export const dbresetRoutes = (
         category: categories[0],
         user: users[0],
         productLocation: [43.189975, -79.190215],
+        condition: 'likenew',
       },
 
       {
@@ -193,6 +201,7 @@ export const dbresetRoutes = (
         category: categories[3],
         user: users[3],
         productLocation: [43.289975, -79.523215],
+        condition: 'likenew',
       },
       {
         name: 'Rug',
@@ -203,10 +212,11 @@ export const dbresetRoutes = (
         category: categories[3],
         user: users[4],
         productLocation: [43.119975, -79.230215],
+        condition: 'likenew',
       },
     ]);
 
-    await favouriteRepository.insert([
+    await favouriteRepository.save([
       {
         user: users[0],
         product: products[0],

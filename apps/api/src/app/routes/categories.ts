@@ -24,7 +24,7 @@ export const categoryRoutes = (categoryRepository: Repository<Category>) => {
   categoryRouter.post('/categories/new', (req, res) => {
     const newCategory = req.body;
     return categoryRepository
-      .insert(newCategory)
+      .save(newCategory)
       .then((category) => res.send(category));
   });
 

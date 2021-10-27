@@ -33,7 +33,10 @@ createConnection({
 
   /** Routes */
   app.use('/api', userRoutes(userRepository));
-  app.use('/api', productRoutes(productRepository));
+  app.use(
+    '/api',
+    productRoutes(productRepository, categoryRepository, userRepository)
+  );
   app.use('/api', categoryRoutes(categoryRepository));
   app.use('/api', favouriteRoutes(favouriteRepository));
 

@@ -1,9 +1,13 @@
-import { Product } from '@fernicher/models';
+import { Category, Product, User } from '@fernicher/models';
 import { Router } from 'express';
 import { ILike, Repository } from 'typeorm';
 import { whereBuilder } from './routeHelpers';
 
-export const productRoutes = (productRepository: Repository<Product>) => {
+export const productRoutes = (
+  productRepository: Repository<Product>,
+  categoryRepository: Repository<Category>,
+  userRepository: Repository<User>
+) => {
   const productRouter = Router();
   // Find products
   productRouter.post('/products', (req, res) => {
@@ -46,11 +50,20 @@ export const productRoutes = (productRepository: Repository<Product>) => {
   });
 
   // Create new product
-  productRouter.post('/products/new', (req, res) => {
-    const newProduct = req.body;
+  productRouter.post('/products/new', async (req, res) => {
+    const { categoryCode, ...theRestOfFields } = req.body as {
+      image: string;
+      categoryCode: string;
+      name: string;
+      condition: string;
+      description?: string;
+    };
+    const user = await userRepository.findOne({ firstName: 'John' }); // Need to grab from logged user session, hard coded for now.
+    const category = await categoryRepository.findOne({ code: categoryCode });
     return productRepository
-      .insert(newProduct)
-      .then((product) => res.send(product));
+      .save({ ...theRestOfFields, category, user })
+      .then((product) => res.send(product))
+      .catch((err) => console.log(err));
   });
 
   productRouter.put('/products/:productId', (req, res) => {
