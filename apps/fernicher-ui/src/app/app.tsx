@@ -11,23 +11,23 @@ import Login from './components/Login';
 import Favourites from './components/Favourites/Favourites';
 import ImageSliders from './components/ImageSliders/ImageSliders';
 import BackToTop from './components/utilities/BackToTop';
-import Chat from './components/Chat/Chat';
+import Chats from './components/Chats/Chats';
 
 const App = () => {
   return (
     <>
       <CssBaseline />
-      <Navbar />
       <ImageSliders />
+      <Navbar />
       <Router>
         <Switch>
           <Route path="/products/:cat" component={Products} />
           <Route path="/rooms/:cat" component={Rooms} />
           <Route path="/fav" component={Favourites} />
           <Route path="/login" component={Login} />
+          <Route path="/chats" component={Chats} />
           <Route path="/">
             <Home />
-            <Chat />
           </Route>
         </Switch>
       </Router>

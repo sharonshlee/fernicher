@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { ChatEngine } from 'react-chat-engine';
-import './Chat.css';
+import './Chats.css';
 import ChatFeed from './ChatFeed';
-import axios from 'axios';
+import LoginForm from './LoginForm';
 
 const user = {password: '123123', username: 'Lewis'};
 
-const Chat = () => {
+const Chats = () => {
   const [username, setUsername] = useState(user.username);
   const [password, setPassword] = useState(user.password);
 
@@ -21,4 +21,4 @@ const Chat = () => {
   )
 }
 
-export default Chat;
+export default Chats;
