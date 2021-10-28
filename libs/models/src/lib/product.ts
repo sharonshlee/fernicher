@@ -14,6 +14,9 @@ export class Product extends ModelBase {
   @Column({ nullable: true })
   image?: string;
 
+  @Column()
+  condition!: string;
+
   @Column({ nullable: true, type: 'float', array: true })
   productLocation?: number[];
 

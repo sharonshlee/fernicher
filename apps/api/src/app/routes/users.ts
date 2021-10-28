@@ -20,7 +20,23 @@ export const userRoutes = (userRepository: Repository<User>) => {
   // Create new user
   userRouter.post('/users/new', (req, res) => {
     const newUser = req.body;
-    return userRepository.insert(newUser).then((user) => res.send(user));
+    return userRepository.save(newUser).then((user) => res.send(user));
+  });
+
+  // Sign in
+  userRouter.post('/users/signin', async (req, res) => {
+    const signInData = req.body;
+    const user = await userRepository.findOne({
+      email: signInData.email,
+      password: signInData.password,
+    });
+    if (user) {
+      res.send(user);
+    } else {
+      res.statusCode = 404;
+      res.statusMessage = 'User Not found';
+      res.end();
+    }
   });
 
   userRouter.put('/users/:userId', (req, res) => {
