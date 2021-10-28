@@ -118,7 +118,7 @@ export function AddProduct(props: { open: boolean; handleClose: any }) {
               label="condition"
             >
               <MenuItem value={'new'}>New</MenuItem>
-              <MenuItem value={'likenew'}>Like New</MenuItem>
+              <MenuItem value={'like new'}>Like New</MenuItem>
               <MenuItem value={'good'}>Good</MenuItem>
               <MenuItem value={'fair'}>Fair</MenuItem>
             </Select>

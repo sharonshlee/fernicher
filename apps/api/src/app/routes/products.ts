@@ -19,18 +19,23 @@ export const productRoutes = (
   });
 
   productRouter.post('/products/search', (req, res) => {
-    const { name, description, orderBy, desc, take } = req.body;
-    const where = {};
+    const { name, description, condition, orderBy, desc, take } = req.body;
+    const where = [];
     if (name) {
-      where['name'] = ILike(`%${name}%`);
+      where.push({ name: ILike(`%${name}%`) });
+    }
+    if (condition) {
+      where.push({ condition: ILike(`%${condition}%`) });
     }
     if (description) {
-      where['description'] = ILike(`%${description}%`);
+      where.push({ description: ILike(`%${description}%`) });
     }
     const findOptions = { where, take: take ? take : 1000 };
     if (orderBy) {
       findOptions['order'] = { [orderBy]: desc ? 'DESC' : 'ASC' };
     }
+    // select * from products where (name like '%new chair%') or (condition like '%new chair%') or (description like '%new chair%')
+    // select * from products where (name like '%c%') or (condition like '%c%') or (description like '%c%')
     return productRepository
       .find({
         ...findOptions,

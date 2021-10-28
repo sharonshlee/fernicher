@@ -211,11 +211,15 @@ export default function PrimarySearchAppBar() {
                 setSearchValue(value);
                 const filter = {
                   name: '',
+                  condition: '',
+                  description: '',
                   orderBy: 'createdAt',
                   desc: true,
                   take: 1000,
                 };
                 filter.name = value;
+                filter.condition = value;
+                filter.description = value;
                 axios.post('/api/products/search', filter).then((result) => {
                   setProducts(result.data);
                   history.push('/products/search');
