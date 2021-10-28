@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useContext } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import './app.scss';
@@ -11,14 +11,15 @@ import Favourites from './components/Favourites/Favourites';
 import ImageSliders from './components/ImageSliders/ImageSliders';
 import BackToTop from './components/utilities/BackToTop';
 import Chats from './components/Chats/Chats';
+import { LoggedInProvider } from "./Providers/LoggedInContext";
 
 const App = () => {
   return (
-    <>
-      <CssBaseline />
-      <ImageSliders />
-      <Navbar />
+    <LoggedInProvider>
       <Router>
+      <Navbar />
+      <ImageSliders />
+      <CssBaseline />
         <Switch>
           <Route path="/products/:cat" component={Products} />
           <Route path="/rooms/:cat" component={Rooms} />
@@ -33,7 +34,7 @@ const App = () => {
       {/* <Route path="/" element={<Home authed={true}/>} /> */}
       <Footer />
       <BackToTop />
-    </>
+    </LoggedInProvider>
   );
 };
 

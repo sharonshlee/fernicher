@@ -9,6 +9,9 @@ import {
   dbresetRoutes,
 } from './app/routes';
 
+import * as cookieParser from 'cookie-parser';
+import * as cookieSession from 'cookie-session';
+
 createConnection({
   type: 'postgres',
   database: process.env.DB_NAME,
@@ -32,6 +35,12 @@ createConnection({
   /** Set transfer limit to 10Mb */
   app.use(express.json({ limit: '10Mb' }));
 
+  /** Use CookieParser and CookieSession */
+  app.use(cookieParser());
+  app.use(cookieSession({
+    name: 'session',
+    keys: ['keys1']
+  }));
   /** Routes */
   app.use('/api', userRoutes(userRepository));
   app.use(

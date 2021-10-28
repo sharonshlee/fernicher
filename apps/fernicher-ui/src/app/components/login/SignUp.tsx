@@ -13,6 +13,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Dialog } from '@mui/material';
 import { useState } from 'react';
 import axios from 'axios';
+import {Redirect} from 'react-router-dom';
 
 function Copyright(props: any) {
   return (
@@ -39,6 +40,7 @@ export default function SignUp(props: {
   setShowSignUp: any;
 }) {
   const { setShowSignIn, setShowSignUp } = props;
+  const [signedUp, setSignedUp] = useState(false);
 
   const defaultUserValues = {
     firstName: '',
@@ -55,6 +57,9 @@ export default function SignUp(props: {
     password: string;
   }>(defaultUserValues);
 
+  if (signedUp) {
+    return <Redirect to='/' />
+  }
   return (
     <Dialog open={true} onClose={() => setShowSignUp(false)}>
       <ThemeProvider theme={theme}>
@@ -143,7 +148,7 @@ export default function SignUp(props: {
                 onClick={() => {
                   axios
                     .post('/api/users/new', user)
-                    .then((result) => console.log(result));
+                    .then(() => setSignedUp(true));
                 }}
               >
                 Sign Up

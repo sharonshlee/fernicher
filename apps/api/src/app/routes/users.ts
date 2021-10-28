@@ -17,9 +17,19 @@ export const userRoutes = (userRepository: Repository<User>) => {
     return userRepository.findOne(userId).then((user) => res.send(user));
   });
 
+  userRouter.get('/isLogged', (req, res) => {
+    if (req.session.user) {
+      return res.send(req.session.user)
+    }
+    return res.send(null);
+  });
+
   // Create new user
   userRouter.post('/users/new', (req, res) => {
     const newUser = req.body;
+    if (!req.session.user) {
+      req.session.user = {email: newUser.email, password: newUser.password}
+    }
     return userRepository.save(newUser).then((user) => res.send(user));
   });
 
@@ -31,10 +41,14 @@ export const userRoutes = (userRepository: Repository<User>) => {
       password: signInData.password,
     });
     if (user) {
+      if (!req.session.user) {
+        req.session.user = {email: signInData.email, password: signInData.password}
+      }
       res.send(user);
     } else {
       res.statusCode = 404;
       res.statusMessage = 'User Not found';
+      res.send(false);
       res.end();
     }
   });

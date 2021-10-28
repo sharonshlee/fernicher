@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
 import Card from '@material-ui/core/Card';
@@ -13,8 +13,11 @@ import Typography from '@material-ui/core/Typography';
 import { red } from '@material-ui/core/colors';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import ShareIcon from '@material-ui/icons/Share';
+import ChatIcon from '@mui/icons-material/Chat';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
+import {Redirect} from 'react-router-dom';
+import { SettingsInputAntennaTwoTone } from '@material-ui/icons';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -42,10 +45,16 @@ const useStyles = makeStyles((theme) => ({
 export default function ProductsSocialCard({title, date, description, firstName, image}) {
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
+  const [msgClicked, setMsgClicked] = React.useState(false);
+
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
+
+  if (msgClicked) {
+    return <Redirect to='/chats' />
+  }
 
   return (
     <Card className={classes.root}>
@@ -79,6 +88,14 @@ export default function ProductsSocialCard({title, date, description, firstName,
         </IconButton>
         <IconButton aria-label="share">
           <ShareIcon />
+        </IconButton>
+        <IconButton
+        aria-label="share"
+        onClick={() => {
+          setMsgClicked(true);
+        }}
+        >
+          <ChatIcon />
         </IconButton>
         <IconButton
           className={clsx(classes.expand, {

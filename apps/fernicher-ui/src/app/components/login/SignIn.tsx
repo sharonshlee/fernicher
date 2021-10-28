@@ -12,6 +12,7 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Dialog } from '@mui/material';
+import {Redirect} from 'react-router-dom';
 import axios from 'axios';
 
 function Copyright(props: any) {
@@ -41,6 +42,12 @@ export default function SignIn(props: {
   const { setShowSignIn, setShowSignUp } = props;
   const [signInData, setSignInData] = useState({ email: '', password: '' });
   const [loginError, setLoginError] = useState(false);
+  const [loggedIn, setLoggedIn] = useState(false);
+
+  if (loggedIn) {
+    return <Redirect to='/'/>
+  }
+
   return (
     <Dialog open={true} onClose={() => setShowSignIn(false)}>
       <ThemeProvider theme={theme}>
@@ -102,8 +109,12 @@ export default function SignIn(props: {
                 onClick={() => {
                   axios
                     .post('/api/users/signin', signInData)
-                    .then((result) => console.log('Signed In!', result.data))
-                    .catch(() => setLoginError(true));
+                    .then((result) => {
+                      setLoggedIn(true);
+                    })
+                    .catch((err) => {
+                      setLoginError(true)
+                    });
                 }}
               >
                 Sign In

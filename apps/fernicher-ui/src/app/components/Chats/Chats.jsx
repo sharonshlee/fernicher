@@ -1,21 +1,24 @@
-import React, { useState } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { ChatEngine } from 'react-chat-engine';
 import './Chats.css';
 import ChatFeed from './ChatFeed';
-import LoginForm from './LoginForm';
+import { LoggedInContext } from "../../Providers/LoggedInContext";
+import {Redirect} from 'react-router-dom';
 
-const user = {password: '123123', username: 'Lewis'};
+
 
 const Chats = () => {
-  const [username, setUsername] = useState(user.username);
-  const [password, setPassword] = useState(user.password);
+  const [state, setState] = useContext(LoggedInContext);
 
+  if (!state) return <Redirect to='/'/>
+
+  console.log("STATE IS: ", state);
   return (
     <ChatEngine
       height="100vh"
       projectID="9663adb6-d823-4a20-935f-b7381ba20105"
-      userName={username}
-      userSecret={password}
+      userName="Lewis"
+      userSecret="123123"
       renderChatFeed={(chatAppProps) => <ChatFeed {...chatAppProps}/>}
     />
   )
