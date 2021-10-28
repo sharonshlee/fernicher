@@ -18,6 +18,7 @@ createConnection({
   port: Number(process.env.DB_PORT),
   synchronize: process.env.DB_SYNCHRONIZE === 'true',
   entities: [Category, Favourite, Product, User], // Entities/Tables to be included in databae,
+
 }).then((connection) => {
   /** TypeORM repositories variables, one for each table */
   const userRepository = connection.getRepository(User);

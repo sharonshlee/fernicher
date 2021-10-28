@@ -41,125 +41,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-// const menus = {
-//   main: [
-//     {
-//       listIcon: <Home />,
-//       listText: 'Home',
-//       listPath: '/',
-//     },
-//     {
-//       listIcon: <ChairIcon />,
-//       listText: 'Products',
-//       listPath: '/products/all',
-//     },
-//     {
-//       listIcon: <BedroomBabyIcon />,
-//       listText: 'Rooms',
-//       listPath: '/rooms/living',
-//     },
-//   ],
-//   products: [
-//     {
-//       // istIcon: <ContactMail />,
-//       listText: 'All Products',
-//       listPath: '/products/all',
-//     },
-//     {
-//       // istIcon: <ContactMail />,
-//       listText: 'Recent Products',
-//       listPath: '/products/recent',
-//     },
-//     // {
-//     //   // listIcon: <BedroomBabyIcon />,
-//     //   listText: 'Shelf',
-//     //   listPath: '/products/shelf',
-//     // },
-//     // {
-//     //   // listIcon: <BedroomBabyIcon />,
-//     //   listText: 'Pantry',
-//     //   listPath: '/products/pantry',
-//     // },
-//     {
-//       // listIcon: <BedroomBabyIcon />,
-//       listText: 'Table',
-//       listPath: '/products/table',
-//     },
-//     {
-//       // listIcon: <BedroomBabyIcon />,
-//       listText: 'Chair',
-//       listPath: '/products/chair',
-//     },
-//     {
-//       // listIcon: <BedIcon />,
-//       listText: 'Bed',
-//       listPath: '/products/bed',
-//     },
-//     {
-//       // listIcon: <BedroomBabyIcon />,
-//       listText: 'Kids',
-//       listPath: '/products/kids',
-//     },
-//   ],
-//   rooms: [
-//     {
-//       listImage: (
-//         <img
-//           src="https://images.unsplash.com/photo-1554995207-c18c203602cb?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2070&q=80"
-//           alt=""
-//           style={{ height: '140px' }}
-//         />
-//       ),
-//       listText: 'Living Room',
-//       listPath: '/rooms/living',
-//     },
-//     {
-//       listImage: (
-//         <img
-//           src="https://images.unsplash.com/photo-1571508601936-6ca847b47ae4?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2071&q=80"
-//           alt=""
-//           style={{ height: '140px' }}
-//         />
-//       ),
-//       listText: 'Bedroom',
-//       listPath: '/rooms/bedroom',
-//     },
-
-//     {
-//       listImage: (
-//         <img
-//           src="https://images.unsplash.com/photo-1581369596603-71209b23077f?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1674&q=80"
-//           alt=""
-//           style={{ width: '225px', height: '140px' }}
-//         />
-//       ),
-//       listText: 'Kitchen',
-//       listPath: '/rooms/kitchen',
-//     },
-//     {
-//       listImage: (
-//         <img
-//           src="https://images.unsplash.com/photo-1515965885361-f1e0095517ea?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2070&q=80"
-//           alt=""
-//           style={{ width: '225px', height: '140px' }}
-//         />
-//       ),
-//       listText: 'Office',
-//       listPath: '/rooms/office',
-//     },
-//   ],
-//   favourites: [
-//     {
-//       listText: 'Favourites',
-//       listPath: '/fav',
-//     },
-//     {
-//       listText: 'Recent Products',
-//       listPath: '/products/recent',
-//     },
-//   ],
-// };
-const exampleLoggedInId = 21;
+const exampleLoggedInId = 1;
 
 const Sidebar = ({ position, toggleSlider, open, menu }) => {
 
@@ -287,11 +169,9 @@ const Sidebar = ({ position, toggleSlider, open, menu }) => {
     axios
       .post('/api/users')
       .then((res) => {
-
-
         if (menu === 'favourites') {
+          console.log("RESPONSE IS :", res.data)
           const resFavs = res.data.filter(el => el.id ===  exampleLoggedInId)[0].favourites;
-          // console.log("RES FAVS: ", resFavs)
           const favourites = resFavs.map((el, i) => ({
             listText: `${i+1}: ${el.product.name}`,
             listPath: '/',
@@ -314,7 +194,7 @@ const Sidebar = ({ position, toggleSlider, open, menu }) => {
 
 
         })
-      .catch((err) => console.log('ERR HAPPENED', err));
+      .catch((err) => console.log('ERR1 HAPPENED', err));
   }, [menu]);
 
 
