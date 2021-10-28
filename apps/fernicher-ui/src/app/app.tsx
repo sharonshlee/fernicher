@@ -11,10 +11,11 @@ import Favourites from './components/Favourites/Favourites';
 import ImageSliders from './components/ImageSliders/ImageSliders';
 import BackToTop from './components/utilities/BackToTop';
 import Chats from './components/Chats/Chats';
+import StateProvider from './providers/StateProvider';
 
 const App = () => {
   return (
-    <>
+    <StateProvider>
       <CssBaseline />
       <Navbar />
       <ImageSliders />
@@ -33,7 +34,7 @@ const App = () => {
       {/* <Route path="/" element={<Home authed={true}/>} /> */}
       <Footer />
       <BackToTop />
-    </>
+    </StateProvider>
   );
 };
 

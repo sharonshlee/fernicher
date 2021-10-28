@@ -5,17 +5,13 @@ import {
   Marker,
   InfoWindow,
 } from '@react-google-maps/api';
-import { formatRelative } from 'date-fns';
 import '@reach/combobox/styles.css';
 import mapStyles from './mapStyles';
 import ProductCard from '../products/ProductCard';
 import useViewport from '../../hooks/useViewport';
 
 const libraries = ['places'];
-const mapContainerStyle = {
-  width: '100vw',
-  height: '100vh',
-};
+
 const center = {
   lat: 53.83579,
   lng: -79.55343,
@@ -26,11 +22,20 @@ const options = {
   zoomControl: true,
 };
 
-const Map = ({ usersAndProducts }) => {
+const Map = ({
+  usersAndProducts,
+  mapTitle = '',
+  width = '100%',
+  height = '80vh',
+}) => {
+  const mapContainerStyle = {
+    width,
+    height,
+  };
   const [selected, setSelected] = useState(null);
   const { viewport, setViewPort } = useViewport();
   const { isLoaded, loadError } = useLoadScript({
-    googleMapsApiKey: "AIzaSyAlh7RkuE1fQuj9D-L9-WQqpFoQaq0CBWk",
+    googleMapsApiKey: 'AIzaSyAlh7RkuE1fQuj9D-L9-WQqpFoQaq0CBWk',
     libraries,
   });
 
@@ -60,15 +65,18 @@ const Map = ({ usersAndProducts }) => {
     />
   ));
 
-  console.log('UsersandProducts :', usersAndProducts)
-
   return (
     <div>
       <h2 className="map-title">
-        FerniCher{' '}
-        <span role="img" aria-label="couch">
-          🛋
-        </span>
+        {mapTitle && mapTitle}
+        {!mapTitle && (
+          <>
+            FerniCher{' '}
+            <span role="img" aria-label="couch">
+              🛋
+            </span>
+          </>
+        )}
       </h2>
       <GoogleMap
         mapContainerStyle={mapContainerStyle}
