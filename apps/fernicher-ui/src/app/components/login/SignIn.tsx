@@ -1,10 +1,9 @@
-import * as React from 'react';
+import React, { useState } from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
+import InputLabel from '@mui/material/InputLabel';
 import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
@@ -12,8 +11,8 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { Dialog, IconButton } from '@mui/material';
-import SignUp from './SignUp';
+import { Dialog } from '@mui/material';
+import axios from 'axios';
 
 function Copyright(props: any) {
   return (
@@ -40,17 +39,8 @@ export default function SignIn(props: {
   setShowSignUp: any;
 }) {
   const { setShowSignIn, setShowSignUp } = props;
-
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    // eslint-disable-next-line no-console
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
-  };
-
+  const [signInData, setSignInData] = useState({ email: '', password: '' });
+  const [loginError, setLoginError] = useState(false);
   return (
     <Dialog open={true} onClose={() => setShowSignIn(false)}>
       <ThemeProvider theme={theme}>
@@ -70,12 +60,7 @@ export default function SignIn(props: {
             <Typography component="h1" variant="h5">
               Sign in
             </Typography>
-            <Box
-              component="form"
-              onSubmit={handleSubmit}
-              noValidate
-              sx={{ mt: 1 }}
-            >
+            <Box component="div" sx={{ mt: 1 }}>
               <TextField
                 margin="normal"
                 required
@@ -85,6 +70,11 @@ export default function SignIn(props: {
                 name="email"
                 autoComplete="email"
                 autoFocus
+                onChange={(e) => {
+                  setLoginError(false);
+                  setSignInData({ ...signInData, email: e.target.value });
+                }}
+                value={signInData.email}
               />
               <TextField
                 margin="normal"
@@ -95,16 +85,26 @@ export default function SignIn(props: {
                 type="password"
                 id="password"
                 autoComplete="current-password"
+                onChange={(e) => {
+                  setLoginError(false);
+                  setSignInData({ ...signInData, password: e.target.value });
+                }}
+                value={signInData.password}
               />
-              <FormControlLabel
-                control={<Checkbox value="remember" color="primary" />}
-                label="Remember me"
-              />
+              {loginError && (
+                <InputLabel color="primary">Invalid User</InputLabel>
+              )}
               <Button
                 type="submit"
                 fullWidth
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
+                onClick={() => {
+                  axios
+                    .post('/api/users/signin', signInData)
+                    .then((result) => console.log('Signed In!', result.data))
+                    .catch(() => setLoginError(true));
+                }}
               >
                 Sign In
               </Button>
