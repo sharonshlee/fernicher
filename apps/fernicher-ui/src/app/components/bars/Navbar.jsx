@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { Link, Route } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { alpha, makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -18,6 +18,7 @@ import FavoriteIcon from '@material-ui/icons/Favorite';
 import LocationOnIcon from '@material-ui/icons/LocationOn';
 import Tooltip from '@material-ui/core/Tooltip';
 import Button from '@material-ui/core/Button';
+import MenuIcon from '@material-ui/icons/Menu';
 import AddAPhotoIcon from '@material-ui/icons/AddAPhoto';
 import Sidebar from './Sidebar';
 import { AddProduct } from '../products/AddProduct';
@@ -25,9 +26,6 @@ import SignIn from '../login/SignIn';
 import SignUp from '../login/SignUp';
 import axios from 'axios';
 import { stateContext } from '../../providers/StateProvider';
-
-
-import { ClassRounded } from '@material-ui/icons';
 
 const useStyles = makeStyles((theme) => ({
   grow: {
@@ -190,10 +188,20 @@ export default function PrimarySearchAppBar() {
   const history = useHistory();
   const [searchValue, setSearchValue] = useState('');
   const { setProducts } = useContext(stateContext);
+
   return (
     <div className={classes.grow}>
       <AppBar position="static" style={{ color: 'black', background: 'white' }}>
         <Toolbar id="back-to-top-anchor">
+          <IconButton
+            edge="start"
+            className={classes.menuButton}
+            color="inherit"
+            aria-label="open drawer"
+            onClick={toggleSlider(position, true, 'main')}
+          >
+            <MenuIcon />
+          </IconButton>
           <Sidebar {...state} toggleSlider={toggleSlider} />
           <Button onClick={() => history.push('/')}>Fernicher</Button>
           <Button onClick={toggleSlider('left', true, 'products')}>
@@ -261,12 +269,11 @@ export default function PrimarySearchAppBar() {
                 </Badge>
               </IconButton>
             </Tooltip>
-            <IconButton
-              aria-label="show 17 new notifications"
-              color="inherit"
-            >
+            <IconButton aria-label="show 17 new notifications" color="inherit">
               <Badge badgeContent={5} color="secondary">
-                <FavoriteIcon onClick={toggleSlider('right', true, 'favourites')}/>
+                <FavoriteIcon
+                  onClick={toggleSlider('right', true, 'favourites')}
+                />
               </Badge>
             </IconButton>
             <IconButton aria-label="show 4 new mails" color="inherit">

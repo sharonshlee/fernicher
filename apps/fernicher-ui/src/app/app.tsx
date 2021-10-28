@@ -25,9 +25,7 @@ const App = () => {
         <Route path="/fav" component={Favourites} />
         {/* <Route path="/login" component={Login} /> */}
         <Route path="/chats" component={Chats} />
-        <Route path="/">
-          <Home />
-        </Route>
+        <Route path="/" component={Home} />
       </Switch>
       {/* <Route path="/" element={<Home authed={true}/>} /> */}
       <Footer />
