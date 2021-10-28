@@ -5,6 +5,7 @@ import ProductsSocialCard from './ProductsSocialCard';
 import { isEmpty, map, upperFirst } from 'lodash';
 import { useParams } from 'react-router-dom';
 import { stateContext } from '../../providers/StateProvider';
+import Map from '../Map/Map';
 
 function Products() {
   const [usersAndProducts, setUsersAndProducts] = useState<any>([]);
@@ -47,6 +48,14 @@ function Products() {
           </Grid>
         ))}
       </Grid>
+      <br />
+      <br />
+      <hr />
+      <Map
+        mapTitle="Products on Map"
+        usersAndProducts={usersAndProducts}
+        width="100%"
+      />
     </div>
   );
 }
