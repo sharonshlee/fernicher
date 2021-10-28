@@ -2,7 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import './app.scss';
-import Navbar from './components/Bars/Navbar';
+import Navbar from './components/bars/Navbar';
 import Footer from './components/Footer';
 import Rooms from './components/Rooms';
 import Products from './components/products/Products';
@@ -16,8 +16,8 @@ const App = () => {
   return (
     <>
       <CssBaseline />
-      <ImageSliders />
       <Navbar />
+      <ImageSliders />
       <Router>
         <Switch>
           <Route path="/products/:cat" component={Products} />
