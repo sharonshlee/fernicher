@@ -26,7 +26,7 @@ function Products() {
 
   return (
     <div>
-      <h1>Products: {upperFirst(cat)}</h1>
+      <h1>{upperFirst(cat)}</h1>
       <Grid container spacing={4}>
         {map(usersAndProducts, (usersAndProduct: any) => (
           <Grid item xs={3}>

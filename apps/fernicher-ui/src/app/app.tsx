@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import './app.scss';
 import Navbar from './components/bars/Navbar';
@@ -17,11 +17,12 @@ const App = () => {
       <CssBaseline />
       <Navbar />
       <ImageSliders />
-      <Route path="/products/:cat" component={Products} />
-      <Route path="/rooms/:cat" component={Rooms} />
-      <Route path="/fav" component={Favourites} />
-      {/* <Route path="/login" component={Login} /> */}
-      <Route path="/" component={Home} />
+      <Switch>
+        <Route path="/products/:cat" component={Products} />
+        <Route path="/rooms/:cat" component={Rooms} />
+        <Route path="/fav" component={Favourites} />
+        <Route path="/" component={Home} />
+      </Switch>
       <Footer />
       <BackToTop />
     </>

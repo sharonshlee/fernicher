@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { alpha, makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
-import Typography from '@material-ui/core/Typography';
 import InputBase from '@material-ui/core/InputBase';
 import Badge from '@material-ui/core/Badge';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -21,6 +20,8 @@ import Button from '@material-ui/core/Button';
 import AddAPhotoIcon from '@material-ui/icons/AddAPhoto';
 import Sidebar from './Sidebar';
 import { AddProduct } from '../products/AddProduct';
+import SignIn from '../login/SignIn';
+import SignUp from '../login/SignUp';
 
 const useStyles = makeStyles((theme) => ({
   grow: {
@@ -178,20 +179,19 @@ export default function PrimarySearchAppBar() {
   };
   const [position, setPosition] = useState('left');
   const [showAddProduct, setShowAddProduct] = useState(false);
+  const [showSignIn, setShowSignIn] = useState(false);
+  const [showSignUp, setShowSignUp] = useState(false);
+  const history = useHistory();
   return (
     <div className={classes.grow}>
       <AppBar position="static" style={{ color: 'black', background: 'white' }}>
         <Toolbar id="back-to-top-anchor">
           <Sidebar {...state} toggleSlider={toggleSlider} />
-          <Typography variant="h6" noWrap component={Link} to={'/home'}>
-            FerniCHer
-          </Typography>
-
+          <Button onClick={() => history.push('/')}>Fernicher</Button>
           <Button onClick={toggleSlider('left', true, 'products')}>
             Products
           </Button>
           <Button onClick={toggleSlider('left', true, 'rooms')}>Rooms</Button>
-
           <div className={classes.search}>
             <div className={classes.searchIcon}>
               <SearchIcon />
@@ -257,13 +257,24 @@ export default function PrimarySearchAppBar() {
             </IconButton>
             <IconButton
               edge="end"
-              // onClick={handleProfileMenuOpen}
               color="inherit"
-              component={Link}
-              to="/login"
+              component={Button}
+              onClick={() => setShowSignIn(!showSignIn)}
             >
               <AccountCircle />
             </IconButton>
+            {showSignIn && (
+              <SignIn
+                setShowSignIn={setShowSignIn}
+                setShowSignUp={setShowSignUp}
+              />
+            )}
+            {showSignUp && (
+              <SignUp
+                setShowSignIn={setShowSignIn}
+                setShowSignUp={setShowSignUp}
+              />
+            )}
           </div>
           <div className={classes.sectionMobile}>
             <IconButton
