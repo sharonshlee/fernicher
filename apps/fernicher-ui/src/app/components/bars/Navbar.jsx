@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { alpha, makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
@@ -22,6 +22,8 @@ import Sidebar from './Sidebar';
 import { AddProduct } from '../products/AddProduct';
 import SignIn from '../login/SignIn';
 import SignUp from '../login/SignUp';
+import axios from 'axios';
+import { stateContext } from '../../providers/StateProvider';
 
 const useStyles = makeStyles((theme) => ({
   grow: {
@@ -182,6 +184,8 @@ export default function PrimarySearchAppBar() {
   const [showSignIn, setShowSignIn] = useState(false);
   const [showSignUp, setShowSignUp] = useState(false);
   const history = useHistory();
+  const [searchValue, setSearchValue] = useState('');
+  const { setProducts } = useContext(stateContext);
   return (
     <div className={classes.grow}>
       <AppBar position="static" style={{ color: 'black', background: 'white' }}>
@@ -202,6 +206,22 @@ export default function PrimarySearchAppBar() {
                 root: classes.inputRoot,
                 input: classes.inputInput,
               }}
+              onChange={(e) => {
+                const { value } = e.target;
+                setSearchValue(value);
+                const filter = {
+                  name: '',
+                  orderBy: 'createdAt',
+                  desc: true,
+                  take: 1000,
+                };
+                filter.name = value;
+                axios.post('/api/products/search', filter).then((result) => {
+                  setProducts(result.data);
+                  history.push('/products/search');
+                });
+              }}
+              value={searchValue}
               inputProps={{ 'aria-label': 'search' }}
             />
           </div>

@@ -10,10 +10,11 @@ import Home from './components/Home';
 import Favourites from './components/Favourites/Favourites';
 import ImageSliders from './components/ImageSliders/ImageSliders';
 import BackToTop from './components/utilities/BackToTop';
+import StateProvider from './providers/StateProvider';
 
 const App = () => {
   return (
-    <>
+    <StateProvider>
       <CssBaseline />
       <Navbar />
       <ImageSliders />
@@ -25,7 +26,7 @@ const App = () => {
       </Switch>
       <Footer />
       <BackToTop />
-    </>
+    </StateProvider>
   );
 };
 
