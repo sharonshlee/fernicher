@@ -8,8 +8,7 @@ import { stateContext } from '../../providers/StateProvider';
 import Map from '../Map/Map';
 
 function Products() {
-  const [usersAndProducts, setUsersAndProducts] = useState<any>([]);
-  const { products } = useContext(stateContext);
+  const { products, setProducts } = useContext(stateContext);
   const { cat } =
     useParams<{ cat: 'recent' | 'chair' | 'table' | 'all' | 'search' }>();
   useEffect(() => {
@@ -25,21 +24,21 @@ function Products() {
     axios
       .post<any[]>('/api/products/search', filter)
       .then((res) => {
-        setUsersAndProducts(res.data);
+        setProducts(res.data);
       })
       .catch((err) => console.log(err));
   }, [cat]);
 
   useEffect(() => {
-    setUsersAndProducts(products);
+    setProducts(products);
   }, [products]);
 
   return (
     <div>
       <h1>{upperFirst(cat)}</h1>
-      {isEmpty(usersAndProducts) && <h3>No products found.</h3>}
+      {isEmpty(products) && <h3>No products found.</h3>}
       <Grid container spacing={4}>
-        {map(usersAndProducts, (usersAndProduct: any) => (
+        {map(products, (usersAndProduct: any) => (
           <Grid item xs={3}>
             <ProductsSocialCard
               key={usersAndProduct.id}
@@ -51,11 +50,7 @@ function Products() {
       <br />
       <br />
       <hr />
-      <Map
-        mapTitle="Products on Map"
-        usersAndProducts={usersAndProducts}
-        width="100%"
-      />
+      <Map mapTitle="Products on Map" width="100%" />
     </div>
   );
 }

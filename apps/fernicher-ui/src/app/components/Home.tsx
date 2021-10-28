@@ -1,11 +1,11 @@
 import axios from 'axios';
 import { map } from 'lodash';
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
+import { stateContext } from '../providers/StateProvider';
 import Map from './Map/Map';
 
-function Home(props : any) {
-
-  const [usersAndProducts, setUsersAndProducts] = useState([]);
+function Home(props: any) {
+  const { setProducts } = useContext(stateContext);
   useEffect(() => {
     axios
       .post<any[]>('/api/users')
@@ -16,14 +16,14 @@ function Home(props : any) {
             ...map(user.products, (product) => ({ ...product, user }))
           );
         });
-        setUsersAndProducts(products);
+        setProducts(products);
       })
       .catch((err) => console.log('ERR HAPPENED', err));
   }, []);
 
   return (
     <div>
-      <Map usersAndProducts={usersAndProducts} />
+      <Map />
     </div>
   );
 }

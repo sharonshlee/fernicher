@@ -1,4 +1,4 @@
-import React, { useState, useRef, useCallback } from 'react';
+import React, { useState, useRef, useCallback, useContext } from 'react';
 import {
   GoogleMap,
   useLoadScript,
@@ -9,6 +9,7 @@ import '@reach/combobox/styles.css';
 import mapStyles from './mapStyles';
 import ProductCard from '../products/ProductCard';
 import useViewport from '../../hooks/useViewport';
+import { stateContext } from '../../providers/StateProvider';
 
 const libraries = ['places'];
 
@@ -22,12 +23,8 @@ const options = {
   zoomControl: true,
 };
 
-const Map = ({
-  usersAndProducts,
-  mapTitle = '',
-  width = '100%',
-  height = '80vh',
-}) => {
+const Map = ({ mapTitle = '', width = '100%', height = '80vh' }) => {
+  const { products } = useContext(stateContext);
   const mapContainerStyle = {
     width,
     height,
@@ -47,7 +44,7 @@ const Map = ({
   if (loadError) return <h1>Error loading maps</h1>;
   if (!isLoaded) return <h1>Loading Maps</h1>;
 
-  const products = usersAndProducts.map((product, i) => (
+  const productMarkers = products.map((product, i) => (
     <Marker
       key={i}
       position={{
@@ -85,7 +82,7 @@ const Map = ({
         options={options}
         onLoad={onMapLoad}
       >
-        {products}
+        {productMarkers}
         {selected && (
           <InfoWindow
             position={{

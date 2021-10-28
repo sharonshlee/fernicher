@@ -269,11 +269,13 @@ export default function PrimarySearchAppBar() {
                 </Badge>
               </IconButton>
             </Tooltip>
-            <IconButton aria-label="show 17 new notifications" color="inherit">
+            <IconButton
+              aria-label="show 17 new notifications"
+              color="inherit"
+              onClick={toggleSlider('right', true, 'favourites')}
+            >
               <Badge badgeContent={5} color="secondary">
-                <FavoriteIcon
-                  onClick={toggleSlider('right', true, 'favourites')}
-                />
+                <FavoriteIcon />
               </Badge>
             </IconButton>
             <IconButton aria-label="show 4 new mails" color="inherit">

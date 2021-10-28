@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
@@ -17,6 +17,7 @@ import { Home } from '@material-ui/icons';
 import LoyaltyOutlinedIcon from '@material-ui/icons/LoyaltyOutlined';
 import ChairIcon from '@mui/icons-material/Chair';
 import BedroomBabyIcon from '@mui/icons-material/BedroomBaby';
+import { stateContext } from '../../providers/StateProvider';
 
 // import BedroomBabyIcon from '@mui/icons-material';
 // import BedIcon from '@mui/icons-material/Bed';
@@ -159,6 +160,7 @@ const Sidebar = ({ position, toggleSlider, open, menu }) => {
       },
     ],
   });
+  const { setProducts } = useContext(stateContext);
 
   // Will change this with useContext after our lecture
   useEffect(() => {
@@ -184,6 +186,9 @@ const Sidebar = ({ position, toggleSlider, open, menu }) => {
               el.product.productLocation[0],
               el.product.productLocation[1],
             ],
+            onClick: () => {
+              setProducts([el.product]);
+            },
           }));
           setMenus((prev) => ({
             ...prev,
@@ -216,7 +221,9 @@ const Sidebar = ({ position, toggleSlider, open, menu }) => {
             ContainerProps={lsItem.latlng}
             to={lsItem.listPath}
             style={{ display: 'flex', flexDirection: 'column' }}
-            onClick={toggleSlider(position, false, 'main')}
+            onClick={() => {
+              lsItem.onClick && lsItem.onClick();
+            }}
           >
             <ListItemIcon className={classes.listItem}>
               {lsItem.listIcon && lsItem.listIcon}
