@@ -167,16 +167,30 @@ export function AddProduct(props: { open: boolean; handleClose: any }) {
               }).then((result) => {
                 const { data } = result;
                 axios
-                  .post('/api/products/new', data, {
-                    headers: { 'content-type': 'multipart/form-data' },
-                  })
-                  .then(() => {
-                    setProduct(defaultProductValues);
-                    handleClose(false);
-                    console.log('Product Saved!');
-                  })
-                  .catch((err) => {
-                    console.log(err);
+                  .get<{ plus_code: { compound_code: string } }>(
+                    `https://maps.googleapis.com/maps/api/geocode/json?latlng=${product.productLocation[0]},${product.productLocation[1]}&key=AIzaSyAlh7RkuE1fQuj9D-L9-WQqpFoQaq0CBWk`
+                  )
+                  .then((result) => {
+                    console.log(result.data);
+                    const {
+                      plus_code: { compound_code },
+                    } = result.data;
+
+                    data.append(
+                      'location',
+                      compound_code.substring(compound_code.indexOf(' '))
+                    );
+                    axios
+                      .post('/api/products/new', data, {
+                        headers: { 'content-type': 'multipart/form-data' },
+                      })
+                      .then(() => {
+                        setProduct(defaultProductValues);
+                        handleClose(false);
+                      })
+                      .catch((err) => {
+                        console.log(err);
+                      });
                   });
               });
             }}

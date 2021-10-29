@@ -20,6 +20,9 @@ export class Product extends ModelBase {
   @Column({ nullable: true, type: 'float', array: true })
   productLocation?: number[];
 
+  @Column()
+  location!: string;
+
   @Column({ default: new Date() })
   createdAt!: Date;
 

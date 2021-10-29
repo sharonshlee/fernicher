@@ -1,8 +1,9 @@
 import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import Grid from '@material-ui/core/Grid';
+import { Dialog } from '@mui/material';
 import ProductsSocialCard from './ProductsSocialCard';
-import { isEmpty, map, upperFirst } from 'lodash';
+import { find, isEmpty, map, reduce, upperFirst } from 'lodash';
 import { useParams } from 'react-router-dom';
 import { stateContext } from '../../providers/StateProvider';
 import Map from '../Map/Map';
@@ -31,22 +32,59 @@ function Products() {
 
   useEffect(() => {
     setProducts(products);
+    const productExpanded = reduce(
+      products,
+      (result, product) => ({ ...result, [product.id]: false }),
+      {}
+    );
+    setExpanded(productExpanded);
   }, [products]);
+  const [detail, setDetail] = useState<any>({ expanded: false, product: null });
 
+  const [expanded, setExpanded] = useState<any>({});
   return (
     <div>
       <h1>{upperFirst(cat)}</h1>
       {isEmpty(products) && <h3>No products found.</h3>}
       <Grid container spacing={4}>
         {map(products, (usersAndProduct: any) => (
-          <Grid item xs={3}>
+          <Grid item md={3}>
             <ProductsSocialCard
+              setExpanded={(id: number, isExpanded: boolean) =>
+                setExpanded({ ...expanded, [id]: isExpanded })
+              }
+              expanded={expanded[usersAndProduct.id]}
               key={usersAndProduct.id}
               usersAndProduct={usersAndProduct}
+              showProduct={(id: number) => {
+                setDetail({
+                  expanded: true,
+                  product: find(products, (p) => p.id === id),
+                });
+              }}
             />
           </Grid>
         ))}
       </Grid>
+      {detail.product && (
+        <Dialog
+          open={true}
+          onClose={() => {
+            setDetail({ expanded: false, product: null });
+          }}
+          maxWidth="lg"
+        >
+          <ProductsSocialCard
+            setExpanded={(id: number, isExpanded: boolean) =>
+              setDetail({ ...detail, expanded: isExpanded })
+            }
+            expanded={detail.expanded}
+            usersAndProduct={detail.product}
+            maxWidth="110vh"
+            minWidth="110vh"
+          />
+        </Dialog>
+      )}
       <br />
       <br />
       <hr />
