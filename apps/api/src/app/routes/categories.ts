@@ -1,16 +1,50 @@
-import { Category } from '@fernicher/models';
+import { Category, User } from '@fernicher/models';
 import { Router } from 'express';
-import { Repository } from 'typeorm';
+import { find, map } from 'lodash';
+import { Repository, In } from 'typeorm';
 import { whereBuilder } from './routeHelpers';
 
-export const categoryRoutes = (categoryRepository: Repository<Category>) => {
+export const categoryRoutes = (
+  categoryRepository: Repository<Category>,
+  userRepository: Repository<User>
+) => {
   const categoryRouter = Router();
 
   // Find categories
   categoryRouter.post('/categories', (req, res) => {
-    return categoryRepository
-      .find(req.body)
-      .then((categories) => res.send(categories));
+    return categoryRepository.find(req.body).then(async (categories) => {
+      // Lookup user for each product
+      // for (const category of categories) {
+      //   for (const product of category.products) {
+      //     product.user = await userRepository.findOne(
+      //       { id: product.userId },
+      //       { loadEagerRelations: false }
+      //     );
+      //   }
+      // }
+
+      // Get all userIds from all product
+      const userIds = [];
+
+      map(categories, (category) => {
+        userIds.push(...map(category.products, (product) => product.userId));
+      });
+
+      const users = await userRepository.find({
+        where: { id: In(userIds) },
+        loadEagerRelations: false,
+      });
+
+      const updatedCategories = map(categories, (category) => ({
+        ...category,
+        products: map(category.products, (product) => ({
+          ...product,
+          user: find(users, (user) => user.id === product.userId),
+        })),
+      }));
+      // return categories with products per category
+      res.send(updatedCategories);
+    });
   });
 
   categoryRouter.get('/categories/:categoryId', (req, res) => {

@@ -26,6 +26,9 @@ export class Product extends ModelBase {
   @Column({ default: new Date() })
   createdAt!: Date;
 
+  @Column()
+  userId: number;
+
   @ManyToOne(() => User, (user) => user.products)
   user!: User;
 
