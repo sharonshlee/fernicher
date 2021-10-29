@@ -2,7 +2,7 @@ import React from 'react';
 
 function Footer() {
   return (
-    <div>
+    <footer>
       {/* <img
         style={{ width: "500px" }}
         src="/assets/imgs/maria-orlova-XmhAN9TYD50-unsplash.jpg"
@@ -26,7 +26,7 @@ function Footer() {
       at velit obcaecati quo? Sunt magni modi vitae ad! Voluptas vero voluptatum
       quas sapiente quos libero saepe consectetur accusantium odio facere, fugit
       quam?
-    </div>
+    </footer>
   );
 }
 

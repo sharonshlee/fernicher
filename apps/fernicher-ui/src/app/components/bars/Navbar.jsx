@@ -191,7 +191,10 @@ export default function PrimarySearchAppBar() {
 
   return (
     <div className={classes.grow}>
-      <AppBar position="static" style={{ color: 'black', background: 'white' }}>
+      <AppBar
+        position="static"
+        style={{ backgroundColor: '#F8F9FA', color: '#212529' }}
+      >
         <Toolbar id="back-to-top-anchor">
           <IconButton
             edge="start"
@@ -203,11 +206,24 @@ export default function PrimarySearchAppBar() {
             <MenuIcon />
           </IconButton>
           <Sidebar {...state} toggleSlider={toggleSlider} />
-          <Button onClick={() => history.push('/')}>Fernicher</Button>
-          <Button onClick={toggleSlider('left', true, 'products')}>
+          <Button
+            style={{ color: '#212529' }}
+            onClick={() => history.push('/')}
+          >
+            Fernicher
+          </Button>
+          <Button
+            style={{ color: '#212529' }}
+            onClick={toggleSlider('left', true, 'products')}
+          >
             Products
           </Button>
-          <Button onClick={toggleSlider('left', true, 'rooms')}>Rooms</Button>
+          <Button
+            style={{ color: '#212529' }}
+            onClick={toggleSlider('left', true, 'rooms')}
+          >
+            Rooms
+          </Button>
           <div className={classes.search}>
             <div className={classes.searchIcon}>
               <SearchIcon />

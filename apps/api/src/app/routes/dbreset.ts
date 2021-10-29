@@ -236,10 +236,6 @@ export const dbresetRoutes = (
         product: products[1],
       },
       {
-        user: users[0],
-        product: products[2],
-      },
-      {
         user: users[1],
         product: products[0],
       },
@@ -252,8 +248,8 @@ export const dbresetRoutes = (
         product: products[2],
       },
       {
-        user: users[2],
-        product: products[0],
+        user: users[1],
+        product: products[3],
       },
       {
         user: users[2],

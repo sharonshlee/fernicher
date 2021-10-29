@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
 import Card from '@material-ui/core/Card';
@@ -14,9 +14,21 @@ import { red } from '@material-ui/core/colors';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import ShareIcon from '@material-ui/icons/Share';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
-import { Badge } from '@mui/material';
+import DeleteIcon from '@material-ui/icons/DeleteOutline';
+import {
+  Badge,
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+} from '@mui/material';
 import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
+import { useParams } from 'react-router-dom';
+import { isEmpty } from 'lodash';
+import axios from 'axios';
+import { stateContext } from '../../providers/StateProvider';
 
 export default function ProductsSocialCard(props: {
   usersAndProduct: any;
@@ -26,6 +38,8 @@ export default function ProductsSocialCard(props: {
   setExpanded: any;
   expanded: any;
 }) {
+  const { userid } = useParams<{ userid: string }>();
+  const { setMyProducts } = useContext(stateContext);
   const {
     usersAndProduct,
     showProduct,
@@ -60,7 +74,10 @@ export default function ProductsSocialCard(props: {
     },
   }));
   const classes = useStyles();
-
+  const [deleteMessage, setDeleteMessage] = useState('false');
+  const [showDelete, setShowDelete] = useState(false);
+  const [deleting, setDeleting] = useState(false);
+  const [deleted, setDeleted] = useState(false);
   return (
     <Card className={classes.root}>
       <CardHeader
@@ -70,14 +87,69 @@ export default function ProductsSocialCard(props: {
           </Avatar>
         }
         action={
-          <IconButton aria-label="settings">
-            <MoreVertIcon />
+          <IconButton
+            aria-label="settings"
+            style={{ visibility: isEmpty(userid) ? 'hidden' : 'inherit' }}
+            onClick={() => {
+              setShowDelete(true);
+              setDeleteMessage('Are you sure you want to delete this product?');
+            }}
+          >
+            <DeleteIcon />
           </IconButton>
         }
         title={usersAndProduct.name}
         // need to convert geolocation to location
         subheader={usersAndProduct.location}
       />
+      <Dialog
+        open={showDelete}
+        onClose={setShowDelete}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">
+          {'Delete Confirmation'}
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            {deleteMessage}
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          {!deleting && (
+            <>
+              <Button
+                onClick={() => {
+                  if (!isEmpty(userid)) {
+                    setDeleteMessage('Deleting...');
+                    setDeleting(true);
+                    setTimeout(() => {
+                      axios
+                        .delete(`/api/products/${usersAndProduct.id}`)
+                        .then(() => {
+                          setMyProducts([]);
+                          setDeleted(true);
+                          setDeleteMessage('Product deleted.');
+                        });
+                    }, 1000);
+                  }
+                }}
+              >
+                Yes
+              </Button>
+              <Button onClick={() => setShowDelete(false)} autoFocus>
+                No
+              </Button>
+            </>
+          )}
+          {deleted && (
+            <Button onClick={() => setShowDelete(false)} autoFocus>
+              Ok
+            </Button>
+          )}
+        </DialogActions>
+      </Dialog>
       <CardMedia
         className={classes.media}
         image={usersAndProduct.image}
