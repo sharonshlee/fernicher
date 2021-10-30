@@ -110,9 +110,7 @@ export const productRoutes = (
 
   productRouter.delete('/products/:productId', (req, res) => {
     const productId = req.params.productId;
-    return productRepository
-      .delete(productId)
-      .then((products) => res.send(products));
+    return productRepository.delete(productId).then(() => res.end());
   });
   return productRouter;
 };

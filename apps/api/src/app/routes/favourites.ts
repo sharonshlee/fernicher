@@ -67,9 +67,7 @@ export const favouriteRoutes = (favouriteRepository: Repository<Favourite>) => {
 
   favouriteRouter.delete('/favourites/:favouriteId', (req, res) => {
     const favouriteId = req.params.favouriteId;
-    return favouriteRepository
-      .delete(favouriteId)
-      .then((favourites) => res.send(favourites));
+    return favouriteRepository.delete(favouriteId).then(() => res.end());
   });
   return favouriteRouter;
 };
