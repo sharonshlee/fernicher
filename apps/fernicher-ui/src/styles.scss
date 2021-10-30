@@ -1,5 +1,14 @@
 /* You can add global styles to this file, and also import other style files */
 body {
   margin: 0;
-  padding: 0 2em 2em 2em;
+  // padding: 0 2em 2em 2em;
+  background-color: #e9ecef;
+  .mainContent {
+    padding: 2em;
+  }
+}
+footer {
+  background: #495057;
+  color: #adb5bd;
+  padding: 1em;
 }

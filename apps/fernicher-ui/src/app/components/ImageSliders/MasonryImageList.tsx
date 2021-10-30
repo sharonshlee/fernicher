@@ -4,10 +4,13 @@ import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
 import { map } from 'lodash';
 
-export default function MasonryImageList(props: { products: [] }) {
-  const { products } = props;
+export default function MasonryImageList(props: {
+  products: [];
+  setDetail?: any;
+}) {
+  const { products, setDetail } = props;
   return (
-    <Box sx={{ margin: 'auto', width: 1000, height: 850, overflowY: 'scroll' }}>
+    <Box sx={{ width: '100%' }}>
       <ImageList variant="masonry" cols={3} gap={20}>
         {map(products, (product: any) => (
           // arrObj.products.image
@@ -17,6 +20,9 @@ export default function MasonryImageList(props: { products: [] }) {
               srcSet={`${product.image}?w=248&fit=crop&auto=format&dpr=2 2x`}
               alt={product.name}
               loading="lazy"
+              onClick={() =>
+                setDetail && setDetail({ expanded: true, product })
+              }
             />
           </ImageListItem>
         ))}

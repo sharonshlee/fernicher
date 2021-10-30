@@ -2,6 +2,7 @@ import { Favourite } from '@fernicher/models';
 import { Router } from 'express';
 import { Repository } from 'typeorm';
 import { whereBuilder } from './routeHelpers';
+import { countBy } from 'lodash';
 
 export const favouriteRoutes = (favouriteRepository: Repository<Favourite>) => {
   const favouriteRouter = Router();
@@ -11,6 +12,30 @@ export const favouriteRoutes = (favouriteRepository: Repository<Favourite>) => {
     return favouriteRepository
       .find(req.body)
       .then((favourites) => res.send(favourites));
+  });
+
+  favouriteRouter.get('/favourites/top10', (req, res) => {
+    /*
+     SELECT f.productId, COUNT(f.userId), p.*, u.* FROM favourites f 
+     JOIN products p ON p.productId = f.productId
+     JOIN users u ON u.userId on p.userId
+     GROUP BY f.productId, p.id, p.name....., u.id, u.email
+     */
+    return favouriteRepository
+      .find({
+        join: {
+          alias: 'favourite',
+          innerJoinAndSelect: {
+            user: 'favourite.user',
+            product: 'favourite.product',
+          },
+        },
+      })
+      .then((favourites) => {
+        const countByProducts = countBy(favourites, 'product.id');
+        console.log('>>>', countByProducts);
+        res.send(favourites);
+      });
   });
 
   favouriteRouter.get('/favourites/:favouriteId', (req, res) => {

@@ -47,7 +47,7 @@ createConnection({
     '/api',
     productRoutes(productRepository, categoryRepository, userRepository)
   );
-  app.use('/api', categoryRoutes(categoryRepository));
+  app.use('/api', categoryRoutes(categoryRepository, userRepository));
   app.use('/api', favouriteRoutes(favouriteRepository));
 
   app.use(

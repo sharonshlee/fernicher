@@ -20,8 +20,14 @@ export class Product extends ModelBase {
   @Column({ nullable: true, type: 'float', array: true })
   productLocation?: number[];
 
+  @Column()
+  location!: string;
+
   @Column({ default: new Date() })
   createdAt!: Date;
+
+  @Column()
+  userId: number;
 
   @ManyToOne(() => User, (user) => user.products)
   user!: User;

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import ImageList from '@material-ui/core/ImageList';
 import ImageListItem from '@material-ui/core/ImageListItem';
@@ -7,6 +7,7 @@ import IconButton from '@material-ui/core/IconButton';
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 import './ImageSliders.scss';
 import { chunk, map } from 'lodash';
+import { ProductDialog } from '../products/ProductDialog';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -14,14 +15,15 @@ const useStyles = makeStyles((theme) => ({
     flexWrap: 'wrap',
     justifyContent: 'space-around',
     overflow: 'hidden',
-    backgroundColor: theme.palette.background.paper,
+    backgroundColor: '#DEE2E6',
   },
   imageList: {
     flexWrap: 'nowrap',
     // Promote the list into his own layer on Chrome. This cost memory but helps keeping high FPS.
     transform: 'translateZ(0)',
     width: '100%',
-    height: '200px',
+    // height: '50vh',
+    // backgroundColor: '#d3d3d3',
   },
   title: {
     color: 'white',
@@ -40,18 +42,19 @@ export default function SingleLineImageList(props: {
   const { subUsersAndProducts } = props;
 
   const classes = useStyles();
-
+  const [detail, setDetail] = useState<any>({ expanded: false, product: null });
   return (
     <div className={classes.root}>
-      <ImageList className={classes.imageList} cols={5}>
+      <ImageList className={classes.imageList} cols={5} spacing={10}>
         {map(subUsersAndProducts, (usersAndProduct) => (
           <ImageListItem key={usersAndProduct.id}>
             <img
-              height="180px"
               src={usersAndProduct.image}
               alt={usersAndProduct.name}
+              onClick={() => {
+                setDetail({ expanded: true, product: usersAndProduct });
+              }}
             />
-
             <ImageListItemBar
               title={usersAndProduct.name}
               classes={{
@@ -67,6 +70,9 @@ export default function SingleLineImageList(props: {
           </ImageListItem>
         ))}
       </ImageList>
+      {detail.product && (
+        <ProductDialog detail={detail} setDetail={setDetail} />
+      )}
     </div>
   );
 }

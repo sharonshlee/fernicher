@@ -1,9 +1,11 @@
 .sliderimg {
-  width: 100%;
-  height: 200px;
-  object-fit: cover;
+  padding: 1em;
+  background-color: #dee2e6;
+  text-align: center;
 }
-.img {
-  width: 1px;
-  height: 1px;
+img {
+  &:hover {
+    cursor: pointer;
+  }
 }
+// https://coolors.co/f8f9fa-e9ecef-dee2e6-ced4da-adb5bd-6c757d-495057-343a40-212529

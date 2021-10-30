@@ -2,6 +2,7 @@ import axios from 'axios';
 import { map } from 'lodash';
 import React, { useContext, useEffect, useState } from 'react';
 import { stateContext } from '../providers/StateProvider';
+import ImageSliders from './ImageSliders/ImageSliders';
 import Map from './Map/Map';
 
 function Home(props: any) {
@@ -23,6 +24,7 @@ function Home(props: any) {
 
   return (
     <div>
+      <ImageSliders />
       <Map />
     </div>
   );
