@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import ImageList from '@material-ui/core/ImageList';
 import ImageListItem from '@material-ui/core/ImageListItem';
@@ -8,6 +8,7 @@ import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 import './ImageSliders.scss';
 import { chunk, map } from 'lodash';
 import { ProductDialog } from '../products/ProductDialog';
+import { stateContext } from '../../providers/StateProvider';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -40,9 +41,10 @@ export default function SingleLineImageList(props: {
   subUsersAndProducts: any;
 }) {
   const { subUsersAndProducts } = props;
-
+  const { setProducts } = useContext(stateContext);
   const classes = useStyles();
   const [detail, setDetail] = useState<any>({ expanded: false, product: null });
+  const [commentExpanded, setCommentExpanded] = useState<any>({});
   return (
     <div className={classes.root}>
       <ImageList className={classes.imageList} cols={5} spacing={10}>
@@ -71,7 +73,13 @@ export default function SingleLineImageList(props: {
         ))}
       </ImageList>
       {detail.product && (
-        <ProductDialog detail={detail} setDetail={setDetail} />
+        <ProductDialog
+          detail={detail}
+          setDetail={setDetail}
+          setProducts={setProducts}
+          commentExpanded={commentExpanded}
+          setCommentExpanded={setCommentExpanded}
+        />
       )}
     </div>
   );

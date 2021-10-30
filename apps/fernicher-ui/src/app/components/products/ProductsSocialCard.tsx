@@ -23,28 +23,36 @@ import {
   DialogContent,
   DialogContentText,
   DialogTitle,
+  TextField,
 } from '@mui/material';
 import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
 import { useParams } from 'react-router-dom';
-import { isEmpty } from 'lodash';
+import { isEmpty, map, trim } from 'lodash';
 import axios from 'axios';
 import { stateContext } from '../../providers/StateProvider';
+import { Data } from '@react-google-maps/api';
 
 export default function ProductsSocialCard(props: {
   usersAndProduct: any;
+  setUsersAndProduct: any;
   showProduct?: any;
   maxWidth?: any;
   minWidth?: any;
   setExpanded: any;
   expanded: any;
+  commentExpanded: any;
+  setCommentExpanded: any;
 }) {
   const { userid } = useParams<{ userid: string }>();
   const { setMyProducts } = useContext(stateContext);
   const {
     usersAndProduct,
+    setUsersAndProduct,
     showProduct,
     expanded,
     setExpanded,
+    commentExpanded,
+    setCommentExpanded,
     maxWidth = 345,
     minWidth,
   } = props;
@@ -78,6 +86,7 @@ export default function ProductsSocialCard(props: {
   const [showDelete, setShowDelete] = useState(false);
   const [deleting, setDeleting] = useState(false);
   const [deleted, setDeleted] = useState(false);
+  const [comment, setComment] = useState('');
   return (
     <Card className={classes.root}>
       <CardHeader
@@ -167,7 +176,16 @@ export default function ProductsSocialCard(props: {
         <IconButton aria-label="share">
           <ShareIcon />
         </IconButton>
-        <IconButton aria-label="share">
+        <IconButton
+          className={clsx(classes.expand, {
+            [classes.expandOpen]: commentExpanded,
+          })}
+          onClick={() =>
+            setCommentExpanded(usersAndProduct.id, !commentExpanded)
+          }
+          aria-expanded={commentExpanded}
+          aria-label="comment"
+        >
           <ChatBubbleOutlineIcon />
         </IconButton>
         <IconButton
@@ -186,6 +204,45 @@ export default function ProductsSocialCard(props: {
           <Typography variant="body2" color="textSecondary" component="p">
             {usersAndProduct.description}
           </Typography>
+        </CardContent>
+      </Collapse>
+      <Collapse in={commentExpanded} timeout="auto" unmountOnExit>
+        <CardContent>
+          <TextField
+            margin="dense"
+            id="name"
+            label="write a comment..."
+            type="text"
+            fullWidth
+            variant="standard"
+            onChange={(e) => setComment(e.target.value)}
+            value={comment}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' && !isEmpty(trim(comment))) {
+                console.log(comment);
+                setComment('');
+                axios
+                  .post('/api/comments/new', {
+                    comment,
+                    productId: usersAndProduct.id,
+                    userId: 2,
+                  })
+                  .then((result) => {
+                    setUsersAndProduct({
+                      ...usersAndProduct,
+                      comments: [result.data, ...usersAndProduct.comments],
+                    });
+                  });
+              }
+            }}
+          />
+          {map(usersAndProduct.comments, (com) => {
+            return (
+              <div key={com.id}>
+                {com.user.firstName} - {com.comment}
+              </div>
+            );
+          })}
         </CardContent>
       </Collapse>
     </Card>
