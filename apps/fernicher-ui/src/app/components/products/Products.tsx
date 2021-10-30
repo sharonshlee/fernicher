@@ -38,6 +38,7 @@ function Products() {
       {}
     );
     setExpanded(productExpanded);
+    setCommentExpanded(productExpanded);
   }, [products]);
   const [detail, setDetail] = useState<any>({ expanded: false, product: null });
 
@@ -77,7 +78,7 @@ function Products() {
                   product: find(products, (p) => p.id === id),
                 });
               }}
-              commentExpanded={commentExpanded}
+              commentExpanded={commentExpanded[usersAndProduct.id]}
             />
           </Grid>
         ))}

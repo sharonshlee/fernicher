@@ -81,8 +81,7 @@ export default function ProductsSocialCard(props: {
     },
     avatar: {
       fontSize: 12,
-      // backgroundColor: red[500],
-      backgroundColor: '#343a40',
+      backgroundColor: red[500],
     },
   }));
   const classes = useStyles();
