@@ -23,6 +23,7 @@ import {
   DialogContentText,
   DialogTitle,
   InputAdornment,
+  InputLabel,
   TextField,
   Tooltip,
 } from '@mui/material';
@@ -32,7 +33,7 @@ import { isEmpty, map, trim } from 'lodash';
 import axios from 'axios';
 import { stateContext } from '../../providers/StateProvider';
 import { Data } from '@react-google-maps/api';
-import { AccountCircle } from '@material-ui/icons';
+import { AccountCircle, Label } from '@material-ui/icons';
 
 export default function ProductsSocialCard(props: {
   usersAndProduct: any;
@@ -83,6 +84,14 @@ export default function ProductsSocialCard(props: {
       fontSize: 12,
       backgroundColor: red[500],
     },
+    avatarComment: {
+      fontSize: 10,
+      width: '3em',
+      height: '3em',
+      margin: '0.5em',
+      padding: 0,
+      backgroundColor: green[500],
+    },
   }));
   const classes = useStyles();
   const [deleteMessage, setDeleteMessage] = useState('false');
@@ -90,6 +99,7 @@ export default function ProductsSocialCard(props: {
   const [deleting, setDeleting] = useState(false);
   const [deleted, setDeleted] = useState(false);
   const [comment, setComment] = useState('');
+  console.log(usersAndProduct);
   return (
     <Card className={classes.root}>
       <CardHeader
@@ -172,24 +182,32 @@ export default function ProductsSocialCard(props: {
       <CardActions disableSpacing>
         <Tooltip title="Add to Favourite">
           <IconButton aria-label="add to favorites">
-            {/* badgeContent to count from fav table, how many fav for this product. */}
-            <Badge badgeContent={usersAndProduct.id} color="error">
+            <Badge
+              badgeContent={
+                usersAndProduct.favourites && usersAndProduct.favourites.length
+              }
+              color="error"
+            >
               <FavoriteBorderIcon />
             </Badge>
           </IconButton>
         </Tooltip>
         <Tooltip title="Comment">
           <IconButton
-            className={clsx(classes.expand, {
-              [classes.expandOpen]: commentExpanded,
-            })}
             onClick={() =>
               setCommentExpanded(usersAndProduct.id, !commentExpanded)
             }
             aria-expanded={commentExpanded}
             aria-label="comment"
           >
-            <ChatBubbleOutlineIcon />
+            <Badge
+              badgeContent={
+                usersAndProduct.comments && usersAndProduct.comments.length
+              }
+              color="error"
+            >
+              <ChatBubbleOutlineIcon />
+            </Badge>
           </IconButton>
         </Tooltip>
         <Tooltip title="Description">
@@ -217,17 +235,6 @@ export default function ProductsSocialCard(props: {
           <TextField
             id="name"
             type="text"
-            // InputProps={{
-            //   startAdornment: (
-            //     <InputAdornment position="start">
-            //       {/* <AccountCircle />  */}
-            //       <Avatar aria-label="firstName" className={classes.avatar}>
-            //         {/* use login info user name */}
-            //         {usersAndProduct.user.firstName}
-            //       </Avatar>
-            //     </InputAdornment>
-            //   ),
-            // }}
             label="write a comment..."
             margin="dense"
             fullWidth
@@ -236,13 +243,12 @@ export default function ProductsSocialCard(props: {
             value={comment}
             onKeyDown={(e) => {
               if (e.key === 'Enter' && !isEmpty(trim(comment))) {
-                console.log(comment);
                 setComment('');
                 axios
                   .post('/api/comments/new', {
                     comment,
                     productId: usersAndProduct.id,
-                    userId: 2,
+                    userId: 1,
                   })
                   .then((result) => {
                     setUsersAndProduct({
@@ -255,8 +261,31 @@ export default function ProductsSocialCard(props: {
           />
           {map(usersAndProduct.comments, (com) => {
             return (
-              <div key={com.id}>
-                {com.user.firstName} - {com.comment}
+              <div key={com.id} style={{ display: 'flex', margin: '0.5em' }}>
+                <InputLabel
+                  style={{
+                    border: '1px solid',
+                    borderRadius: '5em',
+                    width: '100%',
+                    whiteSpace: 'pre-wrap',
+                  }}
+                >
+                  <div
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      width: '100%',
+                    }}
+                  >
+                    <Avatar
+                      aria-label="firstName"
+                      className={classes.avatarComment}
+                    >
+                      {com.user.firstName}
+                    </Avatar>{' '}
+                    {com.comment}
+                  </div>
+                </InputLabel>
               </div>
             );
           })}

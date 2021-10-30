@@ -38,7 +38,15 @@ function Products() {
       {}
     );
     setExpanded(productExpanded);
-    setCommentExpanded(productExpanded);
+    !commentExpanded && setCommentExpanded(productExpanded);
+    detail.product &&
+      setDetail((prev: any) => {
+        console.log('>> setDetail effect prev', prev, products);
+        return {
+          ...prev,
+          product: find(products, (p) => p.id === prev.product.id),
+        };
+      });
   }, [products]);
   const [detail, setDetail] = useState<any>({ expanded: false, product: null });
 
@@ -83,7 +91,7 @@ function Products() {
           </Grid>
         ))}
       </Grid>
-      {detail.product && (
+      {detail.expanded && (
         <ProductDialog
           setProducts={setProducts}
           detail={detail}

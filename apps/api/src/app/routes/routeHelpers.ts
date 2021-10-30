@@ -31,10 +31,14 @@ export const loadProductsCommentsUsers = async (
 
   const updatedProducts = map(products, (product) => ({
     ...product,
-    comments: map(product.comments, (comment) => ({
-      ...comment,
-      user: find(users, (user) => user.id === comment.userId),
-    })),
+    comments: orderBy(
+      map(product.comments, (comment) => ({
+        ...comment,
+        user: find(users, (user) => user.id === comment.userId),
+      })),
+      ['id'],
+      ['desc']
+    ),
   }));
   return updatedProducts;
 };
