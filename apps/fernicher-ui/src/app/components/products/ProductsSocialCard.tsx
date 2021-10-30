@@ -172,10 +172,6 @@ export default function ProductsSocialCard(props: {
             <FavoriteIcon />
           </Badge>
         </IconButton>
-
-        <IconButton aria-label="share">
-          <ShareIcon />
-        </IconButton>
         <IconButton
           className={clsx(classes.expand, {
             [classes.expandOpen]: commentExpanded,
