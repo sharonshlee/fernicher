@@ -168,7 +168,6 @@ const Sidebar = ({ position, toggleSlider, open, menu }) => {
       axios
         .post('/api/users')
         .then((res) => {
-          console.log('RESPONSE IS :', res.data);
           const resFavs = res.data.filter(
             (el) => el.id === exampleLoggedInId
           )[0].favourites;

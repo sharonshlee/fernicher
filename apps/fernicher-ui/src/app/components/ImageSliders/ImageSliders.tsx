@@ -35,7 +35,7 @@ function ImageSliders() {
         // disableDotsControls={true}
       >
         {map(chunk(usersAndProducts, 5), (subUsersAndProducts: any) => (
-          <SingleLineImageList subUsersAndProducts={subUsersAndProducts} />
+          <SingleLineImageList key={subUsersAndProducts} subUsersAndProducts={subUsersAndProducts} />
         ))}
       </AliceCarousel>
     </div>

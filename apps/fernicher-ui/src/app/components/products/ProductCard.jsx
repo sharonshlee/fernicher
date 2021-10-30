@@ -42,18 +42,21 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function ProductsSocialCard({title, date, description, firstName, image}) {
+export default function ProductsSocialCard({title, date, description, firstName, image, email}) {
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
   const [msgClicked, setMsgClicked] = React.useState(false);
 
-
+  console.log("SELECTED IS THIS: ", email)
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
 
   if (msgClicked) {
-    return <Redirect to='/chats' />
+    return <Redirect to={{
+      pathname: '/chats',
+      state: {email}
+    }} />
   }
 
   return (

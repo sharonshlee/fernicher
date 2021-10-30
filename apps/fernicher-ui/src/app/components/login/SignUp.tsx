@@ -149,6 +149,37 @@ export default function SignUp(props: {
                   axios
                     .post('/api/users/new', user)
                     .then(() => setSignedUp(true));
+
+                  //Sign user up for chatengine.io as well
+                  console.log("USER IS THIS :", user);
+                  const data = {
+                    username: user.email,
+                    secret: user.password,
+                    email: user.email,
+                    first_name: user.firstName,
+                    last_name: user.lastName
+                  }
+
+                  // `{
+                  //   "username": ${user.email},
+                  //   "secret": ${user.password},
+                  //   "email": ${user.email},
+                  //   "first_name": ${user.firstName},
+                  //   "last_name": ${user.lastName}
+                  // }`
+
+                  const headers = {
+                    'PRIVATE-KEY': '9663adb6-d823-4a20-935f-b7381ba20105'
+                  }
+
+                //   axios.post('https://api/chatengine.io/users/', JSON.stringify(data), { headers
+                //   }
+                //   ).then(function (response) {
+                //     console.log(JSON.stringify(response.data));
+                //   })
+                //   .catch(function (error) {
+                //     console.log(error);
+                //   })
                 }}
               >
                 Sign Up

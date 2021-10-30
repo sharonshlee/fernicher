@@ -9,6 +9,7 @@ const LoggedInProvider = props => {
   useEffect(() => {
     axios.get('/api/isLogged')
     .then((res) => {
+      console.log("RES DATA: ", res.data)
       setState(res.data);
     })
   }, [])

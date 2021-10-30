@@ -16,27 +16,29 @@ import StateProvider from './providers/StateProvider';
 
 const App = () => {
   return (
+
     <StateProvider>
-      <Navbar />
-      <div
-        style={{
-          width: '100%',
-          margin: 'auto',
-        }}
-      >
-        <Switch>
-          <Route path="/users/:userid/products" component={UserProducts} />
-          <Route path="/products/:cat" component={Products} />
-          <Route path="/rooms/:cat" component={Rooms} />
-          <Route path="/fav" component={Favourites} />
-          {/* <Route path="/login" component={Login} /> */}
-          <Route path="/chats" component={Chats} />
-          <Route path="/" component={Home} />
-        </Switch>
-        {/* <Route path="/" element={<Home authed={true}/>} /> */}
-        <Footer />
-      </div>
-      <BackToTop />
+      <LoggedInProvider>
+        <Navbar />
+        <div
+          style={{
+            width: '100%',
+            margin: 'auto',
+          }}
+          >
+          <Switch>
+            <Route path="/users/:userid/products" component={UserProducts} />
+            <Route path="/products/:cat" component={Products} />
+            <Route path="/rooms/:cat" component={Rooms} />
+            <Route path="/fav" component={Favourites} />
+            <Route path="/chats" component={Chats} />
+            <Route path="/" component={Home} />
+          </Switch>
+          {/* <Route path="/" element={<Home authed={true}/>} /> */}
+          <Footer />
+        </div>
+        <BackToTop />
+      </LoggedInProvider>
     </StateProvider>
   )
 };

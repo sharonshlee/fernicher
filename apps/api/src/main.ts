@@ -21,7 +21,7 @@ createConnection({
   port: Number(process.env.DB_PORT),
   // dropSchema: true, // if api failed to start, uncomment this save the file, and comment it back, then do dbreset
   synchronize: process.env.DB_SYNCHRONIZE === 'true',
-  entities: [Category, Favourite, Product, User], // Entities/Tables to be included in databae,
+  entities: [Category, Favourite, Product, User], // Entities/Tables to be included in databae
 }).then((connection) => {
   /** TypeORM repositories variables, one for each table */
   const userRepository = connection.getRepository(User);
