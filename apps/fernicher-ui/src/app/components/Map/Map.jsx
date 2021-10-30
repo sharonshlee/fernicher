@@ -1,21 +1,18 @@
-import React, { useState, useRef, useCallback } from 'react';
+import React, { useState, useRef, useCallback, useContext } from 'react';
 import {
   GoogleMap,
   useLoadScript,
   Marker,
   InfoWindow,
 } from '@react-google-maps/api';
-import { formatRelative } from 'date-fns';
 import '@reach/combobox/styles.css';
 import mapStyles from './mapStyles';
 import ProductCard from '../products/ProductCard';
 import useViewport from '../../hooks/useViewport';
+import { stateContext } from '../../providers/StateProvider';
 
 const libraries = ['places'];
-const mapContainerStyle = {
-  width: '100vw',
-  height: '100vh',
-};
+
 const center = {
   lat: 53.83579,
   lng: -79.55343,
@@ -26,11 +23,16 @@ const options = {
   zoomControl: true,
 };
 
-const Map = ({ usersAndProducts }) => {
+const Map = ({ mapTitle = '', width = '100%', height = '80vh' }) => {
+  const { products } = useContext(stateContext);
+  const mapContainerStyle = {
+    width,
+    height,
+  };
   const [selected, setSelected] = useState(null);
   const { viewport, setViewPort } = useViewport();
   const { isLoaded, loadError } = useLoadScript({
-    googleMapsApiKey: "AIzaSyAlh7RkuE1fQuj9D-L9-WQqpFoQaq0CBWk",
+    googleMapsApiKey: 'AIzaSyAlh7RkuE1fQuj9D-L9-WQqpFoQaq0CBWk',
     libraries,
   });
 
@@ -42,7 +44,7 @@ const Map = ({ usersAndProducts }) => {
   if (loadError) return <h1>Error loading maps</h1>;
   if (!isLoaded) return <h1>Loading Maps</h1>;
 
-  const products = usersAndProducts.map((product, i) => (
+  const productMarkers = products.map((product, i) => (
     <Marker
       key={i}
       position={{
@@ -60,15 +62,18 @@ const Map = ({ usersAndProducts }) => {
     />
   ));
 
-  console.log('UsersandProducts :', usersAndProducts)
-
   return (
     <div>
       <h2 className="map-title">
-        FerniCher{' '}
-        <span role="img" aria-label="couch">
-          🛋
-        </span>
+        {mapTitle && mapTitle}
+        {!mapTitle && (
+          <>
+            FerniCher{' '}
+            <span role="img" aria-label="couch">
+              🛋
+            </span>
+          </>
+        )}
       </h2>
       <GoogleMap
         mapContainerStyle={mapContainerStyle}
@@ -77,7 +82,7 @@ const Map = ({ usersAndProducts }) => {
         options={options}
         onLoad={onMapLoad}
       >
-        {products}
+        {productMarkers}
         {selected && (
           <InfoWindow
             position={{

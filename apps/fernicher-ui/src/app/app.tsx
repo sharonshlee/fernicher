@@ -11,31 +11,33 @@ import Favourites from './components/Favourites/Favourites';
 import ImageSliders from './components/ImageSliders/ImageSliders';
 import BackToTop from './components/utilities/BackToTop';
 import Chats from './components/Chats/Chats';
-import { LoggedInProvider } from "./Providers/LoggedInContext";
+import { LoggedInProvider } from "./providers/LoggedInContext";
+import StateProvider from './providers/StateProvider';
 
 const App = () => {
   return (
-    <LoggedInProvider>
-      <Router>
-      <Navbar />
-      <ImageSliders />
-      <CssBaseline />
-        <Switch>
-          <Route path="/products/:cat" component={Products} />
-          <Route path="/rooms/:cat" component={Rooms} />
-          <Route path="/fav" component={Favourites} />
-          {/* <Route path="/login" component={Login} /> */}
-          <Route path="/chats" component={Chats} />
-          <Route path="/">
-            <Home />
-          </Route>
-        </Switch>
-      </Router>
-      {/* <Route path="/" element={<Home authed={true}/>} /> */}
-      <Footer />
-      <BackToTop />
-    </LoggedInProvider>
-  );
+    <StateProvider>
+      <LoggedInProvider>
+        <Router>
+        <Navbar />
+        <ImageSliders />
+        <CssBaseline />
+          <Switch>
+            <Route path="/products/:cat" component={Products} />
+            <Route path="/rooms/:cat" component={Rooms} />
+            <Route path="/fav" component={Favourites} />
+            {/* <Route path="/login" component={Login} /> */}
+            <Route path="/chats" component={Chats} />
+            <Route path="/">
+              <Home />
+            </Route>
+          </Switch>
+        </Router>
+        <Footer />
+        <BackToTop />
+      </LoggedInProvider>
+    </StateProvider>
+  )
 };
 
 export default App;

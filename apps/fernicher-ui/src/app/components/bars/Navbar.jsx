@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { Link, Route } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { alpha, makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -18,14 +18,14 @@ import FavoriteIcon from '@material-ui/icons/Favorite';
 import LocationOnIcon from '@material-ui/icons/LocationOn';
 import Tooltip from '@material-ui/core/Tooltip';
 import Button from '@material-ui/core/Button';
+import MenuIcon from '@material-ui/icons/Menu';
 import AddAPhotoIcon from '@material-ui/icons/AddAPhoto';
 import Sidebar from './Sidebar';
 import { AddProduct } from '../products/AddProduct';
 import SignIn from '../login/SignIn';
 import SignUp from '../login/SignUp';
-
-
-import { ClassRounded } from '@material-ui/icons';
+import axios from 'axios';
+import { stateContext } from '../../providers/StateProvider';
 
 const useStyles = makeStyles((theme) => ({
   grow: {
@@ -186,10 +186,22 @@ export default function PrimarySearchAppBar() {
   const [showSignIn, setShowSignIn] = useState(false);
   const [showSignUp, setShowSignUp] = useState(false);
   const history = useHistory();
+  const [searchValue, setSearchValue] = useState('');
+  const { setProducts } = useContext(stateContext);
+
   return (
     <div className={classes.grow}>
       <AppBar position="static" style={{ color: 'black', background: 'white' }}>
         <Toolbar id="back-to-top-anchor">
+          <IconButton
+            edge="start"
+            className={classes.menuButton}
+            color="inherit"
+            aria-label="open drawer"
+            onClick={toggleSlider(position, true, 'main')}
+          >
+            <MenuIcon />
+          </IconButton>
           <Sidebar {...state} toggleSlider={toggleSlider} />
           <Button onClick={() => history.push('/')}>Fernicher</Button>
           <Button onClick={toggleSlider('left', true, 'products')}>
@@ -206,6 +218,26 @@ export default function PrimarySearchAppBar() {
                 root: classes.inputRoot,
                 input: classes.inputInput,
               }}
+              onChange={(e) => {
+                const { value } = e.target;
+                setSearchValue(value);
+                const filter = {
+                  name: '',
+                  condition: '',
+                  description: '',
+                  orderBy: 'createdAt',
+                  desc: true,
+                  take: 1000,
+                };
+                filter.name = value;
+                filter.condition = value;
+                filter.description = value;
+                axios.post('/api/products/search', filter).then((result) => {
+                  setProducts(result.data);
+                  history.push('/products/search');
+                });
+              }}
+              value={searchValue}
               inputProps={{ 'aria-label': 'search' }}
             />
           </div>
@@ -240,9 +272,10 @@ export default function PrimarySearchAppBar() {
             <IconButton
               aria-label="show 17 new notifications"
               color="inherit"
+              onClick={toggleSlider('right', true, 'favourites')}
             >
               <Badge badgeContent={5} color="secondary">
-                <FavoriteIcon onClick={toggleSlider('right', true, 'favourites')}/>
+                <FavoriteIcon />
               </Badge>
             </IconButton>
             <IconButton aria-label="show 4 new mails" color="inherit">

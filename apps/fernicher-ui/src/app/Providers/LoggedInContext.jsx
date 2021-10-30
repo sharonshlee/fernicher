@@ -12,6 +12,7 @@ const LoggedInProvider = props => {
       setState(res.data);
     })
   }, [])
+
   return (
     <LoggedInContext.Provider value={[state, setState]}>
       {props.children}

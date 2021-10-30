@@ -1,15 +1,13 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios'
+import React, { useState, useEffect, useContext } from 'react';
+import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import MobileRightMenuSlider from '@material-ui/core/Drawer';
-import MenuIcon from '@material-ui/icons/Menu';
 import '../ImageSliders/ImageSliders.scss';
 
 import {
   ListItem,
   ListItemIcon,
-  IconButton,
   ListItemText,
   Divider,
   List,
@@ -17,9 +15,9 @@ import {
 } from '@material-ui/core';
 import { Home } from '@material-ui/icons';
 import LoyaltyOutlinedIcon from '@material-ui/icons/LoyaltyOutlined';
-import LivingIcon from '@mui/icons-material/Living';
 import ChairIcon from '@mui/icons-material/Chair';
 import BedroomBabyIcon from '@mui/icons-material/BedroomBaby';
+import { stateContext } from '../../providers/StateProvider';
 
 // import BedroomBabyIcon from '@mui/icons-material';
 // import BedIcon from '@mui/icons-material/Bed';
@@ -44,7 +42,6 @@ const useStyles = makeStyles((theme) => ({
 const exampleLoggedInId = 1;
 
 const Sidebar = ({ position, toggleSlider, open, menu }) => {
-
   const [menus, setMenus] = useState({
     main: [
       {
@@ -162,18 +159,21 @@ const Sidebar = ({ position, toggleSlider, open, menu }) => {
         listPath: '/products/recent',
       },
     ],
-  })
+  });
+  const { setProducts } = useContext(stateContext);
 
- // Will change this with useContext after our lecture
+  // Will change this with useContext after our lecture
   useEffect(() => {
-    axios
-      .post('/api/users')
-      .then((res) => {
-        if (menu === 'favourites') {
-          console.log("RESPONSE IS :", res.data)
-          const resFavs = res.data.filter(el => el.id ===  exampleLoggedInId)[0].favourites;
+    if (menu === 'favourites') {
+      axios
+        .post('/api/users')
+        .then((res) => {
+          console.log('RESPONSE IS :', res.data);
+          const resFavs = res.data.filter(
+            (el) => el.id === exampleLoggedInId
+          )[0].favourites;
           const favourites = resFavs.map((el, i) => ({
-            listText: `${i+1}: ${el.product.name}`,
+            listText: `${i + 1}: ${el.product.name}`,
             listPath: '/',
             listImage: (
               <img
@@ -182,21 +182,22 @@ const Sidebar = ({ position, toggleSlider, open, menu }) => {
                 style={{ height: '50px' }}
               />
             ),
-            latlng: [el.product.productLocation[0], el.product.productLocation[1]]
+            latlng: [
+              el.product.productLocation[0],
+              el.product.productLocation[1],
+            ],
+            onClick: () => {
+              setProducts([el.product]);
+            },
           }));
-          setMenus(prev => ({
+          setMenus((prev) => ({
             ...prev,
-            favourites
-          })
-        )}
-
-
-
-
+            favourites,
+          }));
         })
-      .catch((err) => console.log('ERR1 HAPPENED', err));
+        .catch((err) => console.log('ERR1 HAPPENED', err));
+    }
   }, [menu]);
-
 
   const classes = useStyles();
 
@@ -220,7 +221,9 @@ const Sidebar = ({ position, toggleSlider, open, menu }) => {
             ContainerProps={lsItem.latlng}
             to={lsItem.listPath}
             style={{ display: 'flex', flexDirection: 'column' }}
-            onClick={toggleSlider(position, false, 'main')}
+            onClick={() => {
+              lsItem.onClick && lsItem.onClick();
+            }}
           >
             <ListItemIcon className={classes.listItem}>
               {lsItem.listIcon && lsItem.listIcon}
@@ -237,27 +240,14 @@ const Sidebar = ({ position, toggleSlider, open, menu }) => {
   );
   // if position === right, for user to signup
 
-
   return (
-    <>
-      <IconButton
-        edge="start"
-        className={classes.menuButton}
-        color="inherit"
-        aria-label="open drawer"
-        onClick={toggleSlider(position, true, 'main')}
-      >
-        <MenuIcon />
-      </IconButton>
-
-      <MobileRightMenuSlider
-        anchor={position}
-        open={open}
-        onClose={toggleSlider(position, false, 'main')}
-      >
-        {sideList(position)}
-      </MobileRightMenuSlider>
-    </>
+    <MobileRightMenuSlider
+      anchor={position}
+      open={open}
+      onClose={toggleSlider(position, false, menu)}
+    >
+      {sideList(position)}
+    </MobileRightMenuSlider>
   );
 };
 
