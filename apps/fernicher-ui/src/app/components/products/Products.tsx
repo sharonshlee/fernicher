@@ -43,10 +43,10 @@ function Products() {
 
   const [expanded, setExpanded] = useState<any>({});
   return (
-    <div>
+    <div className={'mainContent'}>
       <h1>{upperFirst(cat)}</h1>
       {isEmpty(products) && <h3>No products found.</h3>}
-      <Grid container spacing={4} style={{ width: '100%', margin: 'auto' }}>
+      <Grid container spacing={4} style={{ width: '100%' }}>
         {map(products, (usersAndProduct: any) => (
           <Grid item md={3}>
             <ProductsSocialCard

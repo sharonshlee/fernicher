@@ -10,7 +10,7 @@ export default function MasonryImageList(props: {
 }) {
   const { products, setDetail } = props;
   return (
-    <Box sx={{ margin: 'auto', width: 1000, height: 850, overflowY: 'scroll' }}>
+    <Box sx={{ width: '100%' }}>
       <ImageList variant="masonry" cols={3} gap={20}>
         {map(products, (product: any) => (
           // arrObj.products.image

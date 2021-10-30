@@ -24,7 +24,7 @@ function Rooms() {
   }, [cat]);
   const [detail, setDetail] = useState<any>({ expanded: false, product: null });
   return (
-    <div>
+    <div className={'mainContent'}>
       <h1>{category.name}</h1>
       <MasonryImageList products={category.products} setDetail={setDetail} />
       {detail.product && (
