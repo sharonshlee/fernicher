@@ -17,13 +17,6 @@ export const userRoutes = (userRepository: Repository<User>) => {
     return userRepository.findOne(userId).then((user) => res.send(user));
   });
 
-  userRouter.get('/isLogged', (req, res) => {
-    if (req.session.user) {
-      return res.send(req.session.user)
-    }
-    return res.send(null);
-  });
-
   // Create new user
   userRouter.post('/users/new', (req, res) => {
     const newUser = req.body;

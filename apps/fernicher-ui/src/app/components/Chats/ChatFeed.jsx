@@ -11,8 +11,6 @@ const ChatFeed = (props) => {
   // console.log("userNAmes ARE :", userName)
   // console.log("Messages ARE :", messages)
 
-  console.log("ALL PROPS ARE: ", props)
-
   const renderReadReceipts = (message, isMyMessage) => chat.people.map((person, index) => person.last_read === message.id && (
       <div
         key={`read_${index}`}

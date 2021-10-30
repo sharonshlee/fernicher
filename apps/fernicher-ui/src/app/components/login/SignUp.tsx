@@ -148,38 +148,26 @@ export default function SignUp(props: {
                 onClick={() => {
                   axios
                     .post('/api/users/new', user)
-                    .then(() => setSignedUp(true));
+                    .then(() => {
+                    setSignedUp(true)
+                    console.log("IT IT HIT THIS: ", user)
+                    //Sign user up for chatengine.io as well
+                    const data = {
+                      username: user.email,
+                      secret: user.password,
+                      first_name: user.firstName,
+                      last_name: user.lastName
+                    }
+                    const headers = {
+                      'PRIVATE-KEY': 'a80dec0b-4e13-4a61-96c8-a1c87e79dd2e'
+                    }
 
-                  //Sign user up for chatengine.io as well
-                  console.log("USER IS THIS :", user);
-                  const data = {
-                    username: user.email,
-                    secret: user.password,
-                    email: user.email,
-                    first_name: user.firstName,
-                    last_name: user.lastName
-                  }
-
-                  // `{
-                  //   "username": ${user.email},
-                  //   "secret": ${user.password},
-                  //   "email": ${user.email},
-                  //   "first_name": ${user.firstName},
-                  //   "last_name": ${user.lastName}
-                  // }`
-
-                  const headers = {
-                    'PRIVATE-KEY': '9663adb6-d823-4a20-935f-b7381ba20105'
-                  }
-
-                //   axios.post('https://api/chatengine.io/users/', JSON.stringify(data), { headers
-                //   }
-                //   ).then(function (response) {
-                //     console.log(JSON.stringify(response.data));
-                //   })
-                //   .catch(function (error) {
-                //     console.log(error);
-                //   })
+                    axios.post('https://api/chatengine.io/users/', data, { headers
+                    })
+                    .catch(function (error) {
+                      console.log("ERROR IS", error);
+                    })
+                  });
                 }}
               >
                 Sign Up
