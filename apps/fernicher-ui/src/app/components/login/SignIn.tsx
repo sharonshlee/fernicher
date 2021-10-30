@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -12,8 +12,9 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Dialog } from '@mui/material';
-import {Redirect} from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import axios from 'axios';
+import { LoggedInContext } from '../../providers/LoggedInContext';
 
 function Copyright(props: any) {
   return (
@@ -43,9 +44,10 @@ export default function SignIn(props: {
   const [signInData, setSignInData] = useState({ email: '', password: '' });
   const [loginError, setLoginError] = useState(false);
   const [loggedIn, setLoggedIn] = useState(false);
+  const { setState } = useContext(LoggedInContext);
 
   if (loggedIn) {
-    return <Redirect to='/'/>
+    return <Redirect to="/" />;
   }
 
   return (
@@ -111,9 +113,10 @@ export default function SignIn(props: {
                     .post('/api/users/signin', signInData)
                     .then((result) => {
                       setLoggedIn(true);
+                      setState(result.data);
                     })
                     .catch((err) => {
-                      setLoginError(true)
+                      setLoginError(true);
                     });
                 }}
               >

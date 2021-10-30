@@ -3,22 +3,21 @@ import axios from 'axios';
 
 const LoggedInContext = React.createContext();
 
-const LoggedInProvider = props => {
+const LoggedInProvider = (props) => {
   const [state, setState] = useState(null);
 
-  useEffect(() => {
-    axios.get('/api/isLogged')
-    .then((res) => {
-      console.log("RES DATA: ", res.data)
-      setState(res.data);
-    })
-  }, [])
+  // useEffect(() => {
+  //   axios.get('/api/isLogged')
+  //   .then((res) => {
+  //     setState(res.data);
+  //   })
+  // }, [])
 
   return (
-    <LoggedInContext.Provider value={[state, setState]}>
+    <LoggedInContext.Provider value={{ state, setState }}>
       {props.children}
     </LoggedInContext.Provider>
-  )
-}
+  );
+};
 
 export { LoggedInContext, LoggedInProvider };

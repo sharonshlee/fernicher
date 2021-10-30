@@ -64,7 +64,7 @@ const Chats = (props) => {
       return <ChatFeed {...finalProps}/>
     }}
     />
-  )
-}
+  );
+};
 
 export default Chats;
