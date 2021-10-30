@@ -3,3 +3,4 @@ export * from './users';
 export * from './categories';
 export * from './favourites';
 export * from './dbreset';
+export * from './comments';

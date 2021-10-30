@@ -58,7 +58,7 @@ export const userRoutes = (userRepository: Repository<User>) => {
 
   userRouter.delete('/users/:userId', (req, res) => {
     const userId = req.params.userId;
-    return userRepository.delete(userId).then((users) => res.send(users));
+    return userRepository.delete(userId).then(() => res.end());
   });
 
   return userRouter;

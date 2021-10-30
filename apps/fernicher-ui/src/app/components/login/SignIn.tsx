@@ -25,8 +25,8 @@ function Copyright(props: any) {
       {...props}
     >
       {'Copyright © '}
-      <Link color="inherit" href="https://mui.com/">
-        Your Website
+      <Link color="inherit" href="https://fernicher.com/">
+        Fernicher
       </Link>{' '}
       {new Date().getFullYear()}
       {'.'}
@@ -122,12 +122,12 @@ export default function SignIn(props: {
               >
                 Sign In
               </Button>
-              <Grid container>
-                <Grid item xs>
+              <Grid container justifyContent="flex-end">
+                {/* <Grid item xs>
                   <Link href="#" variant="body2">
                     Forgot password?
                   </Link>
-                </Grid>
+                </Grid> */}
                 <Grid item>
                   <Link
                     variant="body2"

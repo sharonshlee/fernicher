@@ -16,7 +16,7 @@ import ShareIcon from '@material-ui/icons/Share';
 import ChatIcon from '@mui/icons-material/Chat';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
-import {Redirect} from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import { SettingsInputAntennaTwoTone } from '@material-ui/icons';
 
 const useStyles = makeStyles((theme) => ({
@@ -42,21 +42,32 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function ProductsSocialCard({title, date, description, firstName, image, email}) {
+export default function ProductsSocialCard({
+  title,
+  date,
+  description,
+  firstName,
+  image,
+  email,
+}) {
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
   const [msgClicked, setMsgClicked] = React.useState(false);
 
-  console.log("SELECTED IS THIS: ", email)
+  console.log('SELECTED IS THIS: ', email);
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
 
   if (msgClicked) {
-    return <Redirect to={{
-      pathname: '/chats',
-      state: {email}
-    }} />
+    return (
+      <Redirect
+        to={{
+          pathname: '/chats',
+          state: { email },
+        }}
+      />
+    );
   }
 
   return (
@@ -75,11 +86,7 @@ export default function ProductsSocialCard({title, date, description, firstName,
         title={title}
         subheader={date}
       />
-      <CardMedia
-        className={classes.media}
-        image={image}
-        title="Yellow Couch"
-      />
+      <CardMedia className={classes.media} image={image} title="Yellow Couch" />
       <CardContent>
         <Typography variant="body2" color="textSecondary" component="p">
           {description}
@@ -93,10 +100,10 @@ export default function ProductsSocialCard({title, date, description, firstName,
           <ShareIcon />
         </IconButton>
         <IconButton
-        aria-label="share"
-        onClick={() => {
-          setMsgClicked(true);
-        }}
+          aria-label="share"
+          onClick={() => {
+            setMsgClicked(true);
+          }}
         >
           <ChatIcon />
         </IconButton>

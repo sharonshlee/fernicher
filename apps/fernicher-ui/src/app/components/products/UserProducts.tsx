@@ -31,10 +31,15 @@ function UserProducts() {
       {}
     );
     setExpanded(productExpanded);
+    setCommentExpanded(productExpanded);
   }, [myProducts, userid]);
   const [detail, setDetail] = useState<any>({ expanded: false, product: null });
 
   const [expanded, setExpanded] = useState<any>({});
+  const [commentExpanded, setCommentExpanded] = useState<any>({
+    expanded: false,
+    comments: null,
+  });
   return (
     <div>
       <h1>{upperFirst('my products')}</h1>
@@ -43,8 +48,14 @@ function UserProducts() {
         {map(myProducts, (usersAndProduct: any) => (
           <Grid item md={3}>
             <ProductsSocialCard
+              setUsersAndProduct={(product: any) =>
+                setMyProducts((prev: []) => [...prev, product])
+              }
               setExpanded={(id: number, isExpanded: boolean) =>
                 setExpanded({ ...expanded, [id]: isExpanded })
+              }
+              setCommentExpanded={(id: number, isExpanded: boolean) =>
+                setCommentExpanded({ ...expanded, [id]: isExpanded })
               }
               expanded={expanded[usersAndProduct.id]}
               key={usersAndProduct.id}
@@ -55,12 +66,18 @@ function UserProducts() {
                   product: find(myProducts, (p) => p.id === id),
                 });
               }}
+              commentExpanded={commentExpanded[usersAndProduct.id]}
             />
           </Grid>
         ))}
       </Grid>
       {detail.product && (
-        <ProductDialog detail={detail} setDetail={setDetail} />
+        <ProductDialog
+          detail={detail}
+          setDetail={setDetail}
+          commentExpanded={commentExpanded}
+          setCommentExpanded={setCommentExpanded}
+        />
       )}
       <br />
       <br />

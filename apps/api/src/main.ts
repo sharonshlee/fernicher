@@ -1,11 +1,12 @@
 import * as express from 'express';
 import { createConnection } from 'typeorm';
-import { Category, Favourite, Product, User } from '@fernicher/models';
+import { Category, Favourite, Product, User, Comment } from '@fernicher/models';
 import {
   userRoutes,
   productRoutes,
   categoryRoutes,
   favouriteRoutes,
+  commentRoutes,
   dbresetRoutes,
 } from './app/routes';
 
@@ -21,13 +22,14 @@ createConnection({
   port: Number(process.env.DB_PORT),
   // dropSchema: true, // if api failed to start, uncomment this save the file, and comment it back, then do dbreset
   synchronize: process.env.DB_SYNCHRONIZE === 'true',
-  entities: [Category, Favourite, Product, User], // Entities/Tables to be included in databae
+  entities: [Category, Favourite, Product, User, Comment], // Entities/Tables to be included in databae,
 }).then((connection) => {
   /** TypeORM repositories variables, one for each table */
   const userRepository = connection.getRepository(User);
   const productRepository = connection.getRepository(Product);
   const categoryRepository = connection.getRepository(Category);
   const favouriteRepository = connection.getRepository(Favourite);
+  const commentRepository = connection.getRepository(Comment);
 
   /** Express server */
   const app = express();
@@ -37,10 +39,12 @@ createConnection({
 
   /** Use CookieParser and CookieSession */
   app.use(cookieParser());
-  app.use(cookieSession({
-    name: 'session',
-    keys: ['keys1']
-  }));
+  app.use(
+    cookieSession({
+      name: 'session',
+      keys: ['keys1'],
+    })
+  );
   /** Routes */
   app.use('/api', userRoutes(userRepository));
   app.use(
@@ -49,6 +53,10 @@ createConnection({
   );
   app.use('/api', categoryRoutes(categoryRepository, userRepository));
   app.use('/api', favouriteRoutes(favouriteRepository));
+  app.use(
+    '/api',
+    commentRoutes(commentRepository, productRepository, userRepository)
+  );
 
   app.use(
     '/api',

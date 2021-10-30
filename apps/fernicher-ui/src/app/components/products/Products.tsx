@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import Grid from '@material-ui/core/Grid';
 import ProductsSocialCard from './ProductsSocialCard';
-import { find, isEmpty, map, reduce, upperFirst } from 'lodash';
+import { filter, find, isEmpty, map, reduce, upperFirst } from 'lodash';
 import { useParams } from 'react-router-dom';
 import { stateContext } from '../../providers/StateProvider';
 import Map from '../Map/Map';
@@ -38,10 +38,21 @@ function Products() {
       {}
     );
     setExpanded(productExpanded);
+    !commentExpanded && setCommentExpanded(productExpanded);
+    detail.product &&
+      setDetail((prev: any) => {
+        console.log('>> setDetail effect prev', prev, products);
+        return {
+          ...prev,
+          product: find(products, (p) => p.id === prev.product.id),
+        };
+      });
   }, [products]);
   const [detail, setDetail] = useState<any>({ expanded: false, product: null });
 
   const [expanded, setExpanded] = useState<any>({});
+  const [commentExpanded, setCommentExpanded] = useState<any>({});
+
   return (
     <div className={'mainContent'}>
       <h1>{upperFirst(cat)}</h1>
@@ -50,8 +61,21 @@ function Products() {
         {map(products, (usersAndProduct: any) => (
           <Grid item md={3}>
             <ProductsSocialCard
+              setUsersAndProduct={(product: any) => {
+                setProducts((prev: any[]) => {
+                  return map(prev, (p) => {
+                    if (p.id === product.id) {
+                      return product;
+                    }
+                    return p;
+                  });
+                });
+              }}
               setExpanded={(id: number, isExpanded: boolean) =>
                 setExpanded({ ...expanded, [id]: isExpanded })
+              }
+              setCommentExpanded={(id: number, isExpanded: boolean) =>
+                setCommentExpanded({ ...expanded, [id]: isExpanded })
               }
               expanded={expanded[usersAndProduct.id]}
               key={usersAndProduct.id}
@@ -62,12 +86,19 @@ function Products() {
                   product: find(products, (p) => p.id === id),
                 });
               }}
+              commentExpanded={commentExpanded[usersAndProduct.id]}
             />
           </Grid>
         ))}
       </Grid>
-      {detail.product && (
-        <ProductDialog detail={detail} setDetail={setDetail} />
+      {detail.expanded && (
+        <ProductDialog
+          setProducts={setProducts}
+          detail={detail}
+          setDetail={setDetail}
+          commentExpanded={commentExpanded}
+          setCommentExpanded={setCommentExpanded}
+        />
       )}
       <br />
       <br />

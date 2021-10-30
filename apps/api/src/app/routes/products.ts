@@ -1,9 +1,9 @@
 import { Category, Product, User } from '@fernicher/models';
 import { Router } from 'express';
 import { ILike, Repository } from 'typeorm';
-import { whereBuilder } from './routeHelpers';
 import { v2 as cloudinary } from 'cloudinary';
 import * as multer from 'multer';
+import { loadProductsCommentsUsers } from './routeHelpers';
 
 export const productRoutes = (
   productRepository: Repository<Product>,
@@ -14,8 +14,25 @@ export const productRoutes = (
   // Find products
   productRouter.post('/products', (req, res) => {
     return productRepository
-      .find(req.body)
-      .then((products) => res.send(products));
+      .find({
+        ...req.body,
+        join: {
+          alias: 'product',
+          innerJoinAndSelect: {
+            user: 'product.user',
+          },
+          leftJoinAndSelect: {
+            comments: 'product.comments',
+          },
+        },
+      })
+      .then(async (products) => {
+        const updatedProducts = await loadProductsCommentsUsers(
+          products,
+          userRepository
+        );
+        res.send(updatedProducts);
+      });
   });
 
   productRouter.post('/products/search', (req, res) => {
@@ -44,16 +61,41 @@ export const productRoutes = (
           innerJoinAndSelect: {
             user: 'product.user',
           },
+          leftJoinAndSelect: {
+            comments: 'product.comments',
+          },
         },
       })
-      .then((products) => res.send(products));
+      .then(async (products) => {
+        const updatedProducts = await loadProductsCommentsUsers(
+          products,
+          userRepository
+        );
+        res.send(updatedProducts);
+      });
   });
 
   productRouter.get('/products/:productId', (req, res) => {
     const productId = req.params.productId;
     return productRepository
-      .findOne(productId)
-      .then((product) => res.send(product));
+      .findOne(productId, {
+        join: {
+          alias: 'product',
+          innerJoinAndSelect: {
+            user: 'product.user',
+          },
+          leftJoinAndSelect: {
+            comments: 'product.comments',
+          },
+        },
+      })
+      .then(async (product) => {
+        const updatedProducts = await loadProductsCommentsUsers(
+          [product],
+          userRepository
+        );
+        res.send(updatedProducts[0]);
+      });
   });
 
   const uploadPath = `${__dirname}/upload/`;
@@ -99,20 +141,32 @@ export const productRoutes = (
   productRouter.put('/products/:productId', (req, res) => {
     const updatedProduct = req.body;
     const productId = req.params.productId;
-    return productRepository
-      .update(productId, updatedProduct)
-      .then(() =>
-        productRepository
-          .findOne(productId)
-          .then((product) => res.send(product))
-      );
+    return productRepository.update(productId, updatedProduct).then(() =>
+      productRepository
+        .findOne(productId, {
+          join: {
+            alias: 'product',
+            innerJoinAndSelect: {
+              user: 'product.user',
+            },
+            leftJoinAndSelect: {
+              comments: 'product.comments',
+            },
+          },
+        })
+        .then(async (product) => {
+          const updatedProducts = await loadProductsCommentsUsers(
+            [product],
+            userRepository
+          );
+          res.send(updatedProducts[0]);
+        })
+    );
   });
 
   productRouter.delete('/products/:productId', (req, res) => {
     const productId = req.params.productId;
-    return productRepository
-      .delete(productId)
-      .then((products) => res.send(products));
+    return productRepository.delete(productId).then(() => res.end());
   });
   return productRouter;
 };

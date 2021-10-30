@@ -76,9 +76,7 @@ export const categoryRoutes = (
 
   categoryRouter.delete('/categories/:categoryId', (req, res) => {
     const categoryId = req.params.categoryId;
-    return categoryRepository
-      .delete(categoryId)
-      .then((categories) => res.send(categories));
+    return categoryRepository.delete(categoryId).then(() => res.end());
   });
 
   return categoryRouter;

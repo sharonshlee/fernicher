@@ -10,9 +10,8 @@ import Collapse from '@material-ui/core/Collapse';
 import Avatar from '@material-ui/core/Avatar';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
-import { red } from '@material-ui/core/colors';
-import FavoriteIcon from '@material-ui/icons/Favorite';
-import ShareIcon from '@material-ui/icons/Share';
+import { red, green } from '@material-ui/core/colors';
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import DeleteIcon from '@material-ui/icons/DeleteOutline';
 import {
@@ -23,28 +22,40 @@ import {
   DialogContent,
   DialogContentText,
   DialogTitle,
+  InputAdornment,
+  InputLabel,
+  TextField,
+  Tooltip,
 } from '@mui/material';
 import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
 import { useParams } from 'react-router-dom';
-import { isEmpty } from 'lodash';
+import { isEmpty, map, trim } from 'lodash';
 import axios from 'axios';
 import { stateContext } from '../../providers/StateProvider';
+import { Data } from '@react-google-maps/api';
+import { AccountCircle, Label } from '@material-ui/icons';
 
 export default function ProductsSocialCard(props: {
   usersAndProduct: any;
+  setUsersAndProduct: any;
   showProduct?: any;
   maxWidth?: any;
   minWidth?: any;
   setExpanded: any;
   expanded: any;
+  commentExpanded: any;
+  setCommentExpanded: any;
 }) {
   const { userid } = useParams<{ userid: string }>();
   const { setMyProducts } = useContext(stateContext);
   const {
     usersAndProduct,
+    setUsersAndProduct,
     showProduct,
     expanded,
     setExpanded,
+    commentExpanded,
+    setCommentExpanded,
     maxWidth = 345,
     minWidth,
   } = props;
@@ -70,7 +81,16 @@ export default function ProductsSocialCard(props: {
       transform: 'rotate(180deg)',
     },
     avatar: {
+      fontSize: 12,
       backgroundColor: red[500],
+    },
+    avatarComment: {
+      fontSize: 10,
+      width: '3em',
+      height: '3em',
+      margin: '0.5em',
+      padding: 0,
+      backgroundColor: green[500],
     },
   }));
   const classes = useStyles();
@@ -78,11 +98,13 @@ export default function ProductsSocialCard(props: {
   const [showDelete, setShowDelete] = useState(false);
   const [deleting, setDeleting] = useState(false);
   const [deleted, setDeleted] = useState(false);
+  const [comment, setComment] = useState('');
+  console.log(usersAndProduct);
   return (
     <Card className={classes.root}>
       <CardHeader
         avatar={
-          <Avatar aria-label="recipe" className={classes.avatar}>
+          <Avatar aria-label="firstName" className={classes.avatar}>
             {usersAndProduct.user.firstName}
           </Avatar>
         }
@@ -158,34 +180,115 @@ export default function ProductsSocialCard(props: {
       />
       <CardContent></CardContent>
       <CardActions disableSpacing>
-        <IconButton aria-label="add to favorites">
-          <Badge badgeContent={usersAndProduct.id} color="primary">
-            <FavoriteIcon />
-          </Badge>
-        </IconButton>
-
-        <IconButton aria-label="share">
-          <ShareIcon />
-        </IconButton>
-        <IconButton aria-label="share">
-          <ChatBubbleOutlineIcon />
-        </IconButton>
-        <IconButton
-          className={clsx(classes.expand, {
-            [classes.expandOpen]: expanded,
-          })}
-          onClick={() => setExpanded(usersAndProduct.id, !expanded)}
-          aria-expanded={expanded}
-          aria-label="show more"
-        >
-          <ExpandMoreIcon />
-        </IconButton>
+        <Tooltip title="Add to Favourite">
+          <IconButton aria-label="add to favorites">
+            <Badge
+              badgeContent={
+                usersAndProduct.favourites && usersAndProduct.favourites.length
+              }
+              color="error"
+            >
+              <FavoriteBorderIcon />
+            </Badge>
+          </IconButton>
+        </Tooltip>
+        <Tooltip title="Comment">
+          <IconButton
+            onClick={() =>
+              setCommentExpanded(usersAndProduct.id, !commentExpanded)
+            }
+            aria-expanded={commentExpanded}
+            aria-label="comment"
+          >
+            <Badge
+              badgeContent={
+                usersAndProduct.comments && usersAndProduct.comments.length
+              }
+              color="error"
+            >
+              <ChatBubbleOutlineIcon />
+            </Badge>
+          </IconButton>
+        </Tooltip>
+        <Tooltip title="Description">
+          <IconButton
+            className={clsx(classes.expand, {
+              [classes.expandOpen]: expanded,
+            })}
+            onClick={() => setExpanded(usersAndProduct.id, !expanded)}
+            aria-expanded={expanded}
+            aria-label="show more"
+          >
+            <ExpandMoreIcon />
+          </IconButton>
+        </Tooltip>
       </CardActions>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>
           <Typography variant="body2" color="textSecondary" component="p">
             {usersAndProduct.description}
           </Typography>
+        </CardContent>
+      </Collapse>
+      <Collapse in={commentExpanded} timeout="auto" unmountOnExit>
+        <CardContent>
+          <TextField
+            id="name"
+            type="text"
+            label="write a comment..."
+            margin="dense"
+            fullWidth
+            variant="standard"
+            onChange={(e) => setComment(e.target.value)}
+            value={comment}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' && !isEmpty(trim(comment))) {
+                setComment('');
+                axios
+                  .post('/api/comments/new', {
+                    comment,
+                    productId: usersAndProduct.id,
+                    userId: 1,
+                  })
+                  .then((result) => {
+                    setUsersAndProduct({
+                      ...usersAndProduct,
+                      comments: [result.data, ...usersAndProduct.comments],
+                    });
+                  });
+              }
+            }}
+          />
+          {map(usersAndProduct.comments, (com) => {
+            return (
+              <div key={com.id} style={{ display: 'flex', margin: '0.5em' }}>
+                <InputLabel
+                  style={{
+                    border: '1px solid',
+                    borderRadius: '5em',
+                    width: '100%',
+                    whiteSpace: 'pre-wrap',
+                  }}
+                >
+                  <div
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      width: '100%',
+                    }}
+                  >
+                    <Avatar
+                      aria-label="firstName"
+                      className={classes.avatarComment}
+                    >
+                      {com.user.firstName}
+                    </Avatar>{' '}
+                    {com.comment}
+                  </div>
+                </InputLabel>
+              </div>
+            );
+          })}
         </CardContent>
       </Collapse>
     </Card>
