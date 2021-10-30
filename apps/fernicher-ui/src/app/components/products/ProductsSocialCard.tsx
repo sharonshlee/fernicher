@@ -10,9 +10,8 @@ import Collapse from '@material-ui/core/Collapse';
 import Avatar from '@material-ui/core/Avatar';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
-import { red } from '@material-ui/core/colors';
-import FavoriteIcon from '@material-ui/icons/Favorite';
-import ShareIcon from '@material-ui/icons/Share';
+import { red, green } from '@material-ui/core/colors';
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import DeleteIcon from '@material-ui/icons/DeleteOutline';
 import {
@@ -23,7 +22,9 @@ import {
   DialogContent,
   DialogContentText,
   DialogTitle,
+  InputAdornment,
   TextField,
+  Tooltip,
 } from '@mui/material';
 import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
 import { useParams } from 'react-router-dom';
@@ -31,6 +32,7 @@ import { isEmpty, map, trim } from 'lodash';
 import axios from 'axios';
 import { stateContext } from '../../providers/StateProvider';
 import { Data } from '@react-google-maps/api';
+import { AccountCircle } from '@material-ui/icons';
 
 export default function ProductsSocialCard(props: {
   usersAndProduct: any;
@@ -78,7 +80,9 @@ export default function ProductsSocialCard(props: {
       transform: 'rotate(180deg)',
     },
     avatar: {
-      backgroundColor: red[500],
+      fontSize: 12,
+      // backgroundColor: red[500],
+      backgroundColor: '#343a40',
     },
   }));
   const classes = useStyles();
@@ -91,7 +95,7 @@ export default function ProductsSocialCard(props: {
     <Card className={classes.root}>
       <CardHeader
         avatar={
-          <Avatar aria-label="recipe" className={classes.avatar}>
+          <Avatar aria-label="firstName" className={classes.avatar}>
             {usersAndProduct.user.firstName}
           </Avatar>
         }
@@ -167,33 +171,40 @@ export default function ProductsSocialCard(props: {
       />
       <CardContent></CardContent>
       <CardActions disableSpacing>
-        <IconButton aria-label="add to favorites">
-          <Badge badgeContent={usersAndProduct.id} color="primary">
-            <FavoriteIcon />
-          </Badge>
-        </IconButton>
-        <IconButton
-          className={clsx(classes.expand, {
-            [classes.expandOpen]: commentExpanded,
-          })}
-          onClick={() =>
-            setCommentExpanded(usersAndProduct.id, !commentExpanded)
-          }
-          aria-expanded={commentExpanded}
-          aria-label="comment"
-        >
-          <ChatBubbleOutlineIcon />
-        </IconButton>
-        <IconButton
-          className={clsx(classes.expand, {
-            [classes.expandOpen]: expanded,
-          })}
-          onClick={() => setExpanded(usersAndProduct.id, !expanded)}
-          aria-expanded={expanded}
-          aria-label="show more"
-        >
-          <ExpandMoreIcon />
-        </IconButton>
+        <Tooltip title="Add to Favourite">
+          <IconButton aria-label="add to favorites">
+            {/* badgeContent to count from fav table, how many fav for this product. */}
+            <Badge badgeContent={usersAndProduct.id} color="error">
+              <FavoriteBorderIcon />
+            </Badge>
+          </IconButton>
+        </Tooltip>
+        <Tooltip title="Comment">
+          <IconButton
+            className={clsx(classes.expand, {
+              [classes.expandOpen]: commentExpanded,
+            })}
+            onClick={() =>
+              setCommentExpanded(usersAndProduct.id, !commentExpanded)
+            }
+            aria-expanded={commentExpanded}
+            aria-label="comment"
+          >
+            <ChatBubbleOutlineIcon />
+          </IconButton>
+        </Tooltip>
+        <Tooltip title="Description">
+          <IconButton
+            className={clsx(classes.expand, {
+              [classes.expandOpen]: expanded,
+            })}
+            onClick={() => setExpanded(usersAndProduct.id, !expanded)}
+            aria-expanded={expanded}
+            aria-label="show more"
+          >
+            <ExpandMoreIcon />
+          </IconButton>
+        </Tooltip>
       </CardActions>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>
@@ -205,10 +216,21 @@ export default function ProductsSocialCard(props: {
       <Collapse in={commentExpanded} timeout="auto" unmountOnExit>
         <CardContent>
           <TextField
-            margin="dense"
             id="name"
-            label="write a comment..."
             type="text"
+            // InputProps={{
+            //   startAdornment: (
+            //     <InputAdornment position="start">
+            //       {/* <AccountCircle />  */}
+            //       <Avatar aria-label="firstName" className={classes.avatar}>
+            //         {/* use login info user name */}
+            //         {usersAndProduct.user.firstName}
+            //       </Avatar>
+            //     </InputAdornment>
+            //   ),
+            // }}
+            label="write a comment..."
+            margin="dense"
             fullWidth
             variant="standard"
             onChange={(e) => setComment(e.target.value)}

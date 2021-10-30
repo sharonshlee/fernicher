@@ -11,6 +11,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 import SearchIcon from '@material-ui/icons/Search';
 import AccountCircle from '@material-ui/icons/AccountCircle';
+import ChatBubbleIcon from '@mui/icons-material/ChatBubble';
 import MailIcon from '@material-ui/icons/Mail';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import MoreIcon from '@material-ui/icons/MoreVert';
@@ -259,61 +260,71 @@ export default function PrimarySearchAppBar() {
           </div>
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
-            <IconButton
-              aria-label="show notifications"
-              color="inherit"
-              component={Button}
-              onClick={() => setShowAddProduct(!showAddProduct)}
-            >
-              <Badge color="secondary">
-                <AddAPhotoIcon />
-              </Badge>
-            </IconButton>
+            <Tooltip title="Furnitures Nearby">
+              <IconButton
+                aria-label="show 17 new notifications"
+                color="inherit"
+              >
+                <LocationOnIcon />
+              </IconButton>
+            </Tooltip>
+            <Tooltip title="Donate a Furniture">
+              <IconButton
+                aria-label="show notifications"
+                color="inherit"
+                component={Button}
+                onClick={() => setShowAddProduct(!showAddProduct)}
+              >
+                <Badge color="secondary">
+                  <AddAPhotoIcon />
+                </Badge>
+              </IconButton>
+            </Tooltip>
+
             {showAddProduct && (
               <AddProduct
                 open={showAddProduct}
                 handleClose={setShowAddProduct}
               />
             )}
-            <Tooltip title="Nearby">
+            <Tooltip title="My Favourite Furnitures">
               <IconButton
                 aria-label="show 17 new notifications"
                 color="inherit"
+                onClick={toggleSlider('right', true, 'favourites')}
               >
-                <Badge badgeContent={0} color="secondary">
-                  <LocationOnIcon />
+                <Badge badgeContent={5} color="secondary">
+                  <FavoriteIcon />
                 </Badge>
               </IconButton>
             </Tooltip>
-            <IconButton
-              aria-label="show 17 new notifications"
-              color="inherit"
-              onClick={toggleSlider('right', true, 'favourites')}
-            >
-              <Badge badgeContent={5} color="secondary">
-                <FavoriteIcon />
-              </Badge>
-            </IconButton>
-            <IconButton aria-label="show 4 new mails" color="inherit">
-              <Badge badgeContent={4} color="secondary">
-                <Link to="/chats">
-                  <MailIcon />
-                </Link>
-              </Badge>
-            </IconButton>
-            <IconButton aria-label="show 17 new notifications" color="inherit">
-              <Badge badgeContent={7} color="secondary">
-                <NotificationsIcon />
-              </Badge>
-            </IconButton>
-            <IconButton
-              edge="end"
-              color="inherit"
-              component={Button}
-              onClick={() => setShowSignIn(!showSignIn)}
-            >
-              <AccountCircle />
-            </IconButton>
+
+            <Tooltip title="Let's Chat">
+              <IconButton
+                component={Link}
+                to={'/chats'}
+                aria-label="show"
+                color="inherit"
+              >
+                {/* <Link to="/chats"> */}
+                <Badge badgeContent={2} color="secondary">
+                  <ChatBubbleIcon />
+                </Badge>
+                {/* </Link> */}
+              </IconButton>
+            </Tooltip>
+
+            <Tooltip title="Login/Signup">
+              <IconButton
+                edge="end"
+                color="inherit"
+                component={Button}
+                onClick={() => setShowSignIn(!showSignIn)}
+              >
+                <AccountCircle />
+              </IconButton>
+            </Tooltip>
+
             {showSignIn && (
               <SignIn
                 setShowSignIn={setShowSignIn}
