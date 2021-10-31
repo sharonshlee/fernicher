@@ -1,4 +1,4 @@
-import { Category, Product, User } from '@fernicher/models';
+import { Category, Favourite, Product, User, Comment } from '@fernicher/models';
 import { Router } from 'express';
 import { ILike, Repository } from 'typeorm';
 import { v2 as cloudinary } from 'cloudinary';
@@ -8,7 +8,9 @@ import { loadProductsCommentsUsers } from './routeHelpers';
 export const productRoutes = (
   productRepository: Repository<Product>,
   categoryRepository: Repository<Category>,
-  userRepository: Repository<User>
+  userRepository: Repository<User>,
+  favouriteRepository: Repository<Favourite>,
+  commentRepository: Repository<Comment>
 ) => {
   const productRouter = Router();
   // Find products
@@ -165,8 +167,10 @@ export const productRoutes = (
     );
   });
 
-  productRouter.delete('/products/:productId', (req, res) => {
+  productRouter.delete('/products/:productId', async (req, res) => {
     const productId = req.params.productId;
+    await favouriteRepository.delete({ productId: Number(productId) });
+    await commentRepository.delete({ productId: Number(productId) });
     return productRepository.delete(productId).then(() => res.end());
   });
   return productRouter;

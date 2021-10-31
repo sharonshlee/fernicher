@@ -16,8 +16,10 @@ import {
 import { Home } from '@material-ui/icons';
 import LoyaltyOutlinedIcon from '@material-ui/icons/LoyaltyOutlined';
 import ChairIcon from '@mui/icons-material/Chair';
-import BedroomBabyIcon from '@mui/icons-material/BedroomBaby';
+import BedroomParentIcon from '@mui/icons-material/BedroomParent';
+import ContactsIcon from '@mui/icons-material/Contacts';
 import { stateContext } from '../../providers/StateProvider';
+import { LoggedInContext } from '../../providers/LoggedInContext';
 
 // import BedroomBabyIcon from '@mui/icons-material';
 // import BedIcon from '@mui/icons-material/Bed';
@@ -51,53 +53,47 @@ const Sidebar = ({ position, toggleSlider, open, menu }) => {
       },
       {
         listIcon: <ChairIcon />,
-        listText: 'Products',
+        listText: 'Furnitures',
         listPath: '/products/all',
       },
       {
-        listIcon: <BedroomBabyIcon />,
+        listIcon: <BedroomParentIcon />,
         listText: 'Rooms',
         listPath: '/rooms/living',
+      },
+      {
+        listIcon: <ContactsIcon />,
+        listText: 'About Us',
+        listPath: '/rooms/about',
       },
     ],
     products: [
       {
-        // istIcon: <ContactMail />,
-        listText: 'All Products',
+        listText: 'All Furnitures',
         listPath: '/products/all',
       },
       {
-        // istIcon: <ContactMail />,
-        listText: 'Recent Products',
+        listText: 'Most Popular',
+        listPath: '/products/popular',
+      },
+      {
+        listText: 'Most Recent',
         listPath: '/products/recent',
       },
-      // {
-      //   // listIcon: <BedroomBabyIcon />,
-      //   listText: 'Shelf',
-      //   listPath: '/products/shelf',
-      // },
-      // {
-      //   // listIcon: <BedroomBabyIcon />,
-      //   listText: 'Pantry',
-      //   listPath: '/products/pantry',
-      // },
+
       {
-        // listIcon: <BedroomBabyIcon />,
         listText: 'Table',
         listPath: '/products/table',
       },
       {
-        // listIcon: <BedroomBabyIcon />,
         listText: 'Chair',
         listPath: '/products/chair',
       },
       {
-        // listIcon: <BedIcon />,
         listText: 'Bed',
         listPath: '/products/bed',
       },
       {
-        // listIcon: <BedroomBabyIcon />,
         listText: 'Kids',
         listPath: '/products/kids',
       },
@@ -154,13 +150,10 @@ const Sidebar = ({ position, toggleSlider, open, menu }) => {
         listText: 'Favourites',
         listPath: '/fav',
       },
-      {
-        listText: 'Recent Products',
-        listPath: '/products/recent',
-      },
     ],
   });
   const { setProducts } = useContext(stateContext);
+  const { state: loggedInUser } = useContext(LoggedInContext);
 
   // Will change this with useContext after our lecture
   useEffect(() => {
@@ -168,9 +161,8 @@ const Sidebar = ({ position, toggleSlider, open, menu }) => {
       axios
         .post('/api/users')
         .then((res) => {
-          const resFavs = res.data.filter(
-            (el) => el.id === exampleLoggedInId
-          )[0].favourites;
+          const resFavs = res.data.filter((el) => el.id === loggedInUser.id)[0]
+            .favourites;
           const favourites = resFavs.map((el, i) => ({
             listText: `${i + 1}: ${el.product.name}`,
             listPath: '/',
@@ -196,7 +188,7 @@ const Sidebar = ({ position, toggleSlider, open, menu }) => {
         })
         .catch((err) => console.log('ERR1 HAPPENED', err));
     }
-  }, [menu]);
+  }, [menu, loggedInUser]);
 
   const classes = useStyles();
 
@@ -237,7 +229,6 @@ const Sidebar = ({ position, toggleSlider, open, menu }) => {
       </List>
     </Box>
   );
-  // if position === right, for user to signup
 
   return (
     <MobileRightMenuSlider

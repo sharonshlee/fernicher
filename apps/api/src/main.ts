@@ -46,10 +46,16 @@ createConnection({
     })
   );
   /** Routes */
-  app.use('/api', userRoutes(userRepository));
+  app.use('/api', userRoutes(userRepository, favouriteRepository));
   app.use(
     '/api',
-    productRoutes(productRepository, categoryRepository, userRepository)
+    productRoutes(
+      productRepository,
+      categoryRepository,
+      userRepository,
+      favouriteRepository,
+      commentRepository
+    )
   );
   app.use(
     '/api',
@@ -60,7 +66,7 @@ createConnection({
       favouriteRepository
     )
   );
-  app.use('/api', favouriteRoutes(favouriteRepository, commentRepository));
+  app.use('/api', favouriteRoutes(favouriteRepository));
   app.use(
     '/api',
     commentRoutes(commentRepository, productRepository, userRepository)

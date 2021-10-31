@@ -23,8 +23,7 @@ function Home(props: any) {
   }, []);
 
   return (
-    <div>
-      <ImageSliders />
+    <div className="mainContent">
       <Map />
     </div>
   );
