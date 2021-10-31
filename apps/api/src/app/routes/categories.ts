@@ -1,12 +1,13 @@
-import { Category, User } from '@fernicher/models';
+import { Category, User, Comment } from '@fernicher/models';
 import { Router } from 'express';
-import { find, map } from 'lodash';
+import { filter, find, map } from 'lodash';
 import { Repository, In } from 'typeorm';
 import { whereBuilder } from './routeHelpers';
 
 export const categoryRoutes = (
   categoryRepository: Repository<Category>,
-  userRepository: Repository<User>
+  userRepository: Repository<User>,
+  commentRepository: Repository<Comment>
 ) => {
   const categoryRouter = Router();
 
@@ -35,10 +36,28 @@ export const categoryRoutes = (
         loadEagerRelations: false,
       });
 
+      const productIds = [];
+      map(categories, (category) => {
+        productIds.push(...map(category.products, (product) => product.id));
+      });
+      const comments = await commentRepository.find({
+        where: { productId: In(productIds) },
+        join: {
+          alias: 'comment',
+          innerJoinAndSelect: {
+            user: 'comment.user',
+          },
+        },
+      });
+
       const updatedCategories = map(categories, (category) => ({
         ...category,
         products: map(category.products, (product) => ({
           ...product,
+          comments: filter(
+            comments,
+            (comment) => comment.productId === product.id
+          ),
           user: find(users, (user) => user.id === product.userId),
         })),
       }));

@@ -75,8 +75,8 @@ function UserProducts() {
         <ProductDialog
           detail={detail}
           setDetail={setDetail}
-          commentExpanded={commentExpanded}
-          setCommentExpanded={setCommentExpanded}
+          products={myProducts}
+          setProducts={setMyProducts}
         />
       )}
       <br />

@@ -1,10 +1,13 @@
-import { Favourite } from '@fernicher/models';
+import { Favourite, Comment } from '@fernicher/models';
 import { Router } from 'express';
-import { Repository } from 'typeorm';
+import { In, Repository } from 'typeorm';
 import { whereBuilder } from './routeHelpers';
-import { countBy } from 'lodash';
+import { countBy, filter, find, map } from 'lodash';
 
-export const favouriteRoutes = (favouriteRepository: Repository<Favourite>) => {
+export const favouriteRoutes = (
+  favouriteRepository: Repository<Favourite>,
+  commentRepository: Repository<Comment>
+) => {
   const favouriteRouter = Router();
 
   // Find favourites
@@ -31,10 +34,30 @@ export const favouriteRoutes = (favouriteRepository: Repository<Favourite>) => {
           },
         },
       })
-      .then((favourites) => {
-        const countByProducts = countBy(favourites, 'product.id');
-        console.log('>>>', countByProducts);
-        res.send(favourites);
+      .then(async (favourites) => {
+        const productIds = map(favourites, (fav) => fav.product.id);
+
+        const comments = await commentRepository.find({
+          where: { productId: In(productIds) },
+          join: {
+            alias: 'comment',
+            innerJoinAndSelect: {
+              user: 'comment.user',
+            },
+          },
+        });
+        const updatedFavourites = map(favourites, (fav) => ({
+          ...fav,
+          product: {
+            ...fav.product,
+            comments: filter(
+              comments,
+              (c: any) => c.productId === fav.product.id
+            ),
+          },
+        }));
+
+        res.send(updatedFavourites);
       });
   });
 

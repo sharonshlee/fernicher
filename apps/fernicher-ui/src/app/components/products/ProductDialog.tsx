@@ -4,7 +4,7 @@ import { useState } from 'react';
 import ProductsSocialCard from './ProductsSocialCard';
 
 export const ProductDialog = (props: any) => {
-  const { setDetail, detail, setProducts } = props;
+  const { setDetail, detail, products, setProducts } = props;
   const [detailCommentExpanded, setDetailCommentExpanded] = useState(false);
 
   return (
@@ -18,14 +18,13 @@ export const ProductDialog = (props: any) => {
     >
       <ProductsSocialCard
         setUsersAndProduct={(product: any) => {
-          setProducts((prev: any[]) => {
-            return map(prev, (p) => {
-              if (p.id === product.id) {
-                return product;
-              }
-              return p;
-            });
+          const updatedProducts = map(products, (p) => {
+            if (p.id === product.id) {
+              return product;
+            }
+            return p;
           });
+          setProducts(updatedProducts);
         }}
         setExpanded={(id: number, isExpanded: boolean) =>
           setDetail({ ...detail, expanded: isExpanded })

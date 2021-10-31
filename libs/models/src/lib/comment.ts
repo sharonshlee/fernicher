@@ -10,6 +10,9 @@ export class Comment extends ModelBase {
   @Column()
   userId: number;
 
+  @Column()
+  productId: number;
+
   // eager will load products for this favourite id
   @ManyToOne(() => Product, (product) => product.favourite)
   product!: Product;

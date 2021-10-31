@@ -41,7 +41,6 @@ function Products() {
     !commentExpanded && setCommentExpanded(productExpanded);
     detail.product &&
       setDetail((prev: any) => {
-        console.log('>> setDetail effect prev', prev, products);
         return {
           ...prev,
           product: find(products, (p) => p.id === prev.product.id),
@@ -91,13 +90,12 @@ function Products() {
           </Grid>
         ))}
       </Grid>
-      {detail.expanded && (
+      {detail.product && (
         <ProductDialog
           setProducts={setProducts}
           detail={detail}
           setDetail={setDetail}
-          commentExpanded={commentExpanded}
-          setCommentExpanded={setCommentExpanded}
+          products={products}
         />
       )}
       <br />

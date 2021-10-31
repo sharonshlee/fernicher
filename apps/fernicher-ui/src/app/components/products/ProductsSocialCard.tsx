@@ -90,7 +90,7 @@ export default function ProductsSocialCard(props: {
       height: '3em',
       margin: '0.5em',
       padding: 0,
-      backgroundColor: green[500],
+      backgroundColor: '#087e8b',
     },
   }));
   const classes = useStyles();
@@ -99,7 +99,6 @@ export default function ProductsSocialCard(props: {
   const [deleting, setDeleting] = useState(false);
   const [deleted, setDeleted] = useState(false);
   const [comment, setComment] = useState('');
-  console.log(usersAndProduct);
   return (
     <Card className={classes.root}>
       <CardHeader
@@ -265,7 +264,7 @@ export default function ProductsSocialCard(props: {
                 <InputLabel
                   style={{
                     border: '1px solid',
-                    borderRadius: '5em',
+                    borderRadius: '2em',
                     width: '100%',
                     whiteSpace: 'pre-wrap',
                   }}
