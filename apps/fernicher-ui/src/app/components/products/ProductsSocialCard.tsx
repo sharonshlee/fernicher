@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
 import Card from '@material-ui/core/Card';
@@ -12,6 +12,7 @@ import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import { red, green } from '@material-ui/core/colors';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import FavoriteIcon from '@mui/icons-material/Favorite';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import DeleteIcon from '@material-ui/icons/DeleteOutline';
 import {
@@ -29,11 +30,12 @@ import {
 } from '@mui/material';
 import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
 import { useParams } from 'react-router-dom';
-import { isEmpty, map, trim } from 'lodash';
+import { filter, find, isEmpty, map, trim } from 'lodash';
 import axios from 'axios';
 import { stateContext } from '../../providers/StateProvider';
 import { Data } from '@react-google-maps/api';
 import { AccountCircle, Label } from '@material-ui/icons';
+import { LoggedInContext } from '../../providers/LoggedInContext';
 
 export default function ProductsSocialCard(props: {
   usersAndProduct: any;
@@ -47,7 +49,7 @@ export default function ProductsSocialCard(props: {
   setCommentExpanded: any;
 }) {
   const { userid } = useParams<{ userid: string }>();
-  const { setMyProducts } = useContext(stateContext);
+  const { setMyProducts, myProducts } = useContext(stateContext);
   const {
     usersAndProduct,
     setUsersAndProduct,
@@ -94,11 +96,28 @@ export default function ProductsSocialCard(props: {
     },
   }));
   const classes = useStyles();
-  const [deleteMessage, setDeleteMessage] = useState('false');
+  const [deleteMessage, setDeleteMessage] = useState('');
   const [showDelete, setShowDelete] = useState(false);
   const [deleting, setDeleting] = useState(false);
   const [deleted, setDeleted] = useState(false);
   const [comment, setComment] = useState('');
+  const { state: loggedInUser, setState: setLoggedInUser } =
+    useContext(LoggedInContext);
+  const [favouriteId, setFavouriteId] = useState('');
+
+  useEffect(() => {
+    if (loggedInUser) {
+      const { favourites } = loggedInUser;
+      const userFav = find(
+        favourites,
+        (fav) =>
+          fav.productId === usersAndProduct.id && fav.userId === loggedInUser.id
+      );
+
+      setFavouriteId(userFav ? userFav.id : '');
+    }
+  }, [loggedInUser]);
+
   return (
     <Card className={classes.root}>
       <CardHeader
@@ -149,7 +168,12 @@ export default function ProductsSocialCard(props: {
                       axios
                         .delete(`/api/products/${usersAndProduct.id}`)
                         .then(() => {
-                          setMyProducts([]);
+                          setMyProducts(
+                            filter(
+                              myProducts,
+                              (p) => p.id !== usersAndProduct.id
+                            )
+                          );
                           setDeleted(true);
                           setDeleteMessage('Product deleted.');
                         });
@@ -179,18 +203,69 @@ export default function ProductsSocialCard(props: {
       />
       <CardContent></CardContent>
       <CardActions disableSpacing>
-        <Tooltip title="Add to Favourite">
-          <IconButton aria-label="add to favorites">
-            <Badge
-              badgeContent={
-                usersAndProduct.favourites && usersAndProduct.favourites.length
-              }
-              color="error"
-            >
-              <FavoriteBorderIcon />
-            </Badge>
-          </IconButton>
-        </Tooltip>
+        {loggedInUser && (
+          <>
+            {!favouriteId && (
+              <Tooltip title="Add to Favourite">
+                <IconButton
+                  aria-label="add to favorites"
+                  onClick={() => {
+                    axios
+                      .post('/api/favourites/new', {
+                        userId: loggedInUser.id,
+                        productId: usersAndProduct.id,
+                      })
+                      .then((result: any) => {
+                        setLoggedInUser((prev: any) => ({
+                          ...prev,
+                          favourites: [...prev.favourites, result.data],
+                        }));
+                        setFavouriteId(result.data.id);
+                      });
+                  }}
+                >
+                  <Badge
+                    badgeContent={
+                      loggedInUser.favourites && loggedInUser.favourites.length
+                    }
+                    color="error"
+                  >
+                    <FavoriteBorderIcon />
+                  </Badge>
+                </IconButton>
+              </Tooltip>
+            )}
+            {favouriteId && (
+              <Tooltip title="Remove Favourite">
+                <IconButton
+                  aria-label="remove favorites"
+                  onClick={() => {
+                    axios.delete(`/api/favourites/${favouriteId}`).then(() => {
+                      setLoggedInUser((prev: any) => ({
+                        ...prev,
+                        favourites: filter(
+                          prev.favourites,
+                          (fav) => fav.id !== favouriteId
+                        ),
+                      }));
+                      setFavouriteId('');
+                    });
+                  }}
+                >
+                  <Badge
+                    badgeContent={
+                      loggedInUser.favourites && loggedInUser.favourites.length
+                    }
+                    color="error"
+                  >
+                    <FavoriteIcon />
+                  </Badge>
+                </IconButton>
+              </Tooltip>
+            )}
+          </>
+        )}
+
         <Tooltip title="Comment">
           <IconButton
             onClick={() =>
@@ -231,33 +306,35 @@ export default function ProductsSocialCard(props: {
       </Collapse>
       <Collapse in={commentExpanded} timeout="auto" unmountOnExit>
         <CardContent>
-          <TextField
-            id="name"
-            type="text"
-            label="write a comment..."
-            margin="dense"
-            fullWidth
-            variant="standard"
-            onChange={(e) => setComment(e.target.value)}
-            value={comment}
-            onKeyDown={(e) => {
-              if (e.key === 'Enter' && !isEmpty(trim(comment))) {
-                setComment('');
-                axios
-                  .post('/api/comments/new', {
-                    comment,
-                    productId: usersAndProduct.id,
-                    userId: 1,
-                  })
-                  .then((result) => {
-                    setUsersAndProduct({
-                      ...usersAndProduct,
-                      comments: [result.data, ...usersAndProduct.comments],
+          {loggedInUser && (
+            <TextField
+              id="name"
+              type="text"
+              label="write a comment..."
+              margin="dense"
+              fullWidth
+              variant="standard"
+              onChange={(e) => setComment(e.target.value)}
+              value={comment}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' && !isEmpty(trim(comment))) {
+                  setComment('');
+                  axios
+                    .post('/api/comments/new', {
+                      comment,
+                      productId: usersAndProduct.id,
+                      userId: loggedInUser.id,
+                    })
+                    .then((result) => {
+                      setUsersAndProduct({
+                        ...usersAndProduct,
+                        comments: [result.data, ...usersAndProduct.comments],
+                      });
                     });
-                  });
-              }
-            }}
-          />
+                }
+              }}
+            />
+          )}
           {map(usersAndProduct.comments, (com) => {
             return (
               <div key={com.id} style={{ display: 'flex', margin: '0.5em' }}>

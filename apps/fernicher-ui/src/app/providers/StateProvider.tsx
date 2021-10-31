@@ -12,7 +12,12 @@ export default function StateProvider(props: any) {
   const [myProducts, setMyProducts] = useState<any[]>([]);
 
   // This list can get long with a lot of functions.  Reducer may be a better choice
-  const providerData = { products, setProducts, myProducts, setMyProducts };
+  const providerData = {
+    products,
+    setProducts,
+    myProducts,
+    setMyProducts,
+  };
 
   // We can now use this as a component to wrap anything
   // that needs our state

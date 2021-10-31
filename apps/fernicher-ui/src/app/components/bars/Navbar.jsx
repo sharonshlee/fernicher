@@ -3,6 +3,7 @@ import { useHistory } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { alpha, makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
+import Avatar from '@material-ui/core/Avatar';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
 import InputBase from '@material-ui/core/InputBase';
@@ -20,6 +21,7 @@ import LocationOnIcon from '@material-ui/icons/LocationOn';
 import Tooltip from '@material-ui/core/Tooltip';
 import Button from '@material-ui/core/Button';
 import MenuIcon from '@material-ui/icons/Menu';
+import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 import AddAPhotoIcon from '@material-ui/icons/AddAPhoto';
 import Sidebar from './Sidebar';
 import { AddProduct } from '../products/AddProduct';
@@ -27,6 +29,7 @@ import SignIn from '../login/SignIn';
 import SignUp from '../login/SignUp';
 import axios from 'axios';
 import { stateContext } from '../../providers/StateProvider';
+import { LoggedInContext } from '../../providers/LoggedInContext';
 
 const useStyles = makeStyles((theme) => ({
   grow: {
@@ -90,6 +93,14 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.up('md')]: {
       display: 'none',
     },
+  },
+  avatarComment: {
+    fontSize: 10,
+    width: '3em',
+    height: '3em',
+    margin: '0.5em',
+    padding: 0,
+    backgroundColor: '#087e8b',
   },
 }));
 
@@ -189,6 +200,8 @@ export default function PrimarySearchAppBar() {
   const history = useHistory();
   const [searchValue, setSearchValue] = useState('');
   const { setProducts } = useContext(stateContext);
+  const { state: loggedInUser, setState: setLoggedInUser } =
+    useContext(LoggedInContext);
 
   return (
     <div className={classes.grow}>
@@ -225,6 +238,14 @@ export default function PrimarySearchAppBar() {
           >
             Rooms
           </Button>
+          {loggedInUser && (
+            <Button
+              style={{ color: '#212529' }}
+              onClick={() => history.push(`/users/${loggedInUser.id}/products`)}
+            >
+              My Products
+            </Button>
+          )}
           <div className={classes.search}>
             <div className={classes.searchIcon}>
               <SearchIcon />
@@ -268,62 +289,99 @@ export default function PrimarySearchAppBar() {
                 <LocationOnIcon />
               </IconButton>
             </Tooltip>
-            <Tooltip title="Donate a Furniture">
-              <IconButton
-                aria-label="show notifications"
-                color="inherit"
-                component={Button}
-                onClick={() => setShowAddProduct(!showAddProduct)}
-              >
-                <Badge color="secondary">
-                  <AddAPhotoIcon />
-                </Badge>
-              </IconButton>
-            </Tooltip>
+            {loggedInUser && (
+              <>
+                <Tooltip title="Donate a Furniture">
+                  <IconButton
+                    aria-label="show notifications"
+                    color="inherit"
+                    component={Button}
+                    onClick={() => setShowAddProduct(!showAddProduct)}
+                  >
+                    <Badge color="secondary">
+                      <AddAPhotoIcon />
+                    </Badge>
+                  </IconButton>
+                </Tooltip>
+                {showAddProduct && (
+                  <AddProduct
+                    open={showAddProduct}
+                    handleClose={setShowAddProduct}
+                  />
+                )}
+                <Tooltip title="My Favourite Furnitures">
+                  <IconButton
+                    aria-label="show 17 new notifications"
+                    color="inherit"
+                    onClick={toggleSlider('right', true, 'favourites')}
+                  >
+                    <Badge
+                      badgeContent={loggedInUser.favourites.length}
+                      color="secondary"
+                    >
+                      <FavoriteIcon />
+                    </Badge>
+                  </IconButton>
+                </Tooltip>
 
-            {showAddProduct && (
-              <AddProduct
-                open={showAddProduct}
-                handleClose={setShowAddProduct}
-              />
+                <Tooltip title="Let's Chat">
+                  <IconButton
+                    component={Link}
+                    to={'/chats'}
+                    aria-label="show"
+                    color="inherit"
+                  >
+                    {/* <Link to="/chats"> */}
+                    <Badge badgeContent={2} color="secondary">
+                      <ChatBubbleIcon />
+                    </Badge>
+                    {/* </Link> */}
+                  </IconButton>
+                </Tooltip>
+
+                <Tooltip title={`Logged in as ${loggedInUser.firstName}`}>
+                  <IconButton
+                    edge="end"
+                    color="inherit"
+                    component={Button}
+                    onClick={() => setShowSignIn(!showSignIn)}
+                  >
+                    <Avatar
+                      aria-label="firstName"
+                      className={classes.avatarComment}
+                    >
+                      {loggedInUser.firstName}
+                    </Avatar>
+                  </IconButton>
+                </Tooltip>
+                <Tooltip title="Logout">
+                  <IconButton
+                    edge="end"
+                    color="inherit"
+                    component={Button}
+                    onClick={() => {
+                      history.push('/');
+                      setLoggedInUser(null);
+                    }}
+                  >
+                    <ExitToAppIcon />
+                  </IconButton>
+                </Tooltip>
+              </>
             )}
-            <Tooltip title="My Favourite Furnitures">
-              <IconButton
-                aria-label="show 17 new notifications"
-                color="inherit"
-                onClick={toggleSlider('right', true, 'favourites')}
-              >
-                <Badge badgeContent={5} color="secondary">
-                  <FavoriteIcon />
-                </Badge>
-              </IconButton>
-            </Tooltip>
 
-            <Tooltip title="Let's Chat">
-              <IconButton
-                component={Link}
-                to={'/chats'}
-                aria-label="show"
-                color="inherit"
-              >
-                {/* <Link to="/chats"> */}
-                <Badge badgeContent={2} color="secondary">
-                  <ChatBubbleIcon />
-                </Badge>
-                {/* </Link> */}
-              </IconButton>
-            </Tooltip>
-
-            <Tooltip title="Login/Signup">
-              <IconButton
-                edge="end"
-                color="inherit"
-                component={Button}
-                onClick={() => setShowSignIn(!showSignIn)}
-              >
-                <AccountCircle />
-              </IconButton>
-            </Tooltip>
+            {!loggedInUser && (
+              <Tooltip title="Login/Signup">
+                <IconButton
+                  edge="end"
+                  color="inherit"
+                  component={Button}
+                  onClick={() => setShowSignIn(!showSignIn)}
+                >
+                  <AccountCircle />
+                </IconButton>
+              </Tooltip>
+            )}
 
             {showSignIn && (
               <SignIn

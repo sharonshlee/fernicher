@@ -39,25 +39,25 @@ export const dbresetRoutes = (
         firstName: 'Jane',
         lastName: 'Doe',
         password: 'johndoe',
-        email: 'johndoe@doe.com',
+        email: 'janedoe@doe.com',
       },
       {
         firstName: 'Rose',
         lastName: 'Doe',
         password: 'johndoe',
-        email: 'johndoe@doe.com',
+        email: 'rosedoe@doe.com',
       },
       {
         firstName: 'Jim',
         lastName: 'Doe',
         password: 'johndoe',
-        email: 'johndoe@doe.com',
+        email: 'jimdoe@doe.com',
       },
       {
         firstName: 'Jerry',
         lastName: 'Doe',
         password: 'johndoe',
-        email: 'johndoe@doe.com',
+        email: 'jerrydoe@doe.com',
       },
     ]);
 

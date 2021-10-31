@@ -1,4 +1,3 @@
-import React, { useState, useContext } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import './app.scss';
@@ -16,7 +15,6 @@ import StateProvider from './providers/StateProvider';
 
 const App = () => {
   return (
-
     <StateProvider>
       <LoggedInProvider>
         <Navbar />

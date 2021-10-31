@@ -1,4 +1,4 @@
-import { Entity, JoinColumn, ManyToOne, OneToMany, OneToOne } from 'typeorm';
+import { Column, Entity, ManyToOne } from 'typeorm';
 import { User, Product } from '.';
 import { ModelBase } from './base';
 
@@ -10,4 +10,10 @@ export class Favourite extends ModelBase {
   // eager will load products for this favourite id
   @ManyToOne(() => Product, (product) => product.favourite, { eager: true })
   product!: Product;
+
+  @Column()
+  userId!: number;
+
+  @Column()
+  productId!: number;
 }

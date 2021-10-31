@@ -43,12 +43,7 @@ export default function SignIn(props: {
   const { setShowSignIn, setShowSignUp } = props;
   const [signInData, setSignInData] = useState({ email: '', password: '' });
   const [loginError, setLoginError] = useState(false);
-  const [loggedIn, setLoggedIn] = useState(false);
   const { setState } = useContext(LoggedInContext);
-
-  if (loggedIn) {
-    return <Redirect to="/" />;
-  }
 
   return (
     <Dialog open={true} onClose={() => setShowSignIn(false)}>
@@ -112,8 +107,8 @@ export default function SignIn(props: {
                   axios
                     .post('/api/users/signin', signInData)
                     .then((result) => {
-                      setLoggedIn(true);
                       setState(result.data);
+                      setShowSignIn(false);
                     })
                     .catch((err) => {
                       setLoginError(true);

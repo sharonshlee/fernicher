@@ -112,6 +112,7 @@ export const productRoutes = (
           condition: string;
           description?: string;
           productLocation: string;
+          userId: number;
         };
       const location = productLocation.split(',').map((item) => Number(item));
       cloudinary.config({
@@ -123,7 +124,6 @@ export const productRoutes = (
 
       const { url } = await cloudinary.uploader.upload(req.file.path);
 
-      const user = await userRepository.findOne({ firstName: 'John' }); // Need to grab from logged user session, hard coded for now.
       const category = await categoryRepository.findOne({ code: categoryCode });
       return productRepository
         .save({
@@ -131,7 +131,6 @@ export const productRoutes = (
           productLocation: location,
           image: url,
           category,
-          user,
         })
         .then((product) => res.send(product))
         .catch((err) => console.log(err));

@@ -6,10 +6,11 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import { FormControl, InputLabel, Select, MenuItem } from '@mui/material';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import axios from 'axios';
 import useViewport from '../../hooks/useViewport';
 import { map } from 'lodash';
+import { LoggedInContext } from '../../providers/LoggedInContext';
 
 export function AddProduct(props: { open: boolean; handleClose: any }) {
   const { open, handleClose } = props;
@@ -38,6 +39,7 @@ export function AddProduct(props: { open: boolean; handleClose: any }) {
     code!: string;
   }
   const [categories, setCategories] = useState<CategoryDto[]>([]);
+  const { state: loggedInUser } = useContext(LoggedInContext);
   useEffect(() => {
     axios
       .post<CategoryDto[]>('/api/categories')
@@ -152,6 +154,7 @@ export function AddProduct(props: { open: boolean; handleClose: any }) {
 
                 const formData = new FormData();
 
+                formData.append('userId', loggedInUser.id);
                 formData.append('name', product.name);
                 formData.append('description', product.description as string);
                 formData.append('categoryCode', product.categoryCode);
