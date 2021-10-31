@@ -1,4 +1,4 @@
-import { Category, User, Comment } from '@fernicher/models';
+import { Category, User, Comment, Favourite } from '@fernicher/models';
 import { Router } from 'express';
 import { filter, find, map } from 'lodash';
 import { Repository, In } from 'typeorm';
@@ -7,7 +7,8 @@ import { whereBuilder } from './routeHelpers';
 export const categoryRoutes = (
   categoryRepository: Repository<Category>,
   userRepository: Repository<User>,
-  commentRepository: Repository<Comment>
+  commentRepository: Repository<Comment>,
+  favouriteRepository: Repository<Favourite>
 ) => {
   const categoryRouter = Router();
 
@@ -50,6 +51,16 @@ export const categoryRoutes = (
         },
       });
 
+      const favourites = await favouriteRepository.find({
+        where: { productId: In(productIds) },
+        join: {
+          alias: 'favourite',
+          innerJoinAndSelect: {
+            user: 'favourite.user',
+          },
+        },
+      });
+
       const updatedCategories = map(categories, (category) => ({
         ...category,
         products: map(category.products, (product) => ({
@@ -57,6 +68,10 @@ export const categoryRoutes = (
           comments: filter(
             comments,
             (comment) => comment.productId === product.id
+          ),
+          favourites: filter(
+            favourites,
+            (favourite) => favourite.productId === product.id
           ),
           user: find(users, (user) => user.id === product.userId),
         })),

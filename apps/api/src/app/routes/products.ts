@@ -63,6 +63,7 @@ export const productRoutes = (
           },
           leftJoinAndSelect: {
             comments: 'product.comments',
+            favourites: 'product.favourites',
           },
         },
       })
@@ -86,6 +87,7 @@ export const productRoutes = (
           },
           leftJoinAndSelect: {
             comments: 'product.comments',
+            favourites: 'product.favourites',
           },
         },
       })

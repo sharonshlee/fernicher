@@ -53,7 +53,12 @@ createConnection({
   );
   app.use(
     '/api',
-    categoryRoutes(categoryRepository, userRepository, commentRepository)
+    categoryRoutes(
+      categoryRepository,
+      userRepository,
+      commentRepository,
+      favouriteRepository
+    )
   );
   app.use('/api', favouriteRoutes(favouriteRepository, commentRepository));
   app.use(

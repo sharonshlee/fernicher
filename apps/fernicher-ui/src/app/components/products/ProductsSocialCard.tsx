@@ -49,7 +49,7 @@ export default function ProductsSocialCard(props: {
   setCommentExpanded: any;
 }) {
   const { userid } = useParams<{ userid: string }>();
-  const { setMyProducts, myProducts } = useContext(stateContext);
+  const { myProducts, setProducts, setMyProducts } = useContext(stateContext);
   const {
     usersAndProduct,
     setUsersAndProduct,
@@ -221,12 +221,34 @@ export default function ProductsSocialCard(props: {
                           favourites: [...prev.favourites, result.data],
                         }));
                         setFavouriteId(result.data.id);
+                        setProducts((prev: any[]) =>
+                          map(prev, (product) => {
+                            if (product.id === usersAndProduct.id) {
+                              return {
+                                ...product,
+                                favourites: [
+                                  ...product.favourites,
+                                  result.data,
+                                ],
+                              };
+                            }
+                            return product;
+                          })
+                        );
+                        setUsersAndProduct({
+                          ...usersAndProduct,
+                          favourites: [
+                            result.data,
+                            ...usersAndProduct.favourites,
+                          ],
+                        });
                       });
                   }}
                 >
                   <Badge
                     badgeContent={
-                      loggedInUser.favourites && loggedInUser.favourites.length
+                      usersAndProduct.favourites &&
+                      usersAndProduct.favourites.length
                     }
                     color="error"
                   >
@@ -249,12 +271,29 @@ export default function ProductsSocialCard(props: {
                         ),
                       }));
                       setFavouriteId('');
+                      setProducts((prev: any[]) =>
+                        map(prev, (product) => ({
+                          ...product,
+                          favourites: filter(
+                            product.favourites,
+                            (fav) => fav.id !== favouriteId
+                          ),
+                        }))
+                      );
+                      setUsersAndProduct({
+                        ...usersAndProduct,
+                        favourites: filter(
+                          usersAndProduct.favourites,
+                          (fav) => fav.id !== favouriteId
+                        ),
+                      });
                     });
                   }}
                 >
                   <Badge
                     badgeContent={
-                      loggedInUser.favourites && loggedInUser.favourites.length
+                      usersAndProduct.favourites &&
+                      usersAndProduct.favourites.length
                     }
                     color="error"
                   >
