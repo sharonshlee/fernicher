@@ -246,7 +246,10 @@ export default function ProductsSocialCard(props: {
                     .then((result: any) => {
                       setLoggedInUser((prev: any) => ({
                         ...prev,
-                        favourites: [...prev.favourites, result.data],
+                        favourites: [
+                          ...map(prev.favourites, (fav) => fav),
+                          result.data,
+                        ],
                       }));
                       setFavouriteId(result.data.id);
                       !userid &&
@@ -256,7 +259,7 @@ export default function ProductsSocialCard(props: {
                               return {
                                 ...product,
                                 favourites: [
-                                  ...product.favourites,
+                                  ...map(product.favourites, (fav) => fav),
                                   result.data,
                                 ],
                               };
@@ -271,7 +274,7 @@ export default function ProductsSocialCard(props: {
                               return {
                                 ...product,
                                 favourites: [
-                                  ...product.favourites,
+                                  ...map(product.favourites, (fav) => fav),
                                   result.data,
                                 ],
                               };
@@ -283,7 +286,7 @@ export default function ProductsSocialCard(props: {
                         ...usersAndProduct,
                         favourites: [
                           result.data,
-                          ...usersAndProduct.favourites,
+                          ...map(usersAndProduct.favourites, (fav) => fav),
                         ],
                       });
                     });

@@ -233,7 +233,7 @@ export const dbresetRoutes = (
         description: 'Full sized mirror - check yourself out in full length!',
         image:
           'https://images.unsplash.com/photo-1556784344-ad913c73cfc4?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1769&q=80',
-        category: categories[0],
+        category: categories[3],
         user: users[0],
         productLocation: [43.189975, -79.190215],
         location: 'Toronto, ON, Canada',
@@ -293,7 +293,7 @@ export const dbresetRoutes = (
         color: 'brown',
       },
       {
-        name: 'White food pantry',
+        name: 'White kitchen shelf',
         description: 'Moving soon, letting this go, message me for details!',
         image:
           'https://images.unsplash.com/photo-1504977402025-84285fea814b?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=687&q=80',
@@ -318,7 +318,7 @@ export const dbresetRoutes = (
         color: 'white',
       },
       {
-        name: 'Small computer table with chair',
+        name: 'Small computer table',
         description:
           'Finishing my term soon, letting this go, message me for details!',
         image:
