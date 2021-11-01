@@ -16,32 +16,34 @@ import { ViewportProvider } from './providers/ViewportProvider';
 
 const App = () => {
   return (
-    <StateProvider>
-      <LoggedInProvider>
-        <ViewportProvider>
-          <Navbar />
-          <div
-            style={{
-              width: '100%',
-              margin: 'auto',
-            }}
-          >
-            <Switch>
-              <Route path="/users/:userid/products" component={UserProducts} />
-              <Route path="/products/:cat" component={Products} />
-              <Route path="/rooms/:cat" component={Rooms} />
-              <Route path="/fav" component={Favourites} />
-              {/* <Route path="/login" component={Login} /> */}
-              <Route path="/chats" component={Chats} />
-              <Route path="/" component={Home} />
-            </Switch>
-            {/* <Route path="/" element={<Home authed={true}/>} /> */}
-            <Footer />
-          </div>
-          <BackToTop />
-        </ViewportProvider>
-      </LoggedInProvider>
-    </StateProvider>
+
+      <StateProvider>
+        <LoggedInProvider>
+          <ViewportProvider>
+            <Navbar />
+            <div
+              style={{
+                width: '100%',
+                margin: 'auto',
+              }}
+            >
+              <Switch>
+                <Route path="/users/:userid/products" component={UserProducts} />
+                <Route path="/products/:cat" component={Products} />
+                <Route path="/rooms/:cat" component={Rooms} />
+                <Route path="/fav" component={Favourites} />
+                {/* <Route path="/login" component={Login} /> */}
+                <Route path="/chats" component={Chats} />
+                <Route path="/" component={Home} />
+              </Switch>
+              {/* <Route path="/" element={<Home authed={true}/>} /> */}
+              <Footer />
+            </div>
+            <BackToTop />
+          </ViewportProvider>
+        </LoggedInProvider>
+      </StateProvider>
+
   );
 };
 

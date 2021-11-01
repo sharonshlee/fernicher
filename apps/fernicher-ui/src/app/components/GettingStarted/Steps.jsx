@@ -1,24 +1,22 @@
 import * as React from 'react';
-import { useContext } from 'react';
+import {useEffect} from 'react';
 import Box from '@mui/material/Box';
 import Stepper from '@mui/material/Stepper';
 import Step from '@mui/material/Step';
 import StepLabel from '@mui/material/StepLabel';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-import LoggedInContext from '../../providers/LoggedInContext';
-import { useHistory } from 'react-router-dom';
+import Instructions from './Instructions';
 
-const steps = ['Select campaign settings', 'Create an ad group', 'Create an ad'];
+const steps = ['Sigup or Login', 'Post Your Furniture!', 'Find Furniture Near You!'];
 
-export default function HorizontalLinearStepper() {
+export default function HorizontalLinearStepper({ handleClose }) {
   const [activeStep, setActiveStep] = React.useState(0);
   const [skipped, setSkipped] = React.useState(new Set());
-  const { state, setState } = useContext(LoggedInContext);
-  const history = useHistory();
+  const [finished, setFinished] = React.useState(false);
 
   const isStepOptional = (step) => {
-    return step === 1;
+    return step === 1 || 2;
   };
 
   const isStepSkipped = (step) => {
@@ -55,17 +53,20 @@ export default function HorizontalLinearStepper() {
     });
   };
 
-  const handleReset = () => {
-    setActiveStep(0);
-  };
+  if (activeStep === 3) {
+    setTimeout(() => {
+      setFinished(true);
+      handleClose();
+    }, 2000)
+  }
 
-  if (!state) {
-    history.push('/')
+  if (finished) {
     return null;
   }
 
   return (
     <Box sx={{ width: '100%' }}>
+      <Instructions activeStep={activeStep}/>
       <Stepper activeStep={activeStep}>
         {steps.map((label, index) => {
           const stepProps = {};
@@ -85,19 +86,18 @@ export default function HorizontalLinearStepper() {
           );
         })}
       </Stepper>
-      {activeStep === steps.length ? (
+      {/* {activeStep === steps.length ? (
         <React.Fragment>
           <Typography sx={{ mt: 2, mb: 1 }}>
-            All steps completed - you&apos;re finished
+            And that's it!
           </Typography>
           <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
             <Box sx={{ flex: '1 1 auto' }} />
-            <Button onClick={handleReset}>Reset</Button>
           </Box>
-        </React.Fragment>
-      ) : (
+        </React.Fragment> */}
+      {/* ) : ( */}
         <React.Fragment>
-          <Typography sx={{ mt: 2, mb: 1 }}>Step {activeStep + 1}</Typography>
+          {activeStep !== 3 && <Typography sx={{ mt: 2, mb: 1 }}>Step {activeStep + 1}</Typography>}
           <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
             <Button
               color="inherit"
@@ -119,7 +119,7 @@ export default function HorizontalLinearStepper() {
             </Button>
           </Box>
         </React.Fragment>
-      )}
+      {/* )} */}
     </Box>
   );
 }

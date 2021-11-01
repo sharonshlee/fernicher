@@ -15,7 +15,7 @@ function Footer() {
         color="white"
       >
         <Container maxWidth="lg">
-          <Grid container spacing={5}>
+          {/* <Grid container spacing={5}>
             <Grid item xs={12} sm={4}>
               <Box borderBottom={1}>About us</Box>
               <Box>
@@ -36,10 +36,10 @@ function Footer() {
               </Link>
             </Box>
             </Grid>
-          </Grid>
-          <Box  textAlign="center" pt={{xs: 5, sm: 10}} pb={{xs: 5, sm: 0}}>
+              </Grid>*/}
+          {<Box  textAlign="center" pt={{xs: 5, sm: 10}} pb={{xs: 5, sm: 0}}>
             Fernicher &reg; {new Date().getFullYear()}
-          </Box>
+          </Box> }
           <Box textAlign="center" pt={{xs: 5, sm: 10}} pb={{xs: 5, sm: 0}}>
             Created by Sharon Lee and Lewis Lee
             <br />
