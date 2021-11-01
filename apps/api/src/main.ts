@@ -45,8 +45,8 @@ createConnection({
       keys: ['keys1'],
     })
   );
-   /** Routes */
-   app.use(
+  /** Routes */
+  app.use(
     '/api',
     userRoutes(
       userRepository,

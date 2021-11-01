@@ -151,38 +151,8 @@ const Sidebar = ({ position, toggleSlider, open, menu }) => {
   const { setProductOnMap } = useContext(stateContext);
   const { state: loggedInUser } = useContext(LoggedInContext);
 
-  // Will change this with useContext after our lecture
   useEffect(() => {
-    if (menu === 'favourites') {
-      // axios
-      //   .post('/api/users')
-      //   .then((res) => {
-      //     const resFavs = res.data.filter((el) => el.id === loggedInUser.id)[0]
-      //       .favourites;
-      //     const favourites = resFavs.map((el, i) => ({
-      //       listText: `${i + 1}: ${el.product.name}`,
-      //       listPath: '/',
-      //       listImage: (
-      //         <img
-      //           src={el.product.image}
-      //           alt={el.product.name}
-      //           style={{ height: '50px' }}
-      //         />
-      //       ),
-      //       latlng: [
-      //         el.product.productLocation[0],
-      //         el.product.productLocation[1],
-      //       ],
-      //       onClick: () => {
-      //         setProducts([el.product]);
-      //       },
-      //     }));
-      //     setMenus((prev) => ({
-      //       ...prev,
-      //       favourites,
-      //     }));
-      //   })
-      //   .catch((err) => console.log('ERR1 HAPPENED', err));
+    if (menu === 'favourites' && loggedInUser) {
       const menuFavourites = map(loggedInUser.favourites, (favourite) => ({
         listText: `${favourite.product.name}`,
         listPath: '/',

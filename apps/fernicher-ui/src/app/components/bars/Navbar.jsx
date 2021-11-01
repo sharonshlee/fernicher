@@ -12,7 +12,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 import SearchIcon from '@material-ui/icons/Search';
 import AccountCircle from '@material-ui/icons/AccountCircle';
-import ChatBubbleIcon from '@mui/icons-material/ChatBubble';
+import { Chat } from '@mui/icons-material';
 import MailIcon from '@material-ui/icons/Mail';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import MoreIcon from '@material-ui/icons/MoreVert';
@@ -31,7 +31,6 @@ import axios from 'axios';
 import { stateContext } from '../../providers/StateProvider';
 import { LoggedInContext } from '../../providers/LoggedInContext';
 import { ViewportContext } from '../../providers/ViewportProvider';
-
 
 const useStyles = makeStyles((theme) => ({
   grow: {
@@ -110,7 +109,7 @@ export default function PrimarySearchAppBar() {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
-  const {viewport, setViewport, mapRef} = useContext(ViewportContext);
+  const { viewport, setViewport, mapRef } = useContext(ViewportContext);
 
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
@@ -206,7 +205,6 @@ export default function PrimarySearchAppBar() {
   const { state: loggedInUser, setState: setLoggedInUser } =
     useContext(LoggedInContext);
 
-
   return (
     <div className={classes.grow}>
       <AppBar
@@ -288,13 +286,14 @@ export default function PrimarySearchAppBar() {
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
             <Tooltip
-            title="Furnitures Nearby"
-            onClick={() => {
-              mapRef.current.panTo({
-                lat: viewport.lat,
-                lng: viewport.lng,
-              });
-            }}>
+              title="Furnitures Nearby"
+              onClick={() => {
+                mapRef.current.panTo({
+                  lat: viewport.lat,
+                  lng: viewport.lng,
+                });
+              }}
+            >
               <IconButton
                 aria-label="show 17 new notifications"
                 color="inherit"
@@ -344,8 +343,8 @@ export default function PrimarySearchAppBar() {
                     color="inherit"
                   >
                     {/* <Link to="/chats"> */}
-                    <Badge badgeContent={2} color="secondary">
-                      <ChatBubbleIcon />
+                    <Badge color="secondary">
+                      <Chat />
                     </Badge>
                     {/* </Link> */}
                   </IconButton>
