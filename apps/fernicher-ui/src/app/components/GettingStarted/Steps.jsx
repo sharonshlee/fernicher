@@ -57,7 +57,7 @@ export default function HorizontalLinearStepper({ handleClose }) {
     setTimeout(() => {
       setFinished(true);
       handleClose();
-    }, 1500)
+    }, 1200)
   }
 
   if (finished) {
@@ -86,18 +86,9 @@ export default function HorizontalLinearStepper({ handleClose }) {
           );
         })}
       </Stepper>
-      {/* {activeStep === steps.length ? (
+        {activeStep !== 3 &&
         <React.Fragment>
-          <Typography sx={{ mt: 2, mb: 1 }}>
-            And that's it!
-          </Typography>
-          <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
-            <Box sx={{ flex: '1 1 auto' }} />
-          </Box>
-        </React.Fragment> */}
-      {/* ) : ( */}
-        <React.Fragment>
-          {activeStep !== 3 && <Typography sx={{ mt: 2, mb: 1 }}>Step {activeStep + 1}</Typography>}
+          <Typography sx={{ mt: 2, mb: 1 }}>Step {activeStep + 1}</Typography>
           <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
             <Button
               color="inherit"
@@ -118,8 +109,7 @@ export default function HorizontalLinearStepper({ handleClose }) {
               {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
             </Button>
           </Box>
-        </React.Fragment>
-      {/* )} */}
+        </React.Fragment>}
     </Box>
   );
 }

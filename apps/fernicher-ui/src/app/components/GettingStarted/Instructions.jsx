@@ -21,7 +21,6 @@ const Instructions = ({activeStep}) => {
     3: <h3>And that's it!</h3>
   }
 
-  console.log("activeStep", activeStep)
   return (
     <div>
      {instructions[activeStep]}
