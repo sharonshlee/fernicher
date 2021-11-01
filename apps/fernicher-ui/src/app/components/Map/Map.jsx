@@ -1,14 +1,13 @@
-import React, { useState, useRef, useCallback, useContext } from 'react';
+import React, { useState, useRef, useCallback, useContext, useEffect } from 'react';
 import {
   GoogleMap,
   useLoadScript,
   Marker,
-  InfoWindow,
+  InfoWindow
 } from '@react-google-maps/api';
 import '@reach/combobox/styles.css';
 import mapStyles from './mapStyles';
 import ProductCard from '../products/ProductCard';
-import useViewport from '../../hooks/useViewport';
 import { stateContext } from '../../providers/StateProvider';
 import { ViewportContext } from '../../providers/ViewportProvider';
 
@@ -65,6 +64,10 @@ const Map = ({ mapTitle = '', width = '100%', height = '80vh' }) => {
       }}
     />
   ));
+
+  // useEffect(() => {
+  //   const directionsService = new google.maps.DirectionsService()
+  // }, [])
 
   return (
     <div>
