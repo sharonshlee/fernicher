@@ -223,7 +223,7 @@ export default function PrimarySearchAppBar() {
           </IconButton>
           <Sidebar {...state} toggleSlider={toggleSlider} />
           <Button
-            startIcon={<Avatar src={'/assets/imgs/brand_logo.png'} />}
+            startIcon={<Avatar src={'/assets/imgs/brand_green.png'} />}
             style={{ color: '#212529' }}
             onClick={() => {
               setProductOnMap(null);
