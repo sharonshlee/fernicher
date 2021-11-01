@@ -10,6 +10,7 @@ import mapStyles from './mapStyles';
 import ProductCard from '../products/ProductCard';
 import useViewport from '../../hooks/useViewport';
 import { stateContext } from '../../providers/StateProvider';
+import { ViewportContext } from '../../providers/ViewportProvider';
 
 const libraries = ['places'];
 
@@ -25,13 +26,14 @@ const options = {
 
 const Map = ({ mapTitle = '', width = '100%', height = '80vh' }) => {
   const { products } = useContext(stateContext);
+  const { viewport, setViewport, setMapRef } = useContext(ViewportContext);
 
   const mapContainerStyle = {
     width,
     height,
   };
   const [selected, setSelected] = useState(null);
-  const { viewport, setViewPort } = useViewport();
+  // const { viewport, setViewPort } = useViewport();
   const { isLoaded, loadError } = useLoadScript({
     googleMapsApiKey: 'AIzaSyAlh7RkuE1fQuj9D-L9-WQqpFoQaq0CBWk',
     libraries,
@@ -40,7 +42,8 @@ const Map = ({ mapTitle = '', width = '100%', height = '80vh' }) => {
   const mapRef = useRef();
   const onMapLoad = useCallback((map) => {
     mapRef.current = map;
-  }, []);
+    setMapRef(mapRef)
+  }, [setMapRef]);
 
   if (loadError) return <h1>Error loading maps</h1>;
   if (!isLoaded) return <h1>Loading Maps</h1>;

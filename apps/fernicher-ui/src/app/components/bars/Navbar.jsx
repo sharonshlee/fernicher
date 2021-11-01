@@ -30,6 +30,8 @@ import SignUp from '../login/SignUp';
 import axios from 'axios';
 import { stateContext } from '../../providers/StateProvider';
 import { LoggedInContext } from '../../providers/LoggedInContext';
+import { ViewportContext } from '../../providers/ViewportProvider';
+
 
 const useStyles = makeStyles((theme) => ({
   grow: {
@@ -108,6 +110,7 @@ export default function PrimarySearchAppBar() {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
+  const {viewport, setViewport, mapRef} = useContext(ViewportContext);
 
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
@@ -284,7 +287,12 @@ export default function PrimarySearchAppBar() {
           <div className={classes.sectionDesktop}>
             <Tooltip
             title="Furnitures Nearby"
-            onClick={() => console.log("CLICKED IT!")}>
+            onClick={() => {
+              mapRef.current.panTo({
+                lat: viewport.lat,
+                lng: viewport.lng,
+              });
+            }}>
               <IconButton
                 aria-label="show 17 new notifications"
                 color="inherit"

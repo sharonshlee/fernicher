@@ -1,7 +1,9 @@
-import {useState, useEffect} from 'react'
-import useLocation from './useLocation'
+import React, { useState, useEffect } from 'react';
+import useLocation from '../hooks/useLocation';
 
-const useViewport = () => {
+const ViewportContext = React.createContext();
+
+const ViewportProvider = (props) => {
   const [viewport, setViewport] = useState({
     latitude: 43.835740,
     longitude: -79.553410,
@@ -12,6 +14,9 @@ const useViewport = () => {
     resolved: false
   })
 
+  const [mapRef, setMapRef] = useState(null);
+
+  console.log("MAP REF IS THIS:", mapRef);
 
   const coords = useLocation()
 
@@ -32,7 +37,11 @@ const useViewport = () => {
     }
   }, [coords])
 
-  return { viewport, setViewport }
-}
+  return (
+    <ViewportContext.Provider value={{ viewport, setViewport, mapRef, setMapRef }}>
+      {props.children}
+    </ViewportContext.Provider>
+  );
+};
 
-export default useViewport
+export { ViewportContext, ViewportProvider };
