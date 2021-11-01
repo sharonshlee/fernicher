@@ -294,6 +294,7 @@ export default function PrimarySearchAppBar() {
                 lat: viewport.lat,
                 lng: viewport.lng,
               });
+              return history.push('/');
             }}>
               <IconButton
                 aria-label="show 17 new notifications"

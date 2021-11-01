@@ -13,7 +13,6 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Dialog } from '@mui/material';
 import { useState } from 'react';
 import axios from 'axios';
-import { Redirect } from 'react-router-dom';
 
 function Copyright(props: any) {
   return (
@@ -57,9 +56,6 @@ export default function SignUp(props: {
     password: string;
   }>(defaultUserValues);
 
-  if (signedUp) {
-    return <Redirect to="/" />;
-  }
   return (
     <Dialog open={true} onClose={() => setShowSignUp(false)}>
       <ThemeProvider theme={theme}>
@@ -148,6 +144,7 @@ export default function SignUp(props: {
                 onClick={() => {
                   axios.post('/api/users/new', user).then(() => {
                     setSignedUp(true);
+                    setShowSignUp(false);
                     console.log('IT IT HIT THIS: ', user);
                     //Sign user up for chatengine.io as well
                     const body = {

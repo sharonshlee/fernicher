@@ -13,7 +13,6 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import LockOpenIcon from '@mui/icons-material/LockOpen';
 import { Dialog } from '@mui/material';
-import { Redirect } from 'react-router-dom';
 import axios from 'axios';
 import { LoggedInContext } from '../../providers/LoggedInContext';
 
