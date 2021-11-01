@@ -183,7 +183,6 @@ const Sidebar = ({ position, toggleSlider, open, menu }) => {
       //     }));
       //   })
       //   .catch((err) => console.log('ERR1 HAPPENED', err));
-      console.log('>>>>', loggedInUser.favourites);
       const menuFavourites = map(loggedInUser.favourites, (favourite) => ({
         listText: `${favourite.product.name}`,
         listPath: '/',

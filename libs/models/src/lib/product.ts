@@ -17,6 +17,9 @@ export class Product extends ModelBase {
   @Column()
   condition!: string;
 
+  @Column()
+  color!: string;
+
   @Column({ nullable: true, type: 'float', array: true })
   productLocation?: number[];
 
@@ -28,6 +31,9 @@ export class Product extends ModelBase {
 
   @Column()
   userId: number;
+
+  @Column()
+  categoryId: number;
 
   @ManyToOne(() => User, (user) => user.products)
   user!: User;

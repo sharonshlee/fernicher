@@ -38,7 +38,8 @@ export const productRoutes = (
   });
 
   productRouter.post('/products/search', (req, res) => {
-    const { name, description, condition, orderBy, desc, take } = req.body;
+    const { name, description, condition, color, orderBy, desc, take } =
+      req.body;
     const where = [];
     if (name) {
       where.push({ name: ILike(`%${name}%`) });
@@ -48,6 +49,9 @@ export const productRoutes = (
     }
     if (description) {
       where.push({ description: ILike(`%${description}%`) });
+    }
+    if (color) {
+      where.push({ color: ILike(`%${color}%`) });
     }
     const findOptions = { where, take: take ? take : 1000 };
     if (orderBy) {
@@ -126,7 +130,9 @@ export const productRoutes = (
         secure: true,
       });
 
-      const { url } = await cloudinary.uploader.upload(req.file.path);
+      const { url, public_id } = await cloudinary.uploader.upload(
+        req.file.path
+      );
 
       const category = await categoryRepository.findOne({ code: categoryCode });
       return productRepository
@@ -136,8 +142,11 @@ export const productRoutes = (
           image: url,
           category,
         })
-        .then((product) => res.send(product))
-        .catch((err) => console.log(err));
+        .then((product) => res.redirect(`/api/products/${product.id}`))
+        .catch(async (err) => {
+          await cloudinary.uploader.destroy(public_id);
+          console.log(err);
+        });
     }
   );
 
