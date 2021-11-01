@@ -77,8 +77,10 @@ function Products() {
         <div className="sliderimg">
           <h2>Most Popular</h2>
           <SingleLineImageList
+            imageWidth="35vh"
+            imageHeight="55vh"
+            imageRootHeight="60vh"
             subUsersAndProducts={products}
-            imageWidth="20%"
           />
         </div>
       )}
