@@ -28,8 +28,9 @@ import {
   TextField,
   Tooltip,
 } from '@mui/material';
+import { Chat } from '@mui/icons-material';
 import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { filter, find, isEmpty, map, trim } from 'lodash';
 import axios from 'axios';
 import { stateContext } from '../../providers/StateProvider';
@@ -78,6 +79,10 @@ export default function ProductsSocialCard(props: {
       transition: theme.transitions.create('transform', {
         duration: theme.transitions.duration.shortest,
       }),
+    },
+    chat: {
+      display: 'flex',
+      marginLeft: 'auto',
     },
     expandOpen: {
       transform: 'rotate(180deg)',
@@ -129,7 +134,12 @@ export default function ProductsSocialCard(props: {
         action={
           <IconButton
             aria-label="settings"
-            style={{ visibility: isEmpty(userid) ? 'hidden' : 'inherit' }}
+            style={{
+              visibility:
+                isEmpty(userid) || usersAndProduct.userId !== loggedInUser.id
+                  ? 'hidden'
+                  : 'inherit',
+            }}
             onClick={() => {
               setShowDelete(true);
               setDeleteMessage('Are you sure you want to delete this product?');
@@ -354,18 +364,25 @@ export default function ProductsSocialCard(props: {
             </Badge>
           </IconButton>
         </Tooltip>
-        <Tooltip title="Description">
-          <IconButton
-            className={clsx(classes.expand, {
-              [classes.expandOpen]: expanded,
-            })}
-            onClick={() => setExpanded(usersAndProduct.id, !expanded)}
-            aria-expanded={expanded}
-            aria-label="show more"
-          >
-            <ExpandMoreIcon />
-          </IconButton>
-        </Tooltip>
+        <div className={classes.chat}>
+          <Tooltip title="Chat">
+            <IconButton component={Link} to={'/chats'}>
+              <Chat />
+            </IconButton>
+          </Tooltip>
+          <Tooltip title="Description">
+            <IconButton
+              className={clsx(classes.expand, {
+                [classes.expandOpen]: expanded,
+              })}
+              onClick={() => setExpanded(usersAndProduct.id, !expanded)}
+              aria-expanded={expanded}
+              aria-label="show more"
+            >
+              <ExpandMoreIcon />
+            </IconButton>
+          </Tooltip>
+        </div>
       </CardActions>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>

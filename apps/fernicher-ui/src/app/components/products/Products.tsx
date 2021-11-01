@@ -18,6 +18,7 @@ import Map from '../Map/Map';
 import { ProductDialog } from './ProductDialog';
 import SingleLineImageList from '../ImageSliders/SingleLineImageList';
 import './products.scss';
+import { Recommendation } from './Recommendation';
 
 function Products() {
   const { products, setProducts } = useContext(stateContext);
@@ -80,6 +81,14 @@ function Products() {
             imageWidth="20%"
           />
         </div>
+      )}
+      {cat === 'all' && (
+        <Recommendation
+          imageWidth="16vh"
+          imageHeight="21vh"
+          imageRootHeight="22vh"
+          className="all-product-recommendation"
+        />
       )}
       {cat !== 'popular' && (
         <>
