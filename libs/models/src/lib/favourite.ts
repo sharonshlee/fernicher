@@ -8,7 +8,7 @@ export class Favourite extends ModelBase {
   user!: User;
 
   // eager will load products for this favourite id
-  @ManyToOne(() => Product, (product) => product.favourite, { eager: true })
+  @ManyToOne(() => Product, (product) => product.favourites, { eager: true })
   product!: Product;
 
   @Column()

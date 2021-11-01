@@ -33,7 +33,7 @@ export class Product extends ModelBase {
   user!: User;
 
   @OneToMany(() => Favourite, (favourite) => favourite.product)
-  favourite!: Favourite;
+  favourites!: Favourite[];
 
   @ManyToOne(() => Category, (category) => category.products)
   category!: Category;

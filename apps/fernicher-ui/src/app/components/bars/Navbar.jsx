@@ -231,7 +231,7 @@ export default function PrimarySearchAppBar() {
             style={{ color: '#212529' }}
             onClick={toggleSlider('left', true, 'products')}
           >
-            Products
+            Furnitures
           </Button>
           <Button
             style={{ color: '#212529' }}
@@ -244,7 +244,7 @@ export default function PrimarySearchAppBar() {
               style={{ color: '#212529' }}
               onClick={() => history.push(`/users/${loggedInUser.id}/products`)}
             >
-              My Products
+              My Listings
             </Button>
           )}
           <div className={classes.search}>
@@ -314,7 +314,6 @@ export default function PrimarySearchAppBar() {
                 )}
                 <Tooltip title="My Favourite Furnitures">
                   <IconButton
-                    aria-label="show 17 new notifications"
                     color="inherit"
                     onClick={toggleSlider('right', true, 'favourites')}
                   >

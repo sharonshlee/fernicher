@@ -49,7 +49,7 @@ export default function ProductsSocialCard(props: {
   setCommentExpanded: any;
 }) {
   const { userid } = useParams<{ userid: string }>();
-  const { setMyProducts, myProducts } = useContext(stateContext);
+  const { myProducts, setProducts, setMyProducts } = useContext(stateContext);
   const {
     usersAndProduct,
     setUsersAndProduct,
@@ -174,6 +174,13 @@ export default function ProductsSocialCard(props: {
                               (p) => p.id !== usersAndProduct.id
                             )
                           );
+                          setLoggedInUser((prev: any) => ({
+                            ...prev,
+                            products: filter(
+                              prev.products,
+                              (product) => product.id !== usersAndProduct.id
+                            ),
+                          }));
                           setDeleted(true);
                           setDeleteMessage('Product deleted.');
                         });
@@ -203,65 +210,128 @@ export default function ProductsSocialCard(props: {
       />
       <CardContent></CardContent>
       <CardActions disableSpacing>
+        {!loggedInUser && (
+          <IconButton disabled style={{ color: 'grey' }}>
+            <Badge
+              badgeContent={
+                usersAndProduct.favourites && usersAndProduct.favourites.length
+              }
+              color="error"
+            >
+              <FavoriteBorderIcon />
+            </Badge>
+          </IconButton>
+        )}
         {loggedInUser && (
           <>
             {!favouriteId && (
-              <Tooltip title="Add to Favourite">
-                <IconButton
-                  aria-label="add to favorites"
-                  onClick={() => {
-                    axios
-                      .post('/api/favourites/new', {
-                        userId: loggedInUser.id,
-                        productId: usersAndProduct.id,
-                      })
-                      .then((result: any) => {
-                        setLoggedInUser((prev: any) => ({
-                          ...prev,
-                          favourites: [...prev.favourites, result.data],
-                        }));
-                        setFavouriteId(result.data.id);
-                      });
-                  }}
-                >
-                  <Badge
-                    badgeContent={
-                      loggedInUser.favourites && loggedInUser.favourites.length
-                    }
-                    color="error"
-                  >
-                    <FavoriteBorderIcon />
-                  </Badge>
-                </IconButton>
-              </Tooltip>
-            )}
-            {favouriteId && (
-              <Tooltip title="Remove Favourite">
-                <IconButton
-                  aria-label="remove favorites"
-                  onClick={() => {
-                    axios.delete(`/api/favourites/${favouriteId}`).then(() => {
+              <IconButton
+                aria-label="add to favorites"
+                onClick={() => {
+                  axios
+                    .post('/api/favourites/new', {
+                      userId: loggedInUser.id,
+                      productId: usersAndProduct.id,
+                    })
+                    .then((result: any) => {
                       setLoggedInUser((prev: any) => ({
                         ...prev,
+                        favourites: [...prev.favourites, result.data],
+                      }));
+                      setFavouriteId(result.data.id);
+                      !userid &&
+                        setProducts((prev: any[]) =>
+                          map(prev, (product) => {
+                            if (product.id === usersAndProduct.id) {
+                              return {
+                                ...product,
+                                favourites: [
+                                  ...product.favourites,
+                                  result.data,
+                                ],
+                              };
+                            }
+                            return product;
+                          })
+                        );
+                      userid &&
+                        setMyProducts((prev: any[]) =>
+                          map(prev, (product) => {
+                            if (product.id === usersAndProduct.id) {
+                              return {
+                                ...product,
+                                favourites: [
+                                  ...product.favourites,
+                                  result.data,
+                                ],
+                              };
+                            }
+                            return product;
+                          })
+                        );
+                      setUsersAndProduct({
+                        ...usersAndProduct,
+                        favourites: [
+                          result.data,
+                          ...usersAndProduct.favourites,
+                        ],
+                      });
+                    });
+                }}
+              >
+                <Badge
+                  badgeContent={
+                    usersAndProduct.favourites &&
+                    usersAndProduct.favourites.length
+                  }
+                  color="error"
+                >
+                  <FavoriteBorderIcon />
+                </Badge>
+              </IconButton>
+            )}
+            {favouriteId && (
+              <IconButton
+                aria-label="remove favorites"
+                onClick={() => {
+                  axios.delete(`/api/favourites/${favouriteId}`).then(() => {
+                    setLoggedInUser((prev: any) => ({
+                      ...prev,
+                      favourites: filter(
+                        prev.favourites,
+                        (fav) => fav.id !== favouriteId
+                      ),
+                    }));
+                    setFavouriteId('');
+                    setProducts((prev: any[]) =>
+                      map(prev, (product) => ({
+                        ...product,
                         favourites: filter(
-                          prev.favourites,
+                          product.favourites,
                           (fav) => fav.id !== favouriteId
                         ),
-                      }));
-                      setFavouriteId('');
+                      }))
+                    );
+                    setUsersAndProduct({
+                      ...usersAndProduct,
+                      favourites: filter(
+                        usersAndProduct.favourites,
+                        (fav) => fav.id !== favouriteId
+                      ),
                     });
-                  }}
+                  });
+                }}
+              >
+                <Badge
+                  badgeContent={
+                    usersAndProduct.favourites &&
+                    usersAndProduct.favourites.length
+                  }
+                  color="error"
                 >
-                  <Badge
-                    badgeContent={
-                      loggedInUser.favourites && loggedInUser.favourites.length
-                    }
-                    color="error"
-                  >
-                    <FavoriteIcon />
-                  </Badge>
-                </IconButton>
-              </Tooltip>
+                  <FavoriteIcon />
+                </Badge>
+              </IconButton>
             )}
           </>
         )}

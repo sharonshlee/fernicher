@@ -46,16 +46,30 @@ createConnection({
     })
   );
   /** Routes */
-  app.use('/api', userRoutes(userRepository));
   app.use(
     '/api',
-    productRoutes(productRepository, categoryRepository, userRepository)
+    userRoutes(userRepository, favouriteRepository, commentRepository)
   );
   app.use(
     '/api',
-    categoryRoutes(categoryRepository, userRepository, commentRepository)
+    productRoutes(
+      productRepository,
+      categoryRepository,
+      userRepository,
+      favouriteRepository,
+      commentRepository
+    )
   );
-  app.use('/api', favouriteRoutes(favouriteRepository, commentRepository));
+  app.use(
+    '/api',
+    categoryRoutes(
+      categoryRepository,
+      userRepository,
+      commentRepository,
+      favouriteRepository
+    )
+  );
+  app.use('/api', favouriteRoutes(favouriteRepository));
   app.use(
     '/api',
     commentRoutes(commentRepository, productRepository, userRepository)

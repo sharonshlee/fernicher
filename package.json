@@ -19,6 +19,7 @@
     "@mui/material": "^5.0.4",
     "@reach/combobox": "^0.16.3",
     "@react-google-maps/api": "^2.5.0",
+    "@sendgrid/mail": "^7.5.0",
     "axios": "^0.23.0",
     "buffer": "^6.0.3",
     "cloudinary": "^1.27.1",

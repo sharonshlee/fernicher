@@ -4,11 +4,12 @@ import ImageList from '@material-ui/core/ImageList';
 import ImageListItem from '@material-ui/core/ImageListItem';
 import ImageListItemBar from '@material-ui/core/ImageListItemBar';
 import IconButton from '@material-ui/core/IconButton';
-import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import './ImageSliders.scss';
 import { chunk, find, map, reduce } from 'lodash';
 import { ProductDialog } from '../products/ProductDialog';
 import { stateContext } from '../../providers/StateProvider';
+import { Badge } from '@mui/material';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -17,14 +18,14 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'space-around',
     overflow: 'hidden',
     backgroundColor: '#DEE2E6',
+    height: '50em',
   },
   imageList: {
     flexWrap: 'nowrap',
     // Promote the list into his own layer on Chrome. This cost memory but helps keeping high FPS.
     transform: 'translateZ(0)',
-    width: '100%',
-    // height: '50vh',
-    // backgroundColor: '#d3d3d3',
+    // backgroundColor: '#d3d3d3'
+    padding: '1.5em 0.5em',
   },
   title: {
     color: 'white',
@@ -58,7 +59,7 @@ export default function SingleLineImageList(props: {
     <div className={classes.root}>
       <ImageList className={classes.imageList} cols={5} spacing={10}>
         {map(subUsersAndProducts, (usersAndProduct) => (
-          <ImageListItem key={usersAndProduct.id}>
+          <ImageListItem key={usersAndProduct.id} style={{ height: '24%' }}>
             <img
               src={usersAndProduct.image}
               alt={usersAndProduct.name}
@@ -73,8 +74,16 @@ export default function SingleLineImageList(props: {
                 title: classes.title,
               }}
               actionIcon={
-                <IconButton>
-                  <FavoriteBorderIcon className={classes.title} />
+                <IconButton disabled>
+                  <Badge
+                    badgeContent={
+                      usersAndProduct.favourites &&
+                      usersAndProduct.favourites.length
+                    }
+                    color="error"
+                  >
+                    <FavoriteBorderIcon className={classes.title} />
+                  </Badge>
                 </IconButton>
               }
             />

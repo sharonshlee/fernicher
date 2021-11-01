@@ -11,6 +11,7 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import LockOpenIcon from '@mui/icons-material/LockOpen';
 import { Dialog } from '@mui/material';
 import { Redirect } from 'react-router-dom';
 import axios from 'axios';
@@ -58,8 +59,8 @@ export default function SignIn(props: {
               alignItems: 'center',
             }}
           >
-            <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-              <LockOutlinedIcon />
+            <Avatar sx={{ m: 1, bgcolor: '#403d39' }}>
+              <LockOpenIcon />
             </Avatar>
             <Typography component="h1" variant="h5">
               Sign in
@@ -102,11 +103,12 @@ export default function SignIn(props: {
                 type="submit"
                 fullWidth
                 variant="contained"
-                sx={{ mt: 3, mb: 2 }}
+                sx={{ mt: 3, mb: 2, bgcolor: '#403d39' }}
                 onClick={() => {
                   axios
                     .post('/api/users/signin', signInData)
                     .then((result) => {
+                      console.log('signin', result.data);
                       setState(result.data);
                       setShowSignIn(false);
                     })
@@ -118,13 +120,9 @@ export default function SignIn(props: {
                 Sign In
               </Button>
               <Grid container justifyContent="flex-end">
-                {/* <Grid item xs>
-                  <Link href="#" variant="body2">
-                    Forgot password?
-                  </Link>
-                </Grid> */}
                 <Grid item>
                   <Link
+                    sx={{ mt: 3, mb: 2, color: '#403d39' }}
                     variant="body2"
                     component={Button}
                     onClick={() => {

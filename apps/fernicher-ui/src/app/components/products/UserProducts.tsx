@@ -48,14 +48,21 @@ function UserProducts() {
   });
   return (
     <div className={'mainContent'}>
-      <h1>{upperFirst('my products')}</h1>
-      {isEmpty(myProducts) && <h3>No Products found.</h3>}
+      <h1>{'My Listings'}</h1>
+      {isEmpty(myProducts) && <h3>No Furnitures found.</h3>}
       <Grid container spacing={4} style={{ width: '100%', margin: 'auto' }}>
         {map(myProducts, (usersAndProduct: any) => (
           <Grid item md={3}>
             <ProductsSocialCard
               setUsersAndProduct={(product: any) =>
-                setMyProducts((prev: []) => [...prev, product])
+                setMyProducts((prev: any[]) => {
+                  return map(prev, (p) => {
+                    if (p.id === product.id) {
+                      return product;
+                    }
+                    return p;
+                  });
+                })
               }
               setExpanded={(id: number, isExpanded: boolean) =>
                 setExpanded({ ...expanded, [id]: isExpanded })
