@@ -11,37 +11,44 @@ import { ProductDialog } from '../products/ProductDialog';
 import { stateContext } from '../../providers/StateProvider';
 import { Badge } from '@mui/material';
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    display: 'flex',
-    flexWrap: 'wrap',
-    justifyContent: 'space-around',
-    overflow: 'hidden',
-    backgroundColor: '#DEE2E6',
-    height: '50em',
-  },
-  imageList: {
-    flexWrap: 'nowrap',
-    // Promote the list into his own layer on Chrome. This cost memory but helps keeping high FPS.
-    transform: 'translateZ(0)',
-    // backgroundColor: '#d3d3d3'
-    padding: '1.5em 0.5em',
-  },
-  title: {
-    color: 'white',
-    display: 'flex',
-    justifyContent: 'flex-start',
-  },
-  titleBar: {
-    background:
-      'linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.3) 70%, rgba(0,0,0,0) 100%)',
-  },
-}));
-
 export default function SingleLineImageList(props: {
   subUsersAndProducts: any;
+  imageHeight?: string;
+  imageWidth?: string;
+  imageRootHeight?: string;
 }) {
-  const { subUsersAndProducts } = props;
+  const {
+    subUsersAndProducts,
+    imageHeight = '60%',
+    imageRootHeight = '50em',
+    imageWidth = '20%',
+  } = props;
+  const useStyles = makeStyles((theme) => ({
+    root: {
+      display: 'flex',
+      flexWrap: 'wrap',
+      justifyContent: 'space-around',
+      overflow: 'hidden',
+      backgroundColor: '#DEE2E6',
+      height: imageRootHeight,
+    },
+    imageList: {
+      flexWrap: 'nowrap',
+      // Promote the list into his own layer on Chrome. This cost memory but helps keeping high FPS.
+      transform: 'translateZ(0)',
+      // backgroundColor: '#d3d3d3'
+      padding: '1.5em 0.5em',
+    },
+    title: {
+      color: 'white',
+      display: 'flex',
+      justifyContent: 'flex-start',
+    },
+    titleBar: {
+      background:
+        'linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.3) 70%, rgba(0,0,0,0) 100%)',
+    },
+  }));
   const { setProducts, products } = useContext(stateContext);
   const classes = useStyles();
   const [detail, setDetail] = useState<any>({ expanded: false, product: null });
@@ -59,7 +66,10 @@ export default function SingleLineImageList(props: {
     <div className={classes.root}>
       <ImageList className={classes.imageList} cols={5} spacing={10}>
         {map(subUsersAndProducts, (usersAndProduct) => (
-          <ImageListItem key={usersAndProduct.id} style={{ height: '24%' }}>
+          <ImageListItem
+            key={usersAndProduct.id}
+            style={{ height: imageHeight, width: imageWidth }}
+          >
             <img
               src={usersAndProduct.image}
               alt={usersAndProduct.name}

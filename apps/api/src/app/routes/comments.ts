@@ -44,7 +44,7 @@ export const commentRoutes = (
         );
 
         sgMail.setApiKey(process.env.SENDGRID_API_KEY);
-        console.log(product.user);
+
         const msg = {
           to: product.user.email, // Change to your recipient
           from: process.env.SENDGRID_SENDER, // Change to your verified sender
@@ -53,10 +53,11 @@ export const commentRoutes = (
           // to compress html: https://www.textfixer.com/html/compress-html-compression.php
           html: `<!DOCTYPE html><html> <head> <style> body { margin: auto; width: 50%; padding: 2em; color: #495057; font-family: Arial, Helvetica, sans-serif; } article { border: solid #495057 2px; border-radius: 0.5em; margin-top: 1em; } img { width: 100%; } div { margin: 1em; } a { color: #495057; background-color: #ced4da; border-radius: 5px; padding: 0.5em; text-decoration: none; } </style> </head> <body> <h2>New Comment</h2> <article> <div>${user.firstName} commented on your ${product.name}:</div> <div><i>${comment.comment}</i></div> <div> <img alt="${product.name}" src="${product.image}" /> </div> <div><a href="${process.env.FRONTEND_URL}">View comment here</a></div> </article> </body></html>`,
         };
-        console.log(msg);
 
-        await sgMail.send(msg);
-        res.send({ ...comment, user });
+        sgMail
+          .send(msg)
+          .catch((err) => console.log('SendGrid error:', err))
+          .finally(() => res.send({ ...comment, user }));
       });
   });
 

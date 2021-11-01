@@ -11,6 +11,7 @@ import axios from 'axios';
 import useViewport from '../../hooks/useViewport';
 import { map } from 'lodash';
 import { LoggedInContext } from '../../providers/LoggedInContext';
+import { stateContext } from '../../providers/StateProvider';
 
 export function AddProduct(props: { open: boolean; handleClose: any }) {
   const { open, handleClose } = props;
@@ -23,6 +24,7 @@ export function AddProduct(props: { open: boolean; handleClose: any }) {
     categoryCode: '',
     image: null,
     condition: '',
+    color: '',
     description: '',
     productLocation: [latitude, longitude],
   };
@@ -31,6 +33,7 @@ export function AddProduct(props: { open: boolean; handleClose: any }) {
     categoryCode: string;
     name: string;
     condition: string;
+    color: string;
     description?: string;
     productLocation: number[];
   }>(defaultProductValues);
@@ -39,7 +42,9 @@ export function AddProduct(props: { open: boolean; handleClose: any }) {
     code!: string;
   }
   const [categories, setCategories] = useState<CategoryDto[]>([]);
-  const { state: loggedInUser } = useContext(LoggedInContext);
+  const { setProducts, setMyProducts } = useContext(stateContext);
+  const { state: loggedInUser, setState: setLoggedInUser } =
+    useContext(LoggedInContext);
   useEffect(() => {
     axios
       .post<CategoryDto[]>('/api/categories')
@@ -70,17 +75,6 @@ export function AddProduct(props: { open: boolean; handleClose: any }) {
           <div className="file-name">
             {product.image && product.image.length > 0 && product.image[0].name}
           </div>
-          {/* <TextField
-            autoFocus
-            margin="dense"
-            id="name"
-            label="Add Photos"
-            type="image"
-            fullWidth
-            variant="standard"            
-            onChange={(e) => setProduct({ ...product, image: e.target.value })}
-            value={product.image}
-          /> */}
           <FormControl variant="standard" sx={{ m: 0, minWidth: 200 }}>
             <InputLabel id="category">Furniture Category</InputLabel>
             <Select
@@ -125,6 +119,30 @@ export function AddProduct(props: { open: boolean; handleClose: any }) {
               <MenuItem value={'fair'}>Fair</MenuItem>
             </Select>
           </FormControl>
+          <FormControl variant="standard" sx={{ m: 0, minWidth: 120 }}>
+            <InputLabel id="color">Color</InputLabel>
+            <Select
+              labelId="color"
+              id="color_select"
+              onChange={(e) =>
+                setProduct({ ...product, color: e.target.value })
+              }
+              value={product.color}
+              label="color"
+            >
+              <MenuItem value={'red'}>Red</MenuItem>
+              <MenuItem value={'green'}>Green</MenuItem>
+              <MenuItem value={'blue'}>Blue</MenuItem>
+              <MenuItem value={'orange'}>Orange</MenuItem>
+              <MenuItem value={'grey'}>Grey</MenuItem>
+              <MenuItem value={'brown'}>Brown</MenuItem>
+              <MenuItem value={'yellow'}>Yellow</MenuItem>
+              <MenuItem value={'white'}>White</MenuItem>
+              <MenuItem value={'black'}>Black</MenuItem>
+              <MenuItem value={'silver'}>Silver</MenuItem>
+              <MenuItem value={'purple'}>Purple</MenuItem>
+            </Select>
+          </FormControl>
           <TextField
             margin="dense"
             id="name"
@@ -163,6 +181,7 @@ export function AddProduct(props: { open: boolean; handleClose: any }) {
                   `${product.productLocation}`
                 );
                 formData.append('condition', product.condition);
+                formData.append('color', product.color);
                 if (product.image) {
                   formData.append('image', product.image[0]);
                 }
@@ -174,7 +193,6 @@ export function AddProduct(props: { open: boolean; handleClose: any }) {
                     `https://maps.googleapis.com/maps/api/geocode/json?latlng=${product.productLocation[0]},${product.productLocation[1]}&key=AIzaSyAlh7RkuE1fQuj9D-L9-WQqpFoQaq0CBWk`
                   )
                   .then((result) => {
-                    console.log(result.data);
                     const {
                       plus_code: { compound_code },
                     } = result.data;
@@ -187,7 +205,15 @@ export function AddProduct(props: { open: boolean; handleClose: any }) {
                       .post('/api/products/new', data, {
                         headers: { 'content-type': 'multipart/form-data' },
                       })
-                      .then(() => {
+                      .then((result) => {
+                        setLoggedInUser((prev: any) => {
+                          return {
+                            ...prev,
+                            products: [...prev.products, result.data],
+                          };
+                        });
+                        setMyProducts((prev: any[]) => [...prev, result.data]);
+                        setProducts((prev: any[]) => [...prev, result.data]);
                         setProduct(defaultProductValues);
                         handleClose(false);
                       })

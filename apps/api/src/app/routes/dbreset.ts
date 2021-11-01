@@ -107,6 +107,7 @@ export const dbresetRoutes = (
         productLocation: [43.865822, -79.61982],
         location: 'Toronto, ON, Canada',
         condition: 'like new',
+        color: 'brown',
       },
 
       {
@@ -120,6 +121,7 @@ export const dbresetRoutes = (
         productLocation: [43.889975, -79.560215],
         location: 'Toronto, ON, Canada',
         condition: 'good',
+        color: 'brown',
       },
 
       {
@@ -133,6 +135,7 @@ export const dbresetRoutes = (
         productLocation: [43.689975, -79.390215],
         location: 'Toronto, ON, Canada',
         condition: 'good',
+        color: 'yellow',
       },
 
       {
@@ -146,6 +149,7 @@ export const dbresetRoutes = (
         productLocation: [43.189975, -79.890215],
         location: 'Toronto, ON, Canada',
         condition: 'fair',
+        color: 'white',
       },
 
       {
@@ -159,6 +163,7 @@ export const dbresetRoutes = (
         productLocation: [42.889975, -77.590215],
         location: 'Toronto, ON, Canada',
         condition: 'like new',
+        color: 'black',
       },
 
       {
@@ -172,6 +177,7 @@ export const dbresetRoutes = (
         productLocation: [43.829975, -79.590515],
         location: 'Toronto, ON, Canada',
         condition: 'like new',
+        color: 'silver',
       },
 
       {
@@ -185,6 +191,7 @@ export const dbresetRoutes = (
         productLocation: [43.889945, -79.580215],
         location: 'Toronto, ON, Canada',
         condition: 'like new',
+        color: 'brown',
       },
 
       {
@@ -198,6 +205,7 @@ export const dbresetRoutes = (
         productLocation: [43.189975, -79.190215],
         location: 'Toronto, ON, Canada',
         condition: 'like new',
+        color: 'silver',
       },
 
       {
@@ -211,6 +219,7 @@ export const dbresetRoutes = (
         productLocation: [43.289975, -79.523215],
         location: 'Toronto, ON, Canada',
         condition: 'like new',
+        color: 'brown',
       },
       {
         name: 'Rug',
@@ -223,6 +232,7 @@ export const dbresetRoutes = (
         productLocation: [43.119975, -79.230215],
         location: 'Toronto, ON, Canada',
         condition: 'like new',
+        color: 'white',
       },
     ]);
 

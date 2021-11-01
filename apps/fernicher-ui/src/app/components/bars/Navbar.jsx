@@ -263,6 +263,7 @@ export default function PrimarySearchAppBar() {
                   name: '',
                   condition: '',
                   description: '',
+                  color: '',
                   orderBy: 'createdAt',
                   desc: true,
                   take: 1000,
@@ -270,6 +271,7 @@ export default function PrimarySearchAppBar() {
                 filter.name = value;
                 filter.condition = value;
                 filter.description = value;
+                filter.color = value;
                 axios.post('/api/products/search', filter).then((result) => {
                   setProducts(result.data);
                   history.push('/products/search');

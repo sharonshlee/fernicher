@@ -2,13 +2,15 @@ import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import Grid from '@material-ui/core/Grid';
 import ProductsSocialCard from './ProductsSocialCard';
-import { filter, find, isEmpty, map, reduce, upperFirst } from 'lodash';
+import { filter, find, isEmpty, map, reduce } from 'lodash';
 import { useParams, useHistory } from 'react-router-dom';
 import { stateContext } from '../../providers/StateProvider';
-import Map from '../Map/Map';
 import { ProductDialog } from './ProductDialog';
 import { LoggedInContext } from '../../providers/LoggedInContext';
+import SingleLineImageList from '../ImageSliders/SingleLineImageList';
+import './products.scss';
 
+// My Listings
 function UserProducts() {
   const { state: loggedInUser } = useContext(LoggedInContext);
   const history = useHistory();
@@ -46,6 +48,13 @@ function UserProducts() {
     expanded: false,
     comments: null,
   });
+  const [recommendedProducts, setRecommendedProducts] = useState<any[]>([]);
+  useEffect(() => {
+    axios.get(`/api/users/${loggedInUser.id}/recommend`).then((result: any) => {
+      console.log(result.data);
+      setRecommendedProducts(result.data);
+    });
+  }, [loggedInUser]);
   return (
     <div className={'mainContent'}>
       <h1>{'My Listings'}</h1>
@@ -84,6 +93,16 @@ function UserProducts() {
           </Grid>
         ))}
       </Grid>
+      {!isEmpty(loggedInUser.favourites) && (
+        <div className="sliderimg recommendation">
+          <h2>Recommendations</h2>
+          <SingleLineImageList
+            subUsersAndProducts={recommendedProducts}
+            imageHeight="25em"
+            imageRootHeight="26em"
+          />
+        </div>
+      )}
       {detail.product && (
         <ProductDialog
           detail={detail}

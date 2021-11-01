@@ -16,7 +16,8 @@ import { useParams } from 'react-router-dom';
 import { stateContext } from '../../providers/StateProvider';
 import Map from '../Map/Map';
 import { ProductDialog } from './ProductDialog';
-import ImageSliders from '../ImageSliders/ImageSliders';
+import SingleLineImageList from '../ImageSliders/SingleLineImageList';
+import './products.scss';
 
 function Products() {
   const { products, setProducts } = useContext(stateContext);
@@ -71,7 +72,15 @@ function Products() {
 
   return (
     <div className={'mainContent'}>
-      {cat === 'popular' && <ImageSliders />}
+      {cat === 'popular' && (
+        <div className="sliderimg">
+          <h2>Most Popular</h2>
+          <SingleLineImageList
+            subUsersAndProducts={products}
+            imageWidth="20%"
+          />
+        </div>
+      )}
       {cat !== 'popular' && (
         <>
           <h1>{upperFirst(cat)}</h1>
