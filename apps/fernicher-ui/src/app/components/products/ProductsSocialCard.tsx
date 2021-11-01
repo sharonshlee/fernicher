@@ -365,11 +365,13 @@ export default function ProductsSocialCard(props: {
           </IconButton>
         </Tooltip>
         <div className={classes.chat}>
-          <Tooltip title="Chat">
-            <IconButton component={Link} to={'/chats'}>
-              <Chat />
-            </IconButton>
-          </Tooltip>
+          {loggedInUser && (
+            <Tooltip title="Chat">
+              <IconButton component={Link} to={'/chats'}>
+                <Chat />
+              </IconButton>
+            </Tooltip>
+          )}
           <Tooltip title="Description">
             <IconButton
               className={clsx(classes.expand, {
