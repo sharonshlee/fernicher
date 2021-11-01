@@ -1,4 +1,5 @@
 import * as React from 'react';
+import {useContext} from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -13,6 +14,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Dialog } from '@mui/material';
 import { useState } from 'react';
 import axios from 'axios';
+import { LoggedInContext } from '../../providers/LoggedInContext';
 
 function Copyright(props: any) {
   return (
@@ -39,8 +41,7 @@ export default function SignUp(props: {
   setShowSignUp: any;
 }) {
   const { setShowSignIn, setShowSignUp } = props;
-  const [signedUp, setSignedUp] = useState(false);
-
+  const { setState } = useContext(LoggedInContext);
   const defaultUserValues = {
     firstName: '',
     lastName: '',
@@ -142,8 +143,9 @@ export default function SignUp(props: {
                 variant="contained"
                 sx={{ mt: 3, mb: 2, bgcolor: '#403d39' }}
                 onClick={() => {
-                  axios.post('/api/users/new', user).then(() => {
-                    setSignedUp(true);
+                  axios.post('/api/users/new', user).then((result) => {
+                    console.log('signup', result.data);
+                    setState(result.data);
                     setShowSignUp(false);
                     console.log('IT IT HIT THIS: ', user);
                     //Sign user up for chatengine.io as well

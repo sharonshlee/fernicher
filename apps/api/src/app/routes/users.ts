@@ -156,7 +156,7 @@ export const userRoutes = (
     if (!req.session.user) {
       req.session.user = { email: newUser.email, password: newUser.password };
     }
-    return userRepository.save(newUser).then((user) => res.send(user));
+    return userRepository.save(newUser).then((user) => res.redirect(`/api/users/${user.id}`));
   });
 
   // Sign in
