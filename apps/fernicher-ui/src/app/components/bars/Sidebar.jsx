@@ -57,11 +57,6 @@ const Sidebar = ({ position, toggleSlider, open, menu }) => {
         listText: 'Rooms',
         listPath: '/rooms/living',
       },
-      {
-        listIcon: <ContactsIcon />,
-        listText: 'About Us',
-        listPath: '/rooms/about',
-      },
     ],
     products: [
       {
@@ -88,10 +83,6 @@ const Sidebar = ({ position, toggleSlider, open, menu }) => {
       {
         listText: 'Bed',
         listPath: '/products/bed',
-      },
-      {
-        listText: 'Kids',
-        listPath: '/products/kids',
       },
     ],
     rooms: [

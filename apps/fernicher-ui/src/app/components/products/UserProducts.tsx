@@ -14,8 +14,10 @@ import { Recommendation } from './Recommendation';
 // My Listings
 function UserProducts() {
   const { state: loggedInUser } = useContext(LoggedInContext);
+  const { setProductOnMap } = useContext(stateContext);
   const history = useHistory();
   if (!loggedInUser) {
+    setProductOnMap(null);
     history.push('/');
   }
   const { myProducts, setMyProducts } = useContext(stateContext);

@@ -57,7 +57,7 @@ export default function HorizontalLinearStepper({ handleClose }) {
     setTimeout(() => {
       setFinished(true);
       handleClose();
-    }, 2000)
+    }, 1500)
   }
 
   if (finished) {

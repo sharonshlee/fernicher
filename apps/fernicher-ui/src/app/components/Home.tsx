@@ -1,10 +1,11 @@
 import axios from 'axios';
 import { map } from 'lodash';
 import React, { useContext, useEffect, useState } from 'react';
+import { LoggedInContext } from '../providers/LoggedInContext';
 import { stateContext } from '../providers/StateProvider';
+import { SignInFrontPage } from './login/SignInFrontPage';
 import Map from './Map/Map';
 import { Recommendation } from './products/Recommendation';
-import { LoggedInContext } from '../providers/LoggedInContext';
 import Modal from './GettingStarted/Modal';
 
 function Home(props: any) {
@@ -27,11 +28,12 @@ function Home(props: any) {
         .catch((err) => console.log('ERR HAPPENED', err));
     productOnMap && setProducts([productOnMap]);
   }, [productOnMap]);
-
+  const { state: loggedInUser } = useContext(LoggedInContext);
   return (
 
     <div className="mainContent">
       <Modal/>
+      {!loggedInUser && <SignInFrontPage />}
       <Recommendation
         imageWidth="16vh"
         imageHeight="21vh"

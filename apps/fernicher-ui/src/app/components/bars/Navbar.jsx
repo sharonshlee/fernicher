@@ -201,7 +201,7 @@ export default function PrimarySearchAppBar() {
   const [showSignUp, setShowSignUp] = useState(false);
   const history = useHistory();
   const [searchValue, setSearchValue] = useState('');
-  const { setProducts } = useContext(stateContext);
+  const { setProducts, setProductOnMap } = useContext(stateContext);
   const { state: loggedInUser, setState: setLoggedInUser } =
     useContext(LoggedInContext);
 
@@ -224,7 +224,10 @@ export default function PrimarySearchAppBar() {
           <Sidebar {...state} toggleSlider={toggleSlider} />
           <Button
             style={{ color: '#212529' }}
-            onClick={() => history.push('/')}
+            onClick={() => {
+              setProductOnMap(null);
+              history.push('/');
+            }}
           >
             Fernicher
           </Button>
@@ -292,6 +295,7 @@ export default function PrimarySearchAppBar() {
                   lat: viewport.lat,
                   lng: viewport.lng,
                 });
+                setProductOnMap(null);
                 return history.push('/');
               }}
             >
@@ -372,6 +376,7 @@ export default function PrimarySearchAppBar() {
                     color="inherit"
                     component={Button}
                     onClick={() => {
+                      setProductOnMap(null);
                       history.push('/');
                       setLoggedInUser(null);
                     }}
