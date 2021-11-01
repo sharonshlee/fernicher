@@ -223,19 +223,20 @@ export default function PrimarySearchAppBar() {
           </IconButton>
           <Sidebar {...state} toggleSlider={toggleSlider} />
           <Button
+            startIcon={<Avatar src={'/assets/imgs/brand_logo.png'} />}
             style={{ color: '#212529' }}
             onClick={() => {
               setProductOnMap(null);
               history.push('/');
             }}
           >
-            Fernicher
+            {/* Fernicher */}
           </Button>
           <Button
             style={{ color: '#212529' }}
             onClick={toggleSlider('left', true, 'products')}
           >
-            Furnitures
+            Fernicher
           </Button>
           <Button
             style={{ color: '#212529' }}
