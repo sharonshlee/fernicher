@@ -5,6 +5,10 @@
   text-align: center;
   &.recommendation {
     margin-top: 2em;
+    margin-bottom: -5em;
+  }
+  &.all-product-recommendation {
+    margin-bottom: 1em;
   }
 }
 img {

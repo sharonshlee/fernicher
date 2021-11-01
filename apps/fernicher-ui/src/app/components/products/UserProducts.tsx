@@ -9,6 +9,7 @@ import { ProductDialog } from './ProductDialog';
 import { LoggedInContext } from '../../providers/LoggedInContext';
 import SingleLineImageList from '../ImageSliders/SingleLineImageList';
 import './products.scss';
+import { Recommendation } from './Recommendation';
 
 // My Listings
 function UserProducts() {
@@ -50,11 +51,14 @@ function UserProducts() {
   });
   const [recommendedProducts, setRecommendedProducts] = useState<any[]>([]);
   useEffect(() => {
-    axios.get(`/api/users/${loggedInUser.id}/recommend`).then((result: any) => {
-      console.log(result.data);
-      setRecommendedProducts(result.data);
-    });
+    loggedInUser &&
+      axios
+        .get(`/api/users/${loggedInUser.id}/recommend`)
+        .then((result: any) => {
+          setRecommendedProducts(result.data);
+        });
   }, [loggedInUser]);
+
   return (
     <div className={'mainContent'}>
       <h1>{'My Listings'}</h1>
@@ -93,16 +97,11 @@ function UserProducts() {
           </Grid>
         ))}
       </Grid>
-      {!isEmpty(loggedInUser.favourites) && (
-        <div className="sliderimg recommendation">
-          <h2>Recommendations</h2>
-          <SingleLineImageList
-            subUsersAndProducts={recommendedProducts}
-            imageHeight="25em"
-            imageRootHeight="26em"
-          />
-        </div>
-      )}
+      <Recommendation
+        imageHeight="25vh"
+        imageRootHeight="26vh"
+        imageWidth="22vh"
+      />
       {detail.product && (
         <ProductDialog
           detail={detail}
