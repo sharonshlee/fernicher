@@ -30,34 +30,34 @@ export const dbresetRoutes = (
 
     const users = await userRepository.save([
       {
-        firstName: 'John',
-        lastName: 'Doe',
-        password: 'johndoe',
-        email: 'johndoe@doe.com',
+        firstName: 'Mark',
+        lastName: 'Lae',
+        password: 'marklae',
+        email: 'marklae@gmail.com',
       },
       {
         firstName: 'Jane',
-        lastName: 'Doe',
-        password: 'johndoe',
-        email: 'janedoe@doe.com',
+        lastName: 'Smith',
+        password: 'janesmith',
+        email: 'janesmith@gmail.com',
       },
       {
-        firstName: 'Rose',
-        lastName: 'Doe',
-        password: 'johndoe',
-        email: 'rosedoe@doe.com',
+        firstName: 'Sara',
+        lastName: 'Singh',
+        password: 'sarasingh',
+        email: 'sarasingh@gmail.com',
       },
       {
-        firstName: 'Jim',
-        lastName: 'Doe',
-        password: 'johndoe',
-        email: 'jimdoe@doe.com',
+        firstName: 'Claire',
+        lastName: 'Woo',
+        password: 'clairewoo',
+        email: 'clairewoo@gmail.com',
       },
       {
         firstName: 'Jerry',
-        lastName: 'Doe',
-        password: 'johndoe',
-        email: 'jerrydoe@doe.com',
+        lastName: 'Ricco',
+        password: 'jerryricco',
+        email: 'jerryricco@gmail.com',
       },
     ]);
 
@@ -72,25 +72,25 @@ export const dbresetRoutes = (
         code: 'dining',
         name: 'Dining',
         description:
-          '3 wolf moon lyft food truck asymmetrical, flannel paleo kombucha chia hashtag four dollar toast master cleanse franzen. Glossier chillwave truffaut keffiyeh flannel before they sold out.',
+        '8/10 condiiton. Has small dents in the corners. Pickup only. Message me if you have any questions.'
       },
       {
         code: 'kitchen',
         name: 'Kitchen',
         description:
-          '3 wolf moon lyft food truck asymmetrical, flannel paleo kombucha chia hashtag four dollar toast master cleanse franzen. Glossier chillwave truffaut keffiyeh flannel before they sold out.',
+        'Pickup only. Thanks!'
       },
       {
         code: 'living',
         name: 'Living Room',
         description:
-          '3 wolf moon lyft food truck asymmetrical, flannel paleo kombucha chia hashtag four dollar toast master cleanse franzen. Glossier chillwave truffaut keffiyeh flannel before they sold out.',
+        'Can deliver to anywhere in the GTA!'
       },
       {
         code: 'office',
         name: 'Office',
         description:
-          '3 wolf moon lyft food truck asymmetrical, flannel paleo kombucha chia hashtag four dollar toast master cleanse franzen. Glossier chillwave truffaut keffiyeh flannel before they sold out.',
+        'If you are looking for equipment for your home office, look no further!'
       },
     ]);
 
@@ -99,7 +99,7 @@ export const dbresetRoutes = (
       {
         name: 'Dining Table',
         description:
-          'In vel quam orci. Suspendisse potenti. Curabitur eget aliquam ex. Praesent ullamcorper scelerisque egestas. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi interdum viverra magna, ut gravida massa lacinia at. Fusce blandit quis lectus ac iaculis.',
+        'Located in the heart of downtown Toronto. Message me to arrange a pickup!',
         image:
           'https://images.unsplash.com/photo-1581404501824-b69dfb89f64c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1769&q=80',
         category: categories[1],
@@ -112,7 +112,7 @@ export const dbresetRoutes = (
       {
         name: 'Dining Chair',
         description:
-          'In vel quam orci. Suspendisse potenti. Curabitur eget aliquam ex. Praesent ullamcorper scelerisque egestas. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi interdum viverra magna, ut gravida massa lacinia at. Fusce blandit quis lectus ac iaculis.',
+        'Great condition - a classic piece. Looking to trade for a coffee table if possible!',
         image:
           'https://images.unsplash.com/photo-1487015307662-6ce6210680f1?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=770&q=80',
         category: categories[1],
@@ -125,7 +125,7 @@ export const dbresetRoutes = (
       {
         name: 'Sofa',
         description:
-          'In vel quam orci. Suspendisse potenti. Curabitur eget aliquam ex. Praesent ullamcorper scelerisque egestas. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi interdum viverra magna, ut gravida massa lacinia at. Fusce blandit quis lectus ac iaculis.',
+        'Purchased from Ikea in 2017. 7/10 condition. Thanks!',
         image:
           'https://images.unsplash.com/photo-1540574163026-643ea20ade25?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1770&q=80',
         category: categories[3],
@@ -138,7 +138,7 @@ export const dbresetRoutes = (
       {
         name: 'Bed',
         description:
-          'In vel quam orci. Suspendisse potenti. Curabitur eget aliquam ex. Praesent ullamcorper scelerisque egestas. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi interdum viverra magna, ut gravida massa lacinia at. Fusce blandit quis lectus ac iaculis.',
+        'Sturdy frame and spring mattress. Pickup only. Message me for more details.',
         image:
           'https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1770&q=80',
         category: categories[0],
@@ -151,7 +151,7 @@ export const dbresetRoutes = (
       {
         name: 'Dresser',
         description:
-          'In vel quam orci. Suspendisse potenti. Curabitur eget aliquam ex. Praesent ullamcorper scelerisque egestas. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi interdum viverra magna, ut gravida massa lacinia at. Fusce blandit quis lectus ac iaculis.',
+        'Xtra Large dresser in great condition.',
         image:
           'https://images.unsplash.com/photo-1609799545166-347a5ba518cc?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=870&q=80',
         category: categories[0],
@@ -164,7 +164,7 @@ export const dbresetRoutes = (
       {
         name: 'Floor Lamp',
         description:
-          'In vel quam orci. Suspendisse potenti. Curabitur eget aliquam ex. Praesent ullamcorper scelerisque egestas. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi interdum viverra magna, ut gravida massa lacinia at. Fusce blandit quis lectus ac iaculis.',
+        '5 foot tall floor lamp. Great for any room.',
         image:
           'https://images.unsplash.com/photo-1519710164239-da123dc03ef4?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=774&q=80',
         category: categories[3],
@@ -177,7 +177,7 @@ export const dbresetRoutes = (
       {
         name: 'Arm Chair',
         description:
-          'In vel quam orci. Suspendisse potenti. Curabitur eget aliquam ex. Praesent ullamcorper scelerisque egestas. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi interdum viverra magna, ut gravida massa lacinia at. Fusce blandit quis lectus ac iaculis.',
+        'Full arm chair. Pickup only.',
         image:
           'https://images.unsplash.com/photo-1582901109033-8aad6fed8168?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=830&q=80',
         category: categories[3],
@@ -190,7 +190,7 @@ export const dbresetRoutes = (
       {
         name: 'Mirror',
         description:
-          'In vel quam orci. Suspendisse potenti. Curabitur eget aliquam ex. Praesent ullamcorper scelerisque egestas. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi interdum viverra magna, ut gravida massa lacinia at. Fusce blandit quis lectus ac iaculis.',
+        'Full sized mirror - check yourself out in full length!',
         image:
           'https://images.unsplash.com/photo-1556784344-ad913c73cfc4?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1769&q=80',
         category: categories[0],
@@ -203,19 +203,19 @@ export const dbresetRoutes = (
       {
         name: 'Coffee Table',
         description:
-          'In vel quam orci. Suspendisse potenti. Curabitur eget aliquam ex. Praesent ullamcorper scelerisque egestas. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi interdum viverra magna, ut gravida massa lacinia at. Fusce blandit quis lectus ac iaculis.',
+        'Purchased in 2018 from Ikea. In great condition. Pickup only. Thank you!',
         image:
           'https://images.unsplash.com/photo-1583847268964-b28dc8f51f92?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=774&q=80',
         category: categories[3],
         user: users[3],
-        productLocation: [43.289975, -79.523215],
+        productLocation: [43.389975, -77.523215],
         location: 'Toronto, ON, Canada',
         condition: 'like new',
       },
       {
         name: 'Rug',
         description:
-          'In vel quam orci. Suspendisse potenti. Curabitur eget aliquam ex. Praesent ullamcorper scelerisque egestas. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi interdum viverra magna, ut gravida massa lacinia at. Fusce blandit quis lectus ac iaculis.',
+        'Purchased from Ikea only 4 months ago. Basically in new condition. Message me for details!',
         image:
           'https://images.unsplash.com/photo-1556597249-cd6a997737df?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=744&q=80',
         category: categories[3],

@@ -203,6 +203,7 @@ export default function PrimarySearchAppBar() {
   const { state: loggedInUser, setState: setLoggedInUser } =
     useContext(LoggedInContext);
 
+
   return (
     <div className={classes.grow}>
       <AppBar
@@ -281,7 +282,9 @@ export default function PrimarySearchAppBar() {
           </div>
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
-            <Tooltip title="Furnitures Nearby">
+            <Tooltip
+            title="Furnitures Nearby"
+            onClick={() => console.log("CLICKED IT!")}>
               <IconButton
                 aria-label="show 17 new notifications"
                 color="inherit"

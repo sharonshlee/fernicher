@@ -14,15 +14,12 @@ const Chats = (props) => {
 
   useEffect(() => {
     if (newChat) {
-      console.log("NEW CHAT IS :", newChat)
       const username = newChat.email;
-      console.log("USERNAME IS: ", username)
       const body = {
         usernames: [username],
         title: username,
         is_direct_chat: true
       }
-
       const headers = {
         'Project-ID': '9663adb6-d823-4a20-935f-b7381ba20105',
         'User-Name': items.state.email,
@@ -31,6 +28,9 @@ const Chats = (props) => {
 
       axios.put('https://api.chatengine.io/chats/', body, {
         headers
+      })
+      .catch(function (error) {
+        console.log("ERROR IS", error);
       })
     }
 

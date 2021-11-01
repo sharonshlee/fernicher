@@ -152,7 +152,7 @@ export default function SignUp(props: {
                     setSignedUp(true)
                     console.log("IT IT HIT THIS: ", user)
                     //Sign user up for chatengine.io as well
-                    const data = {
+                    const body = {
                       username: user.email,
                       secret: user.password,
                       first_name: user.firstName,
@@ -162,7 +162,9 @@ export default function SignUp(props: {
                       'PRIVATE-KEY': 'a80dec0b-4e13-4a61-96c8-a1c87e79dd2e'
                     }
 
-                    axios.post('https://api/chatengine.io/users/', data, { headers
+                    console.log("BODY IS:", body);
+                    axios.post('https://api/chatengine.io/users/', body, {
+                      headers
                     })
                     .catch(function (error) {
                       console.log("ERROR IS", error);

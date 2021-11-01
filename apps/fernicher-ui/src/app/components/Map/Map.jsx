@@ -25,6 +25,7 @@ const options = {
 
 const Map = ({ mapTitle = '', width = '100%', height = '80vh' }) => {
   const { products } = useContext(stateContext);
+
   const mapContainerStyle = {
     width,
     height,
@@ -64,17 +65,6 @@ const Map = ({ mapTitle = '', width = '100%', height = '80vh' }) => {
 
   return (
     <div>
-      <h2 className="map-title">
-        {mapTitle && mapTitle}
-        {!mapTitle && (
-          <>
-            FerniCher{' '}
-            <span role="img" aria-label="couch">
-              🛋
-            </span>
-          </>
-        )}
-      </h2>
       <GoogleMap
         mapContainerStyle={mapContainerStyle}
         zoom={10}
