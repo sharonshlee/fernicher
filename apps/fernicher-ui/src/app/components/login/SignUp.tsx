@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {useContext} from 'react';
+import { useContext } from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -159,13 +159,14 @@ export default function SignUp(props: {
                       'PRIVATE-KEY': 'a80dec0b-4e13-4a61-96c8-a1c87e79dd2e',
                     };
 
-                    console.log("BODY IS:", body);
-                    axios.post('https://api/chatengine.io/users/', body, {
-                      headers
-                    })
-                    .catch(function (error) {
-                      console.log("ERROR IS", error);
-                    })
+                    console.log('BODY IS:', body);
+                    axios
+                      .post('https://api/chatengine.io/users/', body, {
+                        headers,
+                      })
+                      .catch(function (error) {
+                        console.log('ERROR IS', error);
+                      });
                   });
                 }}
               >
@@ -188,7 +189,7 @@ export default function SignUp(props: {
               </Grid>
             </Box>
           </Box>
-          <Copyright sx={{ mt: 5 }} />
+          <Copyright sx={{ mt: 5, mb: 4 }} />
         </Container>
       </ThemeProvider>
     </Dialog>
