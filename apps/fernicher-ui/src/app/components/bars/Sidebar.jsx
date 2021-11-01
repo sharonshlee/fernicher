@@ -13,6 +13,7 @@ import {
   List,
   Box,
 } from '@material-ui/core';
+import Typography from '@mui/material/Typography';
 import { Home } from '@material-ui/icons';
 import LoyaltyOutlinedIcon from '@material-ui/icons/LoyaltyOutlined';
 import ChairIcon from '@mui/icons-material/Chair';
@@ -20,30 +21,25 @@ import BedroomParentIcon from '@mui/icons-material/BedroomParent';
 import ContactsIcon from '@mui/icons-material/Contacts';
 import { stateContext } from '../../providers/StateProvider';
 import { LoggedInContext } from '../../providers/LoggedInContext';
-
-// import BedroomBabyIcon from '@mui/icons-material';
-// import BedIcon from '@mui/icons-material/Bed';
-
-const useStyles = makeStyles((theme) => ({
-  menuSliderContainer: {
-    width: 250,
-    background: 'white',
-    height: '100%',
-  },
-  logo: {
-    display: 'block',
-    margin: '0.5rem auto',
-    width: theme.spacing(7),
-    height: theme.spacing(7),
-  },
-  listItem: {
-    color: 'black',
-  },
-}));
-
-const exampleLoggedInId = 1;
+import { map } from 'lodash';
 
 const Sidebar = ({ position, toggleSlider, open, menu }) => {
+  const useStyles = makeStyles((theme) => ({
+    menuSliderContainer: {
+      width: menu === 'favourites' ? 550 : 250,
+      background: 'white',
+      height: '100%',
+    },
+    logo: {
+      display: 'block',
+      margin: '0.5rem auto',
+      width: theme.spacing(7),
+      height: theme.spacing(7),
+    },
+    listItem: {
+      color: 'black',
+    },
+  }));
   const [menus, setMenus] = useState({
     main: [
       {
@@ -152,41 +148,64 @@ const Sidebar = ({ position, toggleSlider, open, menu }) => {
       },
     ],
   });
-  const { setProducts } = useContext(stateContext);
+  const { setProductOnMap } = useContext(stateContext);
   const { state: loggedInUser } = useContext(LoggedInContext);
 
   // Will change this with useContext after our lecture
   useEffect(() => {
     if (menu === 'favourites') {
-      axios
-        .post('/api/users')
-        .then((res) => {
-          const resFavs = res.data.filter((el) => el.id === loggedInUser.id)[0]
-            .favourites;
-          const favourites = resFavs.map((el, i) => ({
-            listText: `${i + 1}: ${el.product.name}`,
-            listPath: '/',
-            listImage: (
-              <img
-                src={el.product.image}
-                alt={el.product.name}
-                style={{ height: '50px' }}
-              />
-            ),
-            latlng: [
-              el.product.productLocation[0],
-              el.product.productLocation[1],
-            ],
-            onClick: () => {
-              setProducts([el.product]);
-            },
-          }));
-          setMenus((prev) => ({
-            ...prev,
-            favourites,
-          }));
-        })
-        .catch((err) => console.log('ERR1 HAPPENED', err));
+      // axios
+      //   .post('/api/users')
+      //   .then((res) => {
+      //     const resFavs = res.data.filter((el) => el.id === loggedInUser.id)[0]
+      //       .favourites;
+      //     const favourites = resFavs.map((el, i) => ({
+      //       listText: `${i + 1}: ${el.product.name}`,
+      //       listPath: '/',
+      //       listImage: (
+      //         <img
+      //           src={el.product.image}
+      //           alt={el.product.name}
+      //           style={{ height: '50px' }}
+      //         />
+      //       ),
+      //       latlng: [
+      //         el.product.productLocation[0],
+      //         el.product.productLocation[1],
+      //       ],
+      //       onClick: () => {
+      //         setProducts([el.product]);
+      //       },
+      //     }));
+      //     setMenus((prev) => ({
+      //       ...prev,
+      //       favourites,
+      //     }));
+      //   })
+      //   .catch((err) => console.log('ERR1 HAPPENED', err));
+      console.log('>>>>', loggedInUser.favourites);
+      const menuFavourites = map(loggedInUser.favourites, (favourite) => ({
+        listText: `${favourite.product.name}`,
+        listPath: '/',
+        listImage: (
+          <img
+            src={favourite.product.image}
+            alt={favourite.product.name}
+            style={{ width: '25vw' }}
+          />
+        ),
+        latlng: [
+          favourite.product.productLocation[0],
+          favourite.product.productLocation[1],
+        ],
+        onClick: () => {
+          setProductOnMap(favourite.product);
+        },
+      }));
+      setMenus((prev) => ({
+        ...prev,
+        favourites: menuFavourites,
+      }));
     }
   }, [menu, loggedInUser]);
 

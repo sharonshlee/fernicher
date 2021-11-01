@@ -1,8 +1,6 @@
-import { Favourite, Comment } from '@fernicher/models';
+import { Favourite } from '@fernicher/models';
 import { Router } from 'express';
-import { In, Repository } from 'typeorm';
-import { whereBuilder } from './routeHelpers';
-import { countBy, filter, find, map } from 'lodash';
+import { Repository } from 'typeorm';
 
 export const favouriteRoutes = (favouriteRepository: Repository<Favourite>) => {
   const favouriteRouter = Router();
@@ -17,7 +15,14 @@ export const favouriteRoutes = (favouriteRepository: Repository<Favourite>) => {
   favouriteRouter.get('/favourites/:favouriteId', (req, res) => {
     const favouriteId = req.params.favouriteId;
     return favouriteRepository
-      .findOne(favouriteId)
+      .findOne(favouriteId, {
+        join: {
+          alias: 'favourite',
+          innerJoinAndSelect: {
+            user: 'favourite.user',
+          },
+        },
+      })
       .then((favourite) => res.send(favourite));
   });
 
@@ -26,7 +31,7 @@ export const favouriteRoutes = (favouriteRepository: Repository<Favourite>) => {
     const newFavourite = req.body;
     return favouriteRepository
       .save(newFavourite)
-      .then((favourite) => res.send(favourite));
+      .then((favourite) => res.redirect(`/api/favourites/${favourite.id}`));
   });
 
   favouriteRouter.put('/favourites/:favouriteId', (req, res) => {

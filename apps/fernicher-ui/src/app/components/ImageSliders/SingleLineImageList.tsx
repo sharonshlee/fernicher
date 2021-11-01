@@ -59,7 +59,7 @@ export default function SingleLineImageList(props: {
     <div className={classes.root}>
       <ImageList className={classes.imageList} cols={5} spacing={10}>
         {map(subUsersAndProducts, (usersAndProduct) => (
-          <ImageListItem key={usersAndProduct.id} style={{ height: '60%' }}>
+          <ImageListItem key={usersAndProduct.id} style={{ height: '24%' }}>
             <img
               src={usersAndProduct.image}
               alt={usersAndProduct.name}

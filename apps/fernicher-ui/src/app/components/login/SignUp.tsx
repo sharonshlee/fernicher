@@ -13,7 +13,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Dialog } from '@mui/material';
 import { useState } from 'react';
 import axios from 'axios';
-import {Redirect} from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 
 function Copyright(props: any) {
   return (
@@ -58,7 +58,7 @@ export default function SignUp(props: {
   }>(defaultUserValues);
 
   if (signedUp) {
-    return <Redirect to='/' />
+    return <Redirect to="/" />;
   }
   return (
     <Dialog open={true} onClose={() => setShowSignUp(false)}>
@@ -73,7 +73,7 @@ export default function SignUp(props: {
               alignItems: 'center',
             }}
           >
-            <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+            <Avatar sx={{ m: 1, bgcolor: '#403d39' }}>
               <LockOutlinedIcon />
             </Avatar>
             <Typography component="h1" variant="h5">
@@ -144,29 +144,29 @@ export default function SignUp(props: {
                 type="submit"
                 fullWidth
                 variant="contained"
-                sx={{ mt: 3, mb: 2 }}
+                sx={{ mt: 3, mb: 2, bgcolor: '#403d39' }}
                 onClick={() => {
-                  axios
-                    .post('/api/users/new', user)
-                    .then(() => {
-                    setSignedUp(true)
-                    console.log("IT IT HIT THIS: ", user)
+                  axios.post('/api/users/new', user).then(() => {
+                    setSignedUp(true);
+                    console.log('IT IT HIT THIS: ', user);
                     //Sign user up for chatengine.io as well
                     const data = {
                       username: user.email,
                       secret: user.password,
                       first_name: user.firstName,
-                      last_name: user.lastName
-                    }
+                      last_name: user.lastName,
+                    };
                     const headers = {
-                      'PRIVATE-KEY': 'a80dec0b-4e13-4a61-96c8-a1c87e79dd2e'
-                    }
+                      'PRIVATE-KEY': 'a80dec0b-4e13-4a61-96c8-a1c87e79dd2e',
+                    };
 
-                    axios.post('https://api/chatengine.io/users/', data, { headers
-                    })
-                    .catch(function (error) {
-                      console.log("ERROR IS", error);
-                    })
+                    axios
+                      .post('https://api/chatengine.io/users/', data, {
+                        headers,
+                      })
+                      .catch(function (error) {
+                        console.log('ERROR IS', error);
+                      });
                   });
                 }}
               >
@@ -175,6 +175,7 @@ export default function SignUp(props: {
               <Grid container justifyContent="flex-end">
                 <Grid item>
                   <Link
+                    sx={{ mt: 3, mb: 2, color: '#403d39' }}
                     variant="body2"
                     component={Button}
                     onClick={() => {

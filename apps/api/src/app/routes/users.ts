@@ -1,12 +1,12 @@
-import { Favourite, User } from '@fernicher/models';
+import { Favourite, User, Comment } from '@fernicher/models';
 import { Router } from 'express';
-import { filter, map } from 'lodash';
+import { filter, find, map } from 'lodash';
 import { In, Repository } from 'typeorm';
-import { whereBuilder } from './routeHelpers';
 
 export const userRoutes = (
   userRepository: Repository<User>,
-  favouriteRepository: Repository<Favourite>
+  favouriteRepository: Repository<Favourite>,
+  commentRepository: Repository<Comment>
 ) => {
   const userRouter = Router();
 
@@ -19,7 +19,27 @@ export const userRoutes = (
   userRouter.get('/users/:userId', (req, res) => {
     const userId = req.params.userId;
     return userRepository.findOne(userId).then(async (user) => {
+      const userIds = map(user.products, (product) => product.userId);
+
+      map(user.favourites, (favourite) => {
+        userIds.push(favourite.userId);
+        userIds.push(favourite.product.userId);
+      });
+      const users = await userRepository.find({
+        where: { id: In(userIds) },
+        loadEagerRelations: false,
+      });
       const productIds = map(user.products, (product) => product.id);
+      const comments = await commentRepository.find({
+        where: { productId: In(productIds) },
+        join: {
+          alias: 'comment',
+          innerJoinAndSelect: {
+            user: 'comment.user',
+            product: 'comment.product',
+          },
+        },
+      });
       const favourites = await favouriteRepository.find({
         where: { productId: In(productIds) },
         join: {
@@ -33,10 +53,26 @@ export const userRoutes = (
         ...user,
         products: map(user.products, (product) => ({
           ...product,
-          favourites: filter(favourites, (fav) => fav.productId === product.id),
+          comments: filter(
+            comments,
+            (comment) => comment.productId === product.id
+          ),
+          favourites: filter(
+            favourites,
+            (favourite) => favourite.productId === product.id
+          ),
+          user: find(users, (u) => u.id === product.userId),
+        })),
+        favourites: map(user.favourites, (favourite) => ({
+          ...favourite,
+          user: find(users, (u) => u.id === favourite.userId),
+          product: {
+            ...favourite.product,
+            user: find(users, (u) => u.id === favourite.product.userId),
+          },
         })),
       };
-      res.send(updatedUser);
+      return res.send(updatedUser);
     });
   });
 
@@ -63,7 +99,8 @@ export const userRoutes = (
           password: signInData.password,
         };
       }
-      res.send(user);
+      res.redirect(`/api/users/${user.id}`);
+      // res.send(user);
     } else {
       res.statusCode = 404;
       res.statusMessage = 'User Not found';

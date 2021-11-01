@@ -27,7 +27,7 @@ function Products() {
     if (cat === 'search') {
       return;
     }
-    const filter = { name: '', orderBy: 'createdAt', desc: true, take: 1000 };
+    const filter = { name: '', orderBy: 'id', desc: true, take: 1000 };
     if (cat !== 'recent' && cat !== 'all' && cat !== 'popular') {
       filter.name = cat;
     } else if (cat === 'recent') {
@@ -123,7 +123,8 @@ function Products() {
       <br />
       <br />
       <hr />
-      <Map mapTitle="Products on Map" width="100%" />
+      <br />
+      <Map mapTitle="Furnitures on Map" width="100%" />
     </div>
   );
 }
