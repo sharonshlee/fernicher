@@ -1,31 +1,62 @@
-import React from 'react';
+import React, {useContext} from 'react';
+import {Container, Grid, Box, Link} from '@material-ui/core';
+import { useHistory } from 'react-router-dom';
+import GitHubIcon from '@mui/icons-material/GitHub';
+import Divider from '@mui/material/Divider';
 
 function Footer() {
+  const history = useHistory();
+
   return (
     <footer>
-      {/* <img
-        style={{ width: "500px" }}
-        src="/assets/imgs/maria-orlova-XmhAN9TYD50-unsplash.jpg"
-        alt="abc"
-      /> */}
-      <h1>This is footer</h1>
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum laboriosam
-      architecto voluptate odit fugiat veniam itaque rem omnis nobis, facere
-      recusandae iure aut vero iusto labore, voluptatibus, quis provident nam?
-      Natus eos pariatur ratione molestias explicabo, dolorem veniam saepe
-      laboriosam inventore recusandae! Quaerat laborum impedit dolorem dolores,
-      illum doloremque, rem officia temporibus quis nostrum porro cumque
-      eveniet, necessitatibus sequi ea. Veritatis obcaecati tempora, pariatur
-      distinctio, harum iste eligendi, ut repudiandae consequuntur nisi error?
-      Minima rem, sit incidunt, veritatis voluptatibus deleniti quae animi
-      explicabo eum corporis itaque est! Provident, quam cum. Quaerat at
-      distinctio a voluptatibus alias ad, ut fugit, eveniet repudiandae
-      dignissimos ullam laudantium sed minima soluta fugiat tempora quidem
-      aspernatur explicabo voluptas veritatis voluptatum magnam exercitationem
-      sit autem. Officiis! Quae repellendus earum rerum ut adipisci laboriosam
-      at velit obcaecati quo? Sunt magni modi vitae ad! Voluptas vero voluptatum
-      quas sapiente quos libero saepe consectetur accusantium odio facere, fugit
-      quam?
+      <Box
+        px={{ xs: 3, sm: 10}}
+        py={{xs: 5, sm: 10}}
+        color="white"
+      >
+        <Container maxWidth="lg">
+          <Grid container spacing={5}>
+            <Grid item xs={12} sm={4}>
+              <Box borderBottom={1}>About us</Box>
+              <Box>
+                <Link
+                color="inherit"
+                onClick={(() =>{
+                  history.push('/')
+                })}
+                >
+                  Our Story
+                </Link>
+              </Box>
+              <Box>
+              <Link color="inherit" onClick={(() =>{
+                  history.push('/')
+                })}>
+                Contact Us
+              </Link>
+            </Box>
+            </Grid>
+          </Grid>
+          <Box  textAlign="center" pt={{xs: 5, sm: 10}} pb={{xs: 5, sm: 0}}>
+            Fernicher &reg; {new Date().getFullYear()}
+          </Box>
+          <Box textAlign="center" pt={{xs: 5, sm: 10}} pb={{xs: 5, sm: 0}}>
+            Created by Sharon Lee and Lewis Lee
+            <br />
+            <Link rel="noopener noreferrer" target="_blank" href="https://github.com/sharonshlee/fernicher" color="inherit">
+                <strong>Github Project Repo:</strong> <GitHubIcon />
+            </Link>
+            <span>          |          </span>
+            <Link rel="noopener noreferrer" target="_blank" href="https://github.com/sharonshlee" color="inherit">
+            <strong>Sharon's Github:</strong> <GitHubIcon />
+            </Link>
+            <span>          |          </span>
+            <Link rel="noopener noreferrer" target="_blank" href="https://github.com/rexiah23" color="inherit">
+            <strong>Lewis's Github:</strong> <GitHubIcon />
+            </Link>
+          </Box>
+        </Container>
+      </Box>
     </footer>
   );
 }

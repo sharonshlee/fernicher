@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
 import Card from '@material-ui/core/Card';
@@ -18,6 +18,7 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import { Redirect } from 'react-router-dom';
 import { SettingsInputAntennaTwoTone } from '@material-ui/icons';
+import {LoggedInContext} from '../../providers/LoggedInContext';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -53,8 +54,8 @@ export default function ProductsSocialCard({
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
   const [msgClicked, setMsgClicked] = React.useState(false);
+  const { state, setState } = useContext(LoggedInContext);
 
-  console.log('SELECTED IS THIS: ', email);
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
@@ -102,6 +103,10 @@ export default function ProductsSocialCard({
         <IconButton
           aria-label="share"
           onClick={() => {
+            if (!state) {
+              return;
+            }
+
             setMsgClicked(true);
           }}
         >

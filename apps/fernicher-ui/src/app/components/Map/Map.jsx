@@ -17,11 +17,6 @@ const center = {
   lat: 53.83579,
   lng: -79.55343,
 };
-const options = {
-  styles: mapStyles,
-  disableDefaultUI: true,
-  zoomControl: true,
-};
 
 const Map = ({ mapTitle = '', width = '100%', height = '80vh' }) => {
   const { products } = useContext(stateContext);
@@ -43,6 +38,12 @@ const Map = ({ mapTitle = '', width = '100%', height = '80vh' }) => {
     mapRef.current = map;
     setMapRef(mapRef)
   }, [setMapRef]);
+
+  const options = {
+    styles: mapStyles,
+    zoomControl: true,
+    streetViewControl: false
+  };
 
   if (loadError) return <h1>Error loading maps</h1>;
   if (!isLoaded) return <h1>Loading Maps</h1>;

@@ -23,7 +23,6 @@ const useViewport = () => {
           lat: coords.lat,
           lng: coords.lng
       }))
-      console.log('Coords are:', coords)
     } else if (coords.error) {
       setViewport(prev => ({
         ...prev,

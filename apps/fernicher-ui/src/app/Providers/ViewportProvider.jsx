@@ -16,8 +16,6 @@ const ViewportProvider = (props) => {
 
   const [mapRef, setMapRef] = useState(null);
 
-  console.log("MAP REF IS THIS:", mapRef);
-
   const coords = useLocation()
 
   useEffect(() => {
@@ -28,7 +26,6 @@ const ViewportProvider = (props) => {
           lat: coords.lat,
           lng: coords.lng
       }))
-      console.log('Coords are:', coords)
     } else if (coords.error) {
       setViewport(prev => ({
         ...prev,
