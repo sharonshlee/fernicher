@@ -29,9 +29,10 @@ export const favouriteRoutes = (favouriteRepository: Repository<Favourite>) => {
   // Create new favourite
   favouriteRouter.post('/favourites/new', (req, res) => {
     const newFavourite = req.body;
-    return favouriteRepository
-      .save(newFavourite)
-      .then((favourite) => res.redirect(`/api/favourites/${favourite.id}`));
+
+    return favouriteRepository.save(newFavourite).then((favourite) => {
+      res.redirect(`/api/favourites/${favourite.id}`);
+    });
   });
 
   favouriteRouter.put('/favourites/:favouriteId', (req, res) => {

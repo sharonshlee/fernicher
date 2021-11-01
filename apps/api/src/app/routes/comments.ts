@@ -1,6 +1,7 @@
 import { Comment, Product, User } from '@fernicher/models';
 import { Router } from 'express';
 import { Repository } from 'typeorm';
+import * as sgMail from '@sendgrid/mail';
 
 export const commentRoutes = (
   commentRepository: Repository<Comment>,
@@ -26,11 +27,37 @@ export const commentRoutes = (
   // Create new comment
   commentRouter.post('/comments/new', async (req, res) => {
     const { comment, userId, productId } = req.body;
-    const user = await userRepository.findOne({ id: userId });
-    const product = await productRepository.findOne({ id: productId });
     return commentRepository
-      .save({ comment, user, product })
-      .then((comment) => res.send({ ...comment, user }));
+      .save({ comment, userId, productId })
+      .then(async (comment) => {
+        const user = await userRepository.findOne({ id: userId });
+        const product = await productRepository.findOne(
+          { id: productId },
+          {
+            join: {
+              alias: 'product',
+              innerJoinAndSelect: {
+                user: 'product.user',
+              },
+            },
+          }
+        );
+
+        sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+        console.log(product.user);
+        const msg = {
+          to: product.user.email, // Change to your recipient
+          from: process.env.SENDGRID_SENDER, // Change to your verified sender
+          subject: `New comment from ${user.firstName}`,
+          text: `Hi ${product.user.firstName}, ${user.firstName} commented on your ${product.name}.`,
+          // to compress html: https://www.textfixer.com/html/compress-html-compression.php
+          html: `<!DOCTYPE html><html> <head> <style> body { margin: auto; width: 50%; padding: 2em; color: #495057; font-family: Arial, Helvetica, sans-serif; } article { border: solid #495057 2px; border-radius: 0.5em; margin-top: 1em; } img { width: 100%; } div { margin: 1em; } a { color: #495057; background-color: #ced4da; border-radius: 5px; padding: 0.5em; text-decoration: none; } </style> </head> <body> <h2>New Comment</h2> <article> <div>${user.firstName} commented on your ${product.name}:</div> <div><i>${comment.comment}</i></div> <div> <img alt="${product.name}" src="${product.image}" /> </div> <div><a href="${process.env.FRONTEND_URL}">View comment here</a></div> </article> </body></html>`,
+        };
+        console.log(msg);
+
+        await sgMail.send(msg);
+        res.send({ ...comment, user });
+      });
   });
 
   commentRouter.put('/comments/:commentId', (req, res) => {
