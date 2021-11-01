@@ -216,7 +216,7 @@ export const dbresetRoutes = (
           'https://images.unsplash.com/photo-1583847268964-b28dc8f51f92?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=774&q=80',
         category: categories[3],
         user: users[3],
-        productLocation: [43.389975, -77.523215],
+        productLocation: [44.389975, -77.523215],
         location: 'Toronto, ON, Canada',
         condition: 'like new',
         color: 'brown',
