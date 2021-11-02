@@ -48,12 +48,14 @@ To start fernicher-ui:
 
 Powered by:
 
-- [Material UI](https://mui.com/)
-- [React Google Maps](https://www.npmjs.com/package/react-google-maps)
-- [Nx.Dev (monorepos)](https://nx.dev/)
-- [TypeORM](https://typeorm.io/)
-- [React](https://reactjs.org/)
+- [ReactJS](https://reactjs.org/)
 - [NodeJS](https://nodejs.org/)
 - [ExpressJS](http://expressjs.com/)
 - [TypeScript](https://www.typescriptlang.org/)
+- [TypeORM](https://typeorm.io/)
+- [Material UI](https://mui.com/)
+- [Nx.Dev (monorepos)](https://nx.dev/)
 - [PostgreSQL](https://www.postgresql.org/)
+- [React Google Maps](https://www.npmjs.com/package/react-google-maps)
+- [SendGrid](https://signup.sendgrid.com/)
+- [Cloudinary](https://cloudinary.com/documentation/how_to_integrate_cloudinary)

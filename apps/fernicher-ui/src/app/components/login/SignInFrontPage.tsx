@@ -102,18 +102,6 @@ export const SignInFrontPage = () => {
           }}
           onClick={() => setShowSignUp(!showSignUp)}
         >
-          {showSignIn && (
-            <SignIn
-              setShowSignIn={setShowSignIn}
-              setShowSignUp={setShowSignUp}
-            />
-          )}
-          {showSignUp && (
-            <SignUp
-              setShowSignIn={setShowSignIn}
-              setShowSignUp={setShowSignUp}
-            />
-          )}
           <ImageSrc style={{ backgroundImage: `url(${image.url})` }} />
           <ImageBackdrop className="MuiImageBackdrop-root" />
           <Image>
@@ -140,6 +128,12 @@ export const SignInFrontPage = () => {
           </Image>
         </ImageButton>
       ))}
+      {showSignIn && (
+        <SignIn setShowSignIn={setShowSignIn} setShowSignUp={setShowSignUp} />
+      )}
+      {showSignUp && (
+        <SignUp setShowSignIn={setShowSignIn} setShowSignUp={setShowSignUp} />
+      )}
     </Box>
   );
 };

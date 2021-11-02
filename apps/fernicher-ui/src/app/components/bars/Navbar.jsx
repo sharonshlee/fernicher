@@ -259,7 +259,7 @@ export default function PrimarySearchAppBar() {
               <SearchIcon />
             </div>
             <InputBase
-              placeholder="Search…"
+              placeholder="Search name, color, condition or description..."
               classes={{
                 root: classes.inputRoot,
                 input: classes.inputInput,
