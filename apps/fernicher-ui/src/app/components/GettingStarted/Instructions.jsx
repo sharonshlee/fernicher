@@ -3,11 +3,11 @@ import AddAPhotoIcon from '@material-ui/icons/AddAPhoto';
 const Instructions = ({activeStep}) => {
   const instructions = {
     0: <>
-      <strong><h3>Welcome To Fernicher! The World's first FREE fernicher exchange!</h3></strong>
+      <strong><h3>Welcome To Fernicher! The World's first FREE furniture exchange!</h3></strong>
       <p>Unlike other marketplaces, Fernicher is a place where people can donate and pickup free furniture in their area.
         <br/>
         <br/>
-        Firstly, in order to get access to all features such as posting your furniture for donation, messaging other doners, favourite your most wanted items, and to join our growing community, please <strong>Login or Signup!</strong><br/>
+        Firstly, in order to get access to all features such as posting your furniture for donation, messaging other doners, favourite your most wanted items, and to join our growing community, please <strong>Login or Signup.</strong><br/>It'll only take a minute!<br/><br/>
       </p>
       </>,
     1:<>
