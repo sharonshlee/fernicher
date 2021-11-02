@@ -11,7 +11,7 @@ useEffect(() => {
     .then((res) => {
       setUsersAndProducts(res.data);
     })
-    .catch((err) => console.log('ERR HAPPENED', err));
+    .catch((err) => console.log(err));
 }, []);
 
   return (

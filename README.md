@@ -49,7 +49,7 @@ To start fernicher-ui:
 Powered by:
 
 - [Material UI](https://mui.com/)
-- [Mapbox GL](https://docs.mapbox.com/mapbox-gl-js/api/)
+- [React Google Maps](https://www.npmjs.com/package/react-google-maps)
 - [Nx.Dev (monorepos)](https://nx.dev/)
 - [TypeORM](https://typeorm.io/)
 - [React](https://reactjs.org/)

@@ -1,64 +1,133 @@
-import React, {useContext} from 'react';
+import { useContext } from 'react';
 import {Container, Grid, Box, Link} from '@material-ui/core';
 import { useHistory } from 'react-router-dom';
 import GitHubIcon from '@mui/icons-material/GitHub';
-import Divider from '@mui/material/Divider';
+import { LoggedInContext } from '../providers/LoggedInContext';
 
-function Footer() {
+const Footer = () => {
   const history = useHistory();
+  const { state, setState } = useContext(LoggedInContext);
+
+  const showMenuItems = state ? (
+    <Box
+    px={{ xs: 3, sm: 5}}
+    py={{xs: 5, sm: 5}}
+    color="white"
+    >
+      <Grid container spacing={3}>
+
+        <Grid item xs={12} sm={4}>
+          <Box borderBottom={1}>Search Furniture</Box>
+            <Link
+            color="inherit"
+            onClick={(() =>{
+              history.push('/products/all')
+            })}
+            >
+              All Furniture
+            </Link>
+            <br/>
+            <Link color="inherit" onClick={(() =>{
+                history.push('/products/popular')
+              })}>
+              Most Popular
+            </Link>
+            <br/>
+            <Link color="inherit" onClick={(() =>{
+                history.push('/products/recent')
+              })}>
+              Most Recent
+            </Link>
+            <br/>
+            <Link color="inherit" onClick={(() =>{
+                history.push('/')
+              })}>
+              Find On Map
+            </Link>
+          </Grid>
+
+        <Grid item xs={12} sm={4}>
+          <Box borderBottom={1}>My Account</Box>
+          <Link
+          color="inherit"
+          onClick={(() =>{
+            history.push('/chats')
+          })}
+          >
+            My Chats
+          </Link>
+          <br/>
+          <Link color="inherit" onClick={(() =>{
+              history.push(`/products/${state.id}/recent`)
+            })}>
+            My Listings
+          </Link>
+        </Grid>
+
+        <Grid item xs={12} sm={4}>
+          <Box borderBottom={1}>Get Inspired</Box>
+          <Link
+          color="inherit"
+          onClick={(() =>{
+            history.push('/rooms/living')
+          })}
+          >
+            Living Rooms
+          </Link>
+          <br/>
+          <Link color="inherit" onClick={(() =>{
+              history.push('/products/bedroom')
+            })}>
+            Bedrooms
+          </Link>
+          <br/>
+          <Link color="inherit" onClick={(() =>{
+              history.push('/products/kitchen')
+            })}>
+            Kitchen
+          </Link>
+          <br/>
+          <Link color="inherit" onClick={(() =>{
+              history.push('/products/office')
+            })}>
+            Office
+          </Link>
+        </Grid>
+      </Grid>
+    </Box>
+) : (
+  <Box textAlign="center" pt={{xs: 5, sm: 10}} pb={{xs: 5, sm: 0}}>
+    Please Login or Signup to view menu items
+  </Box>
+  );
+
 
   return (
     <footer>
-      <Box
-        px={{ xs: 3, sm: 10}}
-        py={{xs: 5, sm: 10}}
-        color="white"
-      >
-        <Container maxWidth="lg">
-          {/* <Grid container spacing={5}>
-            <Grid item xs={12} sm={4}>
-              <Box borderBottom={1}>About us</Box>
-              <Box>
-                <Link
-                color="inherit"
-                onClick={(() =>{
-                  history.push('/')
-                })}
-                >
-                  Our Story
-                </Link>
-              </Box>
-              <Box>
-              <Link color="inherit" onClick={(() =>{
-                  history.push('/')
-                })}>
-                Contact Us
-              </Link>
-            </Box>
-            </Grid>
-              </Grid>*/}
-          {<Box  textAlign="center" pt={{xs: 5, sm: 10}} pb={{xs: 5, sm: 0}}>
-            Fernicher &reg; {new Date().getFullYear()}
-          </Box> }
-          <Box textAlign="center" pt={{xs: 5, sm: 10}} pb={{xs: 5, sm: 0}}>
-            Created by Sharon Lee and Lewis Lee
-            <br />
-            <Link rel="noopener noreferrer" target="_blank" href="https://github.com/sharonshlee/fernicher" color="inherit">
-                <strong>Github Project Repo:</strong> <GitHubIcon />
-            </Link>
-            <span>          |          </span>
-            <Link rel="noopener noreferrer" target="_blank" href="https://github.com/sharonshlee" color="inherit">
-            <strong>Sharon's Github:</strong> <GitHubIcon />
-            </Link>
-            <span>          |          </span>
-            <Link rel="noopener noreferrer" target="_blank" href="https://github.com/rexiah23" color="inherit">
-            <strong>Lewis's Github:</strong> <GitHubIcon />
-            </Link>
-          </Box>
-        </Container>
-      </Box>
+      <Container maxWidth="sm">
+        {showMenuItems}
+        <Box textAlign="center" pt={{xs: 5, sm: 10}} pb={{xs: 5, sm: 0}}>
+          Fernicher &reg; {new Date().getFullYear()}
+          <br />
+          Created by Sharon Lee and Lewis Lee
+          <br />
+          <Link rel="noopener noreferrer" target="_blank" href="https://github.com/sharonshlee/fernicher" color="inherit">
+              <strong>Github Project Repo:</strong> <GitHubIcon />
+          </Link>
+          <span>          |          </span>
+          <Link rel="noopener noreferrer" target="_blank" href="https://github.com/sharonshlee" color="inherit">
+          <strong>Sharon's Github:</strong> <GitHubIcon />
+          </Link>
+          <span>          |          </span>
+          <Link rel="noopener noreferrer" target="_blank" href="https://github.com/rexiah23" color="inherit">
+          <strong>Lewis's Github:</strong> <GitHubIcon />
+          </Link>
+        </Box>
+      </Container>
     </footer>
   );
-}
+};
 
 export default Footer;
+
+

@@ -1,4 +1,4 @@
-import React, { useState, useRef, useCallback, useContext, useEffect } from 'react';
+import { useState, useRef, useCallback, useContext  } from 'react';
 import {
   GoogleMap,
   useLoadScript,
@@ -20,16 +20,15 @@ const center = {
 
 const Map = ({ mapTitle = '', width = '100%', height = '80vh' }) => {
   const { products } = useContext(stateContext);
-  const { viewport, setViewport, setMapRef } = useContext(ViewportContext);
+  const { viewport, setMapRef } = useContext(ViewportContext);
 
   const mapContainerStyle = {
     width,
     height,
   };
   const [selected, setSelected] = useState(null);
-  // const { viewport, setViewPort } = useViewport();
   const { isLoaded, loadError } = useLoadScript({
-    googleMapsApiKey: 'AIzaSyAlh7RkuE1fQuj9D-L9-WQqpFoQaq0CBWk',
+    googleMapsApiKey: process.env.NX_GOOGLE_MAPS_API_KEY,
     libraries,
   });
 
@@ -65,10 +64,6 @@ const Map = ({ mapTitle = '', width = '100%', height = '80vh' }) => {
       }}
     />
   ));
-
-  // useEffect(() => {
-  //   const directionsService = new google.maps.DirectionsService()
-  // }, [])
 
   return (
     <div>
