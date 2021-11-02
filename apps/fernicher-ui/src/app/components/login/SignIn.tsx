@@ -104,7 +104,6 @@ export default function SignIn(props: {
                   axios
                     .post('/api/users/signin', signInData)
                     .then((result) => {
-                      console.log('signin', result.data);
                       setState(result.data);
                       setShowSignIn(false);
                     })
