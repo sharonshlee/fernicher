@@ -247,7 +247,7 @@ export default function ProductsSocialCard(props: {
                       setLoggedInUser((prev: any) => ({
                         ...prev,
                         favourites: [
-                          ...map(prev.favourites, (fav) => fav),
+                          ...(!isEmpty(prev.favourites) ? prev.favourites : []),
                           result.data,
                         ],
                       }));
@@ -259,7 +259,9 @@ export default function ProductsSocialCard(props: {
                               return {
                                 ...product,
                                 favourites: [
-                                  ...map(product.favourites, (fav) => fav),
+                                  ...(!isEmpty(product.favourites)
+                                    ? product.favourites
+                                    : []),
                                   result.data,
                                 ],
                               };
@@ -274,7 +276,9 @@ export default function ProductsSocialCard(props: {
                               return {
                                 ...product,
                                 favourites: [
-                                  ...map(product.favourites, (fav) => fav),
+                                  ...(!isEmpty(product.favourites)
+                                    ? product.favourites
+                                    : []),
                                   result.data,
                                 ],
                               };
@@ -286,7 +290,9 @@ export default function ProductsSocialCard(props: {
                         ...usersAndProduct,
                         favourites: [
                           result.data,
-                          ...map(usersAndProduct.favourites, (fav) => fav),
+                          ...(!isEmpty(usersAndProduct.favourites)
+                            ? usersAndProduct.favourites
+                            : []),
                         ],
                       });
                     });

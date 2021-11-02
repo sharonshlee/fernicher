@@ -1,4 +1,4 @@
-import { Category, Favourite, Product, User } from '@fernicher/models';
+import { Category, Favourite, Product, User, Comment } from '@fernicher/models';
 import { Router } from 'express';
 import { Repository } from 'typeorm';
 
@@ -6,11 +6,15 @@ export const dbresetRoutes = (
   userRepository: Repository<User>,
   productRepository: Repository<Product>,
   categoryRepository: Repository<Category>,
-  favouriteRepository: Repository<Favourite>
+  favouriteRepository: Repository<Favourite>,
+  commentRepository: Repository<Comment>
 ) => {
   const dbresetRouter = Router();
   dbresetRouter.get('/dbreset', async (req, res) => {
     const favouriteIds = await favouriteRepository
+      .find()
+      .then((items) => items.map((item) => item.id));
+    const commentIds = await commentRepository
       .find()
       .then((items) => items.map((item) => item.id));
     const productIds = await productRepository
@@ -24,6 +28,7 @@ export const dbresetRoutes = (
       .then((items) => items.map((item) => item.id));
 
     favouriteIds.length > 0 && (await favouriteRepository.delete(favouriteIds));
+    commentIds.length > 0 && (await commentRepository.delete(commentIds));
     productIds.length > 0 && (await productRepository.delete(productIds));
     categoryIds.length > 0 && (await categoryRepository.delete(categoryIds));
     userIds.length > 0 && (await userRepository.delete(userIds));
@@ -261,24 +266,11 @@ export const dbresetRoutes = (
         image:
           'https://images.unsplash.com/photo-1556597249-cd6a997737df?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=744&q=80',
         category: categories[3],
-        user: users[4],
+        user: users[3],
         productLocation: [43.119975, -79.230215],
         location: 'Toronto, ON, Canada',
         condition: 'like new',
         color: 'white',
-      },
-      {
-        name: 'Bar stool',
-        description:
-          'Purchased from Ikea only 1 months ago. Basically in new condition. Message me for details!',
-        image:
-          'https://images.unsplash.com/photo-1600585152220-90363fe7e115?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=870&q=80',
-        category: categories[2],
-        user: users[1],
-        productLocation: [41.119975, -75.230215],
-        location: 'Toronto, ON, Canada',
-        condition: 'like new',
-        color: 'brown',
       },
       {
         name: 'Small dining table',
@@ -303,6 +295,54 @@ export const dbresetRoutes = (
         location: 'Toronto, ON, Canada',
         condition: 'fair',
         color: 'white',
+      },
+      {
+        name: 'Wooden Dining Set',
+        description: 'Moving soon, letting this go, message me for details!',
+        image:
+          'https://images.unsplash.com/photo-1628797285815-453c1d0d21e3?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=774&q=80',
+        category: categories[2],
+        user: users[3],
+        productLocation: [43.118875, -79.230215],
+        location: 'Toronto, ON, Canada',
+        condition: 'good',
+        color: 'brown',
+      },
+      {
+        name: 'Black stool',
+        description: 'Moving soon, letting this go, message me for details!',
+        image:
+          'https://images.unsplash.com/photo-1571624436174-10278fda2531?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=772&q=80',
+        category: categories[2],
+        user: users[3],
+        productLocation: [43.128875, -79.230215],
+        location: 'Toronto, ON, Canada',
+        condition: 'good',
+        color: 'black',
+      },
+      {
+        name: 'Stool',
+        description: 'Moving soon, letting this go, message me for details!',
+        image:
+          'https://images.unsplash.com/photo-1601719817866-8678c3d417e5?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1035&q=80',
+        category: categories[2],
+        user: users[3],
+        productLocation: [43.118875, -79.230215],
+        location: 'Toronto, ON, Canada',
+        condition: 'good',
+        color: 'grey',
+      },
+      {
+        name: 'Wooden Stool',
+        description: 'Moving soon, letting this go, message me for details!',
+        image:
+          'https://images.unsplash.com/photo-1628304433247-804066a9864c?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2070&q=80',
+        category: categories[2],
+        user: users[3],
+        productLocation: [43.218875, -79.230215],
+        location: 'Toronto, ON, Canada',
+        condition: 'good',
+        color: 'brown',
       },
       {
         name: 'Work table',
@@ -354,6 +394,19 @@ export const dbresetRoutes = (
         condition: 'new',
         color: 'white',
       },
+      {
+        name: 'Bar stool',
+        description:
+          'Purchased from Ikea only 1 months ago. Basically in new condition. Message me for details!',
+        image:
+          'https://images.unsplash.com/photo-1600585152220-90363fe7e115?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=870&q=80',
+        category: categories[2],
+        user: users[1],
+        productLocation: [41.119975, -75.230215],
+        location: 'Toronto, ON, Canada',
+        condition: 'like new',
+        color: 'brown',
+      },
     ]);
 
     await favouriteRepository.save([
@@ -389,8 +442,14 @@ export const dbresetRoutes = (
         user: users[2],
         product: products[2],
       },
+      {
+        user: users[4],
+        product: products[22],
+      },
     ]);
-
+    await commentRepository.save([
+      { product: products[11], user: users[2], comment: 'This is nice!' },
+    ]);
     res.send('Done reseting database');
   });
 
