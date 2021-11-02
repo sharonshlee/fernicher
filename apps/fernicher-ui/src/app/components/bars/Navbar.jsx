@@ -359,12 +359,7 @@ export default function PrimarySearchAppBar() {
                 </Tooltip>
 
                 <Tooltip title={`Logged in as ${loggedInUser.firstName}`}>
-                  <IconButton
-                    edge="end"
-                    color="inherit"
-                    component={Button}
-                    onClick={() => setShowSignIn(!showSignIn)}
-                  >
+                  <IconButton edge="end" color="inherit">
                     <Avatar
                       aria-label="firstName"
                       className={classes.avatarComment}
@@ -421,7 +416,7 @@ export default function PrimarySearchAppBar() {
               aria-label="show more"
               aria-controls={mobileMenuId}
               aria-haspopup="true"
-              onClick={handleMobileMenuOpen}
+              // onClick={handleMobileMenuOpen}
               color="inherit"
             >
               <MoreIcon />
