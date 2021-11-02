@@ -86,7 +86,8 @@ createConnection({
       userRepository,
       productRepository,
       categoryRepository,
-      favouriteRepository
+      favouriteRepository,
+      commentRepository
     )
   );
   const port = process.env.port || 3001;

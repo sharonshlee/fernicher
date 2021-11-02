@@ -36,6 +36,9 @@ const useStyles = makeStyles((theme) => ({
   grow: {
     flexGrow: 1,
   },
+  growHalf: {
+    flexGrow: 0.5,
+  },
   menuButton: {
     marginRight: theme.spacing(2),
   },
@@ -47,7 +50,7 @@ const useStyles = makeStyles((theme) => ({
   },
   search: {
     position: 'relative',
-    flexGrow: 1,
+    flexGrow: 1.5,
     borderRadius: 30,
     backgroundColor: alpha(theme.palette.common.black, 0.08),
     '&:hover': {
@@ -57,7 +60,7 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: 5,
     width: '100%',
     [theme.breakpoints.up('sm')]: {
-      marginLeft: theme.spacing(3),
+      // marginLeft: theme.spacing(3),
       width: 'auto',
     },
   },
@@ -72,6 +75,7 @@ const useStyles = makeStyles((theme) => ({
   },
   inputRoot: {
     color: 'inherit',
+    width: '100%',
   },
   inputInput: {
     padding: theme.spacing(1, 1, 1, 0),
@@ -79,9 +83,6 @@ const useStyles = makeStyles((theme) => ({
     paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
     transition: theme.transitions.create('width'),
     width: '100%',
-    [theme.breakpoints.up('md')]: {
-      width: '20ch',
-    },
   },
   sectionDesktop: {
     display: 'none',
@@ -223,19 +224,20 @@ export default function PrimarySearchAppBar() {
           </IconButton>
           <Sidebar {...state} toggleSlider={toggleSlider} />
           <Button
+            startIcon={<Avatar src={'/assets/imgs/brand_logo.png'} />}
             style={{ color: '#212529' }}
             onClick={() => {
               setProductOnMap(null);
               history.push('/');
             }}
           >
-            Fernicher
+            {/* Fernicher */}
           </Button>
           <Button
             style={{ color: '#212529' }}
             onClick={toggleSlider('left', true, 'products')}
           >
-            Furnitures
+            Fernicher
           </Button>
           <Button
             style={{ color: '#212529' }}
@@ -251,6 +253,7 @@ export default function PrimarySearchAppBar() {
               My Listings
             </Button>
           )}
+          <div className={classes.growHalf} />
           <div className={classes.search}>
             <div className={classes.searchIcon}>
               <SearchIcon />
@@ -356,12 +359,7 @@ export default function PrimarySearchAppBar() {
                 </Tooltip>
 
                 <Tooltip title={`Logged in as ${loggedInUser.firstName}`}>
-                  <IconButton
-                    edge="end"
-                    color="inherit"
-                    component={Button}
-                    onClick={() => setShowSignIn(!showSignIn)}
-                  >
+                  <IconButton edge="end" color="inherit">
                     <Avatar
                       aria-label="firstName"
                       className={classes.avatarComment}
@@ -418,7 +416,7 @@ export default function PrimarySearchAppBar() {
               aria-label="show more"
               aria-controls={mobileMenuId}
               aria-haspopup="true"
-              onClick={handleMobileMenuOpen}
+              // onClick={handleMobileMenuOpen}
               color="inherit"
             >
               <MoreIcon />

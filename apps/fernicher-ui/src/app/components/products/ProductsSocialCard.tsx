@@ -246,7 +246,10 @@ export default function ProductsSocialCard(props: {
                     .then((result: any) => {
                       setLoggedInUser((prev: any) => ({
                         ...prev,
-                        favourites: [...prev.favourites, result.data],
+                        favourites: [
+                          ...(!isEmpty(prev.favourites) ? prev.favourites : []),
+                          result.data,
+                        ],
                       }));
                       setFavouriteId(result.data.id);
                       !userid &&
@@ -256,7 +259,9 @@ export default function ProductsSocialCard(props: {
                               return {
                                 ...product,
                                 favourites: [
-                                  ...product.favourites,
+                                  ...(!isEmpty(product.favourites)
+                                    ? product.favourites
+                                    : []),
                                   result.data,
                                 ],
                               };
@@ -271,7 +276,9 @@ export default function ProductsSocialCard(props: {
                               return {
                                 ...product,
                                 favourites: [
-                                  ...product.favourites,
+                                  ...(!isEmpty(product.favourites)
+                                    ? product.favourites
+                                    : []),
                                   result.data,
                                 ],
                               };
@@ -283,7 +290,9 @@ export default function ProductsSocialCard(props: {
                         ...usersAndProduct,
                         favourites: [
                           result.data,
-                          ...usersAndProduct.favourites,
+                          ...(!isEmpty(usersAndProduct.favourites)
+                            ? usersAndProduct.favourites
+                            : []),
                         ],
                       });
                     });

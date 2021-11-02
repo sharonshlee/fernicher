@@ -38,12 +38,6 @@ function Products() {
     axios
       .post<any[]>('/api/products/search', filter)
       .then((res) => {
-        if (cat === 'popular') {
-          setProducts(
-            take(orderBy(res.data, ['favourites.length'], ['desc']), 10)
-          );
-          return;
-        }
         setProducts(res.data);
       })
       .catch((err) => console.log(err));
@@ -80,7 +74,10 @@ function Products() {
             imageWidth="35vh"
             imageHeight="55vh"
             imageRootHeight="60vh"
-            subUsersAndProducts={products}
+            subUsersAndProducts={take(
+              orderBy(products, ['favourites.length'], ['desc']),
+              10
+            )}
           />
         </div>
       )}
