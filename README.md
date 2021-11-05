@@ -2,7 +2,23 @@
 
 > A website for people in the community to donate and get free preloved furnitures.
 
-- Final Year Project by [Sharon Lee](https://github.com/sharonshlee) and [Lewis Lee](https://github.com/rexiah23)
+> Final Year Project by [Sharon Lee](https://github.com/sharonshlee) and [Lewis Lee](https://github.com/rexiah23)
+
+## Final Product
+
+!["Screenshot of Home Page"](https://github.com/sharonshlee/fernicher/blob/master/docs/1_home.png)
+!["Screenshot of Filter Category"](https://github.com/sharonshlee/fernicher/blob/master/docs/2a_filter_category.png)
+!["Screenshot of Living Room"](https://github.com/sharonshlee/fernicher/blob/master/docs/2b_living_room.png)
+!["Screenshot of Filter"](https://github.com/sharonshlee/fernicher/blob/master/docs/3_filter.png)
+!["Screenshot of Search"](https://github.com/sharonshlee/fernicher/blob/master/docs/4_search.png)
+!["Screenshot of Popular"](https://github.com/sharonshlee/fernicher/blob/master/docs/5_popular.png)
+!["Screenshot of Recommendation"](https://github.com/sharonshlee/fernicher/blob/master/docs/6_recommendation.png)
+!["Screenshot of Upload"](https://github.com/sharonshlee/fernicher/blob/master/docs/7_upload.png)
+!["Screenshot of My Listings"](https://github.com/sharonshlee/fernicher/blob/master/docs/8_my_listing.png)
+!["Screenshot of Favourite Map"](https://github.com/sharonshlee/fernicher/blob/master/docs/9_favourite_map.png)
+!["Screenshot of Comment"](https://github.com/sharonshlee/fernicher/blob/master/docs/10_comment.png)
+!["Screenshot of Email"](https://github.com/sharonshlee/fernicher/blob/master/docs/11_email.png)
+!["Screenshot of Chat"](https://github.com/sharonshlee/fernicher/blob/master/docs/12_chat.png)
 
 ## First Time Setup:
 
