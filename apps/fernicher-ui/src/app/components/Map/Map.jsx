@@ -89,7 +89,7 @@ const Map = ({ mapTitle = '', width = '100%', height = '80vh' }) => {
               date={selected.createdAt}
               firstName={selected.name}
               image={selected.image}
-              email={selected.user.email}
+              email={selected.user.email && selected.user.email}
             />
           </InfoWindow>
         )}
